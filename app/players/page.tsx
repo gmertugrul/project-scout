@@ -12,7 +12,7 @@ export default async function Players() {
   );
 }
 
-export function Player() {
+function Player() {
   return (
     <div className="card flex flex-col !md:flex-row !md:justify-between">
       <PlayerHeader />
