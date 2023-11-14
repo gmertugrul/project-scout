@@ -1,0 +1,121 @@
+fragment player on PlayerEntity {
+  __typename
+  id
+  attributes {
+    first_name
+    last_name
+    birthdate
+    position
+    technical_stats {
+      ...technicalStats
+    }
+    mental_stats {
+      ...mentalStats
+    }
+    physical_stats {
+      ...physicalStats
+    }
+    team {
+      data {
+        ...team
+      }
+    }
+    country {
+      data {
+        ...country
+      }
+    }
+    photo {
+      data {
+        ...file
+      }
+    }
+  }
+}
+
+fragment file on UploadFileEntity {
+  __typename
+  id
+  attributes {
+    name
+    url
+  }
+}
+
+fragment country on CountryEntity {
+  __typename
+  id
+  attributes {
+    code
+    name
+  }
+}
+
+fragment team on TeamEntity {
+  __typename
+  id
+  attributes {
+    name
+  }
+}
+
+fragment technicalStats on ComponentStatsTechnicalStats {
+  corners
+  crossing
+  dribbling
+  finishing
+  first_touch
+  free_kick_taking
+  heading
+  long_shots
+  long_throws
+  marking
+  passing
+  penalty_taking
+  tackling
+  technique
+}
+
+fragment mentalStats on ComponentStatsMentalStats {
+  aggression
+  anticipation
+  bravery
+  composure
+  concentration
+  decisions
+  determination
+  flair
+  leadership
+  off_the_ball
+  positioning
+  teamwork
+  vision
+  work_rate
+}
+
+fragment physicalStats on ComponentStatsPhysicalStats {
+  acceleration
+  agility
+  balance
+  jumping_reach
+  natural_fitness
+  pace
+  stamina
+  strength
+}
+
+query players {
+  players {
+    data {
+      ...player
+    }
+  }
+}
+
+query player($id: ID!) {
+  player(id: $id) {
+    data {
+      ...player
+    }
+  }
+}

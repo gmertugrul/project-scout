@@ -1,13 +1,12 @@
 import Image from "next/image";
+import { PlayerFragment } from "../lib/gql-sdk";
 
-export function PlayerHeader() {
+export function PlayerHeader({ player }: { player: PlayerFragment }) {
   return (
     <header className="flex gap-x-4">
-      <Image
+      <img
         className="rounded w-24 h-24"
-        src="/images/player.png"
-        width={100}
-        height={100}
+        src={`${process.env.NEXT_STRAPI_URL}${player.attributes?.photo.data?.attributes?.url}`}
         alt="Player"
       />
 
@@ -15,23 +14,43 @@ export function PlayerHeader() {
         <div className="flex flex-col leading-6 justify-between">
           <span className="text-sm text-gray-500 flex items-center">
             <Image
-              src="/images/flags/tr.svg"
-              alt="Turkey flag"
+              src={`/images/flags/${
+                player.attributes?.country?.data?.attributes?.code?.toLowerCase() ??
+                "tr"
+              }.svg`}
+              alt="Country flag"
               className="w-4 h-3 mr-1"
               width={40}
               height={30}
             />
-            TUR, 19
+            {player.attributes?.country?.data?.attributes?.code},{" "}
+            {age(player.attributes?.birthdate)}
           </span>
-          <span className="text-sm text-gray-500 mb-1">GALATASARAY</span>
-          <span className="font-bold text-gray-700">Mahmut</span>
-          <span className="font-bold text-gray-700">Koyuncu</span>
+          <span className="text-sm text-gray-500 mb-1 uppercase">
+            {player.attributes?.team?.data?.attributes?.name}
+          </span>
+          <span className="font-bold text-gray-700">
+            {player.attributes?.first_name}
+          </span>
+          <span className="font-bold text-gray-700">
+            {player.attributes?.last_name}
+          </span>
         </div>
 
         <div className="flex flex-col ml-auto leading-6">
-          <span className="font-medium text-gray-500">AM</span>
+          <span className="font-medium text-gray-500">
+            {player.attributes?.position}
+          </span>
         </div>
       </div>
     </header>
   );
+}
+
+function age(birthday: string | undefined) {
+  if (birthday === undefined) return "";
+
+  var ageDifMs = Date.now() - new Date(birthday).getTime();
+  var ageDate = new Date(ageDifMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
