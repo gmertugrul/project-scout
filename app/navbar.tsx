@@ -8,13 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-
-const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Players", href: "#", current: false },
-  { name: "Activity", href: "#", current: false },
-  { name: "Trade", href: "#", current: false },
-];
+import { NavLink } from "./lib/controls";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -49,21 +43,7 @@ export function NavBar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-brand-800 text-white"
-                            : "text-gray-300 hover:bg-brand-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    <NavLinks />
                   </div>
                 </div>
               </div>
@@ -133,26 +113,41 @@ export function NavBar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-brand-800 text-white"
-                      : "text-gray-300 hover:bg-brand-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
+              <NavLinks />
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
+  );
+}
+
+function NavLinks() {
+  return (
+    <>
+      <NavLink
+        href="/players"
+        className="text-gray-300 hover:bg-brand-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+        activeClassName="bg-brand-800 text-white"
+      >
+        Players
+      </NavLink>
+
+      <NavLink
+        href="#"
+        className="text-gray-300 hover:bg-brand-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+        activeClassName="bg-brand-800 text-white"
+      >
+        Activity
+      </NavLink>
+
+      <NavLink
+        href="#"
+        className="text-gray-300 hover:bg-brand-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+        activeClassName="bg-brand-800 text-white"
+      >
+        Trade
+      </NavLink>
+    </>
   );
 }

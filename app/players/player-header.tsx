@@ -11,7 +11,7 @@ export function PlayerHeader() {
         alt="Player"
       />
 
-      <div className="flex w-full border-b border-brand-900 border-opacity-10 pb-2 !md:border-b-0">
+      <div className="flex w-full border-b border-brand-900 border-opacity-10 pb-2">
         <div className="flex flex-col leading-6 justify-between">
           <span className="text-sm text-gray-500 flex items-center">
             <Image

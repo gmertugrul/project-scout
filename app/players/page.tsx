@@ -1,9 +1,8 @@
-import Image from "next/image";
 import { PlayerHeader } from "./player-header";
 
 export default async function Players() {
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       <Player />
       <Player />
       <Player />
@@ -14,7 +13,7 @@ export default async function Players() {
 
 function Player() {
   return (
-    <div className="card flex flex-col !md:flex-row !md:justify-between">
+    <div className="card flex flex-col">
       <PlayerHeader />
 
       <main className="flex justify-between mt-4 px-2">
