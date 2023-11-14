@@ -6,7 +6,7 @@ export function PlayerHeader({ player }: { player: PlayerFragment }) {
     <header className="flex gap-x-4">
       <img
         className="rounded w-24 h-24"
-        src={`${process.env.NEXT_STRAPI_URL}${player.attributes?.photo.data?.attributes?.url}`}
+        src={`${player.attributes?.photo.data?.attributes?.url}`}
         alt="Player"
       />
 
