@@ -23,7 +23,7 @@ export function PlayerHeader({ player }: { player: PlayerFragment }) {
           <span className="text-sm text-gray-500 flex items-center">
             {country.length == 2 ? (
               <Image
-                src={`/images/flags/${country[0]}.svg`}
+                src={`/images/flags/${country[0].toLowerCase()}.svg`}
                 alt="Country flag"
                 className="w-4 h-3 mr-1"
                 width={40}
