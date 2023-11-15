@@ -110,6 +110,17 @@ fragment goalkeeperStats on ComponentStatsGoalkeeperStats {
   throwing
 }
 
+fragment timelineEntry on ComponentTimelineTimelineEntry {
+  id
+  text
+  posted_on
+  media {
+    data {
+      ...file
+    }
+  }
+}
+
 query players {
   players {
     data {
@@ -122,6 +133,20 @@ query player($id: ID!) {
   player(id: $id) {
     data {
       ...player
+    }
+  }
+}
+
+query playerTimeline($id: ID!) {
+  player(id: $id) {
+    data {
+      ...player
+
+      attributes {
+        timeline(sort: "posted_on:desc") {
+          ...timelineEntry
+        }
+      }
     }
   }
 }

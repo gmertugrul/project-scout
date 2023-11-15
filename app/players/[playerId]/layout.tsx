@@ -24,17 +24,20 @@ function Tabs({ playerId }: { playerId: string }) {
         className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
         activeClassName="bg-gray-200 font-medium"
         href={`/players/${playerId}`}
+        exact
       >
         Statistics
       </NavLink>
       <NavLink
         className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
+        activeClassName="bg-gray-200 font-medium"
         href={`/players/${playerId}/timeline`}
       >
         Timeline
       </NavLink>
       <NavLink
         className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
+        activeClassName="bg-gray-200 font-medium"
         href={`/players/${playerId}/overall`}
       >
         Overall

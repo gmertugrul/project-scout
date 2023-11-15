@@ -2,7 +2,7 @@
 
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export type NavLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -27,7 +27,7 @@ export function NavLink({
   const pathname = usePathname();
 
   const isActive = !exact
-    ? href.toString().startsWith(pathname)
+    ? pathname.startsWith(href.toString())
     : href.toString() == pathname;
 
   return (
@@ -42,4 +42,28 @@ export function NavLink({
       {children}
     </Link>
   );
+}
+
+export function DateTime({
+  date,
+  dateStyle = "medium",
+  timeStyle,
+}: {
+  date: string | Date;
+  dateStyle?: "full" | "long" | "medium" | "short" | undefined;
+  timeStyle?: "full" | "long" | "medium" | "short" | undefined;
+}) {
+  const [formatted, setFormatted] = useState<string>("Loading...");
+
+  useEffect(() => {
+    if (typeof date == "string") {
+      date = new Date(date);
+    }
+
+    setFormatted(
+      Intl.DateTimeFormat("en", { dateStyle, timeStyle }).format(date)
+    );
+  }, [date]);
+
+  return <>{formatted}</>;
 }

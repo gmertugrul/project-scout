@@ -252,6 +252,36 @@ export type ComponentStatsTechnicalStatsInput = {
   technique?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type ComponentTimelineTimelineEntry = {
+  __typename?: 'ComponentTimelineTimelineEntry';
+  id: Scalars['ID']['output'];
+  media?: Maybe<UploadFileRelationResponseCollection>;
+  posted_on: Scalars['DateTime']['output'];
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type ComponentTimelineTimelineEntryMediaArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentTimelineTimelineEntryFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentTimelineTimelineEntryFiltersInput>>>;
+  not?: InputMaybe<ComponentTimelineTimelineEntryFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentTimelineTimelineEntryFiltersInput>>>;
+  posted_on?: InputMaybe<DateTimeFilterInput>;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentTimelineTimelineEntryInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  media?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  posted_on?: InputMaybe<Scalars['DateTime']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DateFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
@@ -577,7 +607,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = ComponentStatsGoalkeeperStats | ComponentStatsMentalStats | ComponentStatsPhysicalStats | ComponentStatsTechnicalStats | I18NLocale | Player | Team | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = ComponentStatsGoalkeeperStats | ComponentStatsMentalStats | ComponentStatsPhysicalStats | ComponentStatsTechnicalStats | ComponentTimelineTimelineEntry | I18NLocale | Player | Team | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -921,7 +951,15 @@ export type Player = {
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   team?: Maybe<TeamEntityResponse>;
   technical_stats?: Maybe<ComponentStatsTechnicalStats>;
+  timeline?: Maybe<Array<Maybe<ComponentTimelineTimelineEntry>>>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type PlayerTimelineArgs = {
+  filters?: InputMaybe<ComponentTimelineTimelineEntryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type PlayerEntity = {
@@ -958,6 +996,7 @@ export type PlayerFiltersInput = {
   publishedAt?: InputMaybe<DateTimeFilterInput>;
   team?: InputMaybe<TeamFiltersInput>;
   technical_stats?: InputMaybe<ComponentStatsTechnicalStatsFiltersInput>;
+  timeline?: InputMaybe<ComponentTimelineTimelineEntryFiltersInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
@@ -974,6 +1013,7 @@ export type PlayerInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   team?: InputMaybe<Scalars['ID']['input']>;
   technical_stats?: InputMaybe<ComponentStatsTechnicalStatsInput>;
+  timeline?: InputMaybe<Array<InputMaybe<ComponentTimelineTimelineEntryInput>>>;
 };
 
 export enum PublicationState {
@@ -1544,6 +1584,8 @@ export type PhysicalStatsFragment = { __typename?: 'ComponentStatsPhysicalStats'
 
 export type GoalkeeperStatsFragment = { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null };
 
+export type TimelineEntryFragment = { __typename?: 'ComponentTimelineTimelineEntry', id: string, text?: string | null, posted_on: any, media?: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null }> } | null };
+
 export type PlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1555,6 +1597,13 @@ export type PlayerQueryVariables = Exact<{
 
 
 export type PlayerQuery = { __typename?: 'Query', player?: { __typename?: 'PlayerEntityResponse', data?: { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, country?: Enum_Player_Country | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, goalkeeper_stats?: { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null } | null } | null };
+
+export type PlayerTimelineQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type PlayerTimelineQuery = { __typename?: 'Query', player?: { __typename?: 'PlayerEntityResponse', data?: { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, country?: Enum_Player_Country | null, timeline?: Array<{ __typename?: 'ComponentTimelineTimelineEntry', id: string, text?: string | null, posted_on: any, media?: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null }> } | null } | null> | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, goalkeeper_stats?: { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null } | null } | null };
 
 export const TechnicalStatsFragmentDoc = gql`
     fragment technicalStats on ComponentStatsTechnicalStats {
@@ -1680,6 +1729,18 @@ ${PhysicalStatsFragmentDoc}
 ${GoalkeeperStatsFragmentDoc}
 ${TeamFragmentDoc}
 ${FileFragmentDoc}`;
+export const TimelineEntryFragmentDoc = gql`
+    fragment timelineEntry on ComponentTimelineTimelineEntry {
+  id
+  text
+  posted_on
+  media {
+    data {
+      ...file
+    }
+  }
+}
+    ${FileFragmentDoc}`;
 export const PlayersDocument = gql`
     query players {
   players {
@@ -1698,6 +1759,21 @@ export const PlayerDocument = gql`
   }
 }
     ${PlayerFragmentDoc}`;
+export const PlayerTimelineDocument = gql`
+    query playerTimeline($id: ID!) {
+  player(id: $id) {
+    data {
+      ...player
+      attributes {
+        timeline(sort: "posted_on:desc") {
+          ...timelineEntry
+        }
+      }
+    }
+  }
+}
+    ${PlayerFragmentDoc}
+${TimelineEntryFragmentDoc}`;
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
@@ -1706,6 +1782,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     player(variables: PlayerQueryVariables, options?: C): Promise<PlayerQuery> {
       return requester<PlayerQuery, PlayerQueryVariables>(PlayerDocument, variables, options) as Promise<PlayerQuery>;
+    },
+    playerTimeline(variables: PlayerTimelineQueryVariables, options?: C): Promise<PlayerTimelineQuery> {
+      return requester<PlayerTimelineQuery, PlayerTimelineQueryVariables>(PlayerTimelineDocument, variables, options) as Promise<PlayerTimelineQuery>;
     }
   };
 }
