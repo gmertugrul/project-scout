@@ -42,3 +42,19 @@ export const physicalStatNames = [
   "stamina",
   "strength",
 ];
+
+export const goalkeeperStatNames = [
+  "aerial_reach",
+  "command_of_area",
+  "communication",
+  "eccentricity",
+  "first_touch",
+  "handling",
+  "kicking",
+  "one_on_ones",
+  "passing",
+  "punching",
+  "reflexes",
+  "rushing_out",
+  "throwing",
+];

@@ -45,6 +45,60 @@ export type BooleanFilterInput = {
   startsWith?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type ComponentStatsGoalkeeperStats = {
+  __typename?: 'ComponentStatsGoalkeeperStats';
+  aerial_reach?: Maybe<Scalars['Int']['output']>;
+  command_of_area?: Maybe<Scalars['Int']['output']>;
+  communication?: Maybe<Scalars['Int']['output']>;
+  eccentricity?: Maybe<Scalars['Int']['output']>;
+  first_touch?: Maybe<Scalars['Int']['output']>;
+  handling?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  kicking?: Maybe<Scalars['Int']['output']>;
+  one_on_ones?: Maybe<Scalars['Int']['output']>;
+  passing?: Maybe<Scalars['Int']['output']>;
+  punching?: Maybe<Scalars['Int']['output']>;
+  reflexes?: Maybe<Scalars['Int']['output']>;
+  rushing_out?: Maybe<Scalars['Int']['output']>;
+  throwing?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ComponentStatsGoalkeeperStatsFiltersInput = {
+  aerial_reach?: InputMaybe<IntFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<ComponentStatsGoalkeeperStatsFiltersInput>>>;
+  command_of_area?: InputMaybe<IntFilterInput>;
+  communication?: InputMaybe<IntFilterInput>;
+  eccentricity?: InputMaybe<IntFilterInput>;
+  first_touch?: InputMaybe<IntFilterInput>;
+  handling?: InputMaybe<IntFilterInput>;
+  kicking?: InputMaybe<IntFilterInput>;
+  not?: InputMaybe<ComponentStatsGoalkeeperStatsFiltersInput>;
+  one_on_ones?: InputMaybe<IntFilterInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentStatsGoalkeeperStatsFiltersInput>>>;
+  passing?: InputMaybe<IntFilterInput>;
+  punching?: InputMaybe<IntFilterInput>;
+  reflexes?: InputMaybe<IntFilterInput>;
+  rushing_out?: InputMaybe<IntFilterInput>;
+  throwing?: InputMaybe<IntFilterInput>;
+};
+
+export type ComponentStatsGoalkeeperStatsInput = {
+  aerial_reach?: InputMaybe<Scalars['Int']['input']>;
+  command_of_area?: InputMaybe<Scalars['Int']['input']>;
+  communication?: InputMaybe<Scalars['Int']['input']>;
+  eccentricity?: InputMaybe<Scalars['Int']['input']>;
+  first_touch?: InputMaybe<Scalars['Int']['input']>;
+  handling?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  kicking?: InputMaybe<Scalars['Int']['input']>;
+  one_on_ones?: InputMaybe<Scalars['Int']['input']>;
+  passing?: InputMaybe<Scalars['Int']['input']>;
+  punching?: InputMaybe<Scalars['Int']['input']>;
+  reflexes?: InputMaybe<Scalars['Int']['input']>;
+  rushing_out?: InputMaybe<Scalars['Int']['input']>;
+  throwing?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type ComponentStatsMentalStats = {
   __typename?: 'ComponentStatsMentalStats';
   aggression?: Maybe<Scalars['Int']['output']>;
@@ -198,50 +252,6 @@ export type ComponentStatsTechnicalStatsInput = {
   technique?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Country = {
-  __typename?: 'Country';
-  code?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type CountryEntity = {
-  __typename?: 'CountryEntity';
-  attributes?: Maybe<Country>;
-  id?: Maybe<Scalars['ID']['output']>;
-};
-
-export type CountryEntityResponse = {
-  __typename?: 'CountryEntityResponse';
-  data?: Maybe<CountryEntity>;
-};
-
-export type CountryEntityResponseCollection = {
-  __typename?: 'CountryEntityResponseCollection';
-  data: Array<CountryEntity>;
-  meta: ResponseCollectionMeta;
-};
-
-export type CountryFiltersInput = {
-  and?: InputMaybe<Array<InputMaybe<CountryFiltersInput>>>;
-  code?: InputMaybe<StringFilterInput>;
-  createdAt?: InputMaybe<DateTimeFilterInput>;
-  id?: InputMaybe<IdFilterInput>;
-  name?: InputMaybe<StringFilterInput>;
-  not?: InputMaybe<CountryFiltersInput>;
-  or?: InputMaybe<Array<InputMaybe<CountryFiltersInput>>>;
-  publishedAt?: InputMaybe<DateTimeFilterInput>;
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
-};
-
-export type CountryInput = {
-  code?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
 export type DateFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
@@ -292,6 +302,250 @@ export type DateTimeFilterInput = {
   startsWith?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export enum Enum_Player_Country {
+  AdAndorrA = 'AD_AndorrA',
+  AeUnitedArabEmirates = 'AE_United_Arab_Emirates',
+  AfAfghanistan = 'AF_Afghanistan',
+  AgAntiguaAndBarbuda = 'AG_Antigua_and_Barbuda',
+  AiAnguilla = 'AI_Anguilla',
+  AlAlbania = 'AL_Albania',
+  AmArmenia = 'AM_Armenia',
+  AoAngola = 'AO_Angola',
+  AqAntarctica = 'AQ_Antarctica',
+  ArArgentina = 'AR_Argentina',
+  AsAmericanSamoa = 'AS_American_Samoa',
+  AtAustria = 'AT_Austria',
+  AuAustralia = 'AU_Australia',
+  AwAruba = 'AW_Aruba',
+  AxAlandIslands = 'AX_Aland_Islands',
+  AzAzerbaijan = 'AZ_Azerbaijan',
+  BaBosniaAndHerzegovina = 'BA_Bosnia_and_Herzegovina',
+  BbBarbados = 'BB_Barbados',
+  BdBangladesh = 'BD_Bangladesh',
+  BeBelgium = 'BE_Belgium',
+  BfBurkinaFaso = 'BF_Burkina_Faso',
+  BgBulgaria = 'BG_Bulgaria',
+  BhBahrain = 'BH_Bahrain',
+  BiBurundi = 'BI_Burundi',
+  BjBenin = 'BJ_Benin',
+  BmBermuda = 'BM_Bermuda',
+  BnBruneiDarussalam = 'BN_Brunei_Darussalam',
+  BoBolivia = 'BO_Bolivia',
+  BrBrazil = 'BR_Brazil',
+  BsBahamas = 'BS_Bahamas',
+  BtBhutan = 'BT_Bhutan',
+  BvBouvetIsland = 'BV_Bouvet_Island',
+  BwBotswana = 'BW_Botswana',
+  ByBelarus = 'BY_Belarus',
+  BzBelize = 'BZ_Belize',
+  CaCanada = 'CA_Canada',
+  CcCocosKeelingIslands = 'CC_Cocos_Keeling_Islands',
+  CdCongoTheDemocraticRepublicOfThe = 'CD_Congo_The_Democratic_Republic_of_the',
+  CfCentralAfricanRepublic = 'CF_Central_African_Republic',
+  CgCongo = 'CG_Congo',
+  ChSwitzerland = 'CH_Switzerland',
+  CiCoteDIvoire = 'CI_Cote_D_Ivoire',
+  CkCookIslands = 'CK_Cook_Islands',
+  ClChile = 'CL_Chile',
+  CmCameroon = 'CM_Cameroon',
+  CnChina = 'CN_China',
+  CoColombia = 'CO_Colombia',
+  CrCostaRica = 'CR_Costa_Rica',
+  CuCuba = 'CU_Cuba',
+  CvCapeVerde = 'CV_Cape_Verde',
+  CxChristmasIsland = 'CX_Christmas_Island',
+  CyCyprus = 'CY_Cyprus',
+  CzCzechRepublic = 'CZ_Czech_Republic',
+  DeGermany = 'DE_Germany',
+  DjDjibouti = 'DJ_Djibouti',
+  DkDenmark = 'DK_Denmark',
+  DmDominica = 'DM_Dominica',
+  DoDominicanRepublic = 'DO_Dominican_Republic',
+  DzAlgeria = 'DZ_Algeria',
+  EcEcuador = 'EC_Ecuador',
+  EeEstonia = 'EE_Estonia',
+  EgEgypt = 'EG_Egypt',
+  EhWesternSahara = 'EH_Western_Sahara',
+  ErEritrea = 'ER_Eritrea',
+  EsSpain = 'ES_Spain',
+  EtEthiopia = 'ET_Ethiopia',
+  FiFinland = 'FI_Finland',
+  FjFiji = 'FJ_Fiji',
+  FkFalklandIslandsMalvinas = 'FK_Falkland_Islands_Malvinas',
+  FmMicronesiaFederatedStatesOf = 'FM_Micronesia_Federated_States_of',
+  FoFaroeIslands = 'FO_Faroe_Islands',
+  FrFrance = 'FR_France',
+  GaGabon = 'GA_Gabon',
+  GbUnitedKingdom = 'GB_United_Kingdom',
+  GdGrenada = 'GD_Grenada',
+  GeGeorgia = 'GE_Georgia',
+  GfFrenchGuiana = 'GF_French_Guiana',
+  GgGuernsey = 'GG_Guernsey',
+  GhGhana = 'GH_Ghana',
+  GiGibraltar = 'GI_Gibraltar',
+  GlGreenland = 'GL_Greenland',
+  GmGambia = 'GM_Gambia',
+  GnGuinea = 'GN_Guinea',
+  GpGuadeloupe = 'GP_Guadeloupe',
+  GqEquatorialGuinea = 'GQ_Equatorial_Guinea',
+  GrGreece = 'GR_Greece',
+  GsSouthGeorgiaAndTheSouthSandwichIslands = 'GS_South_Georgia_and_the_South_Sandwich_Islands',
+  GtGuatemala = 'GT_Guatemala',
+  GuGuam = 'GU_Guam',
+  GwGuineaBissau = 'GW_Guinea_Bissau',
+  GyGuyana = 'GY_Guyana',
+  HkHongKong = 'HK_Hong_Kong',
+  HmHeardIslandAndMcdonaldIslands = 'HM_Heard_Island_and_Mcdonald_Islands',
+  HnHonduras = 'HN_Honduras',
+  HrCroatia = 'HR_Croatia',
+  HtHaiti = 'HT_Haiti',
+  HuHungary = 'HU_Hungary',
+  IdIndonesia = 'ID_Indonesia',
+  IeIreland = 'IE_Ireland',
+  IlIsrael = 'IL_Israel',
+  ImIsleOfMan = 'IM_Isle_of_Man',
+  InIndia = 'IN_India',
+  IoBritishIndianOceanTerritory = 'IO_British_Indian_Ocean_Territory',
+  IqIraq = 'IQ_Iraq',
+  IrIranIslamicRepublicOf = 'IR_Iran_Islamic_Republic_Of',
+  IsIceland = 'IS_Iceland',
+  ItItaly = 'IT_Italy',
+  JeJersey = 'JE_Jersey',
+  JmJamaica = 'JM_Jamaica',
+  JoJordan = 'JO_Jordan',
+  JpJapan = 'JP_Japan',
+  KeKenya = 'KE_Kenya',
+  KgKyrgyzstan = 'KG_Kyrgyzstan',
+  KhCambodia = 'KH_Cambodia',
+  KiKiribati = 'KI_Kiribati',
+  KmComoros = 'KM_Comoros',
+  KnSaintKittsAndNevis = 'KN_Saint_Kitts_and_Nevis',
+  KpKoreaDemocraticPeopleSRepublicOf = 'KP_Korea_Democratic_People_S_Republic_of',
+  KrKoreaRepublicOf = 'KR_Korea_Republic_of',
+  KwKuwait = 'KW_Kuwait',
+  KyCaymanIslands = 'KY_Cayman_Islands',
+  KzKazakhstan = 'KZ_Kazakhstan',
+  LaLaoPeopleSDemocraticRepublic = 'LA_Lao_People_S_Democratic_Republic',
+  LbLebanon = 'LB_Lebanon',
+  LcSaintLucia = 'LC_Saint_Lucia',
+  LiLiechtenstein = 'LI_Liechtenstein',
+  LkSriLanka = 'LK_Sri_Lanka',
+  LrLiberia = 'LR_Liberia',
+  LsLesotho = 'LS_Lesotho',
+  LtLithuania = 'LT_Lithuania',
+  LuLuxembourg = 'LU_Luxembourg',
+  LvLatvia = 'LV_Latvia',
+  LyLibyanArabJamahiriya = 'LY_Libyan_Arab_Jamahiriya',
+  MaMorocco = 'MA_Morocco',
+  McMonaco = 'MC_Monaco',
+  MdMoldovaRepublicOf = 'MD_Moldova_Republic_of',
+  MgMadagascar = 'MG_Madagascar',
+  MhMarshallIslands = 'MH_Marshall_Islands',
+  MkMacedoniaTheFormerYugoslavRepublicOf = 'MK_Macedonia_The_Former_Yugoslav_Republic_of',
+  MlMali = 'ML_Mali',
+  MmMyanmar = 'MM_Myanmar',
+  MnMongolia = 'MN_Mongolia',
+  MoMacao = 'MO_Macao',
+  MpNorthernMarianaIslands = 'MP_Northern_Mariana_Islands',
+  MqMartinique = 'MQ_Martinique',
+  MrMauritania = 'MR_Mauritania',
+  MsMontserrat = 'MS_Montserrat',
+  MtMalta = 'MT_Malta',
+  MuMauritius = 'MU_Mauritius',
+  MvMaldives = 'MV_Maldives',
+  MwMalawi = 'MW_Malawi',
+  MxMexico = 'MX_Mexico',
+  MyMalaysia = 'MY_Malaysia',
+  MzMozambique = 'MZ_Mozambique',
+  NaNamibia = 'NA_Namibia',
+  NcNewCaledonia = 'NC_New_Caledonia',
+  NeNiger = 'NE_Niger',
+  NfNorfolkIsland = 'NF_Norfolk_Island',
+  NgNigeria = 'NG_Nigeria',
+  NiNicaragua = 'NI_Nicaragua',
+  NlNetherlands = 'NL_Netherlands',
+  NoNorway = 'NO_Norway',
+  NpNepal = 'NP_Nepal',
+  NrNauru = 'NR_Nauru',
+  NuNiue = 'NU_Niue',
+  NzNewZealand = 'NZ_New_Zealand',
+  OmOman = 'OM_Oman',
+  PaPanama = 'PA_Panama',
+  PePeru = 'PE_Peru',
+  PfFrenchPolynesia = 'PF_French_Polynesia',
+  PgPapuaNewGuinea = 'PG_Papua_New_Guinea',
+  PhPhilippines = 'PH_Philippines',
+  PkPakistan = 'PK_Pakistan',
+  PlPoland = 'PL_Poland',
+  PmSaintPierreAndMiquelon = 'PM_Saint_Pierre_and_Miquelon',
+  PnPitcairn = 'PN_Pitcairn',
+  PrPuertoRico = 'PR_Puerto_Rico',
+  PsPalestinianTerritoryOccupied = 'PS_Palestinian_Territory_Occupied',
+  PtPortugal = 'PT_Portugal',
+  PwPalau = 'PW_Palau',
+  PyParaguay = 'PY_Paraguay',
+  QaQatar = 'QA_Qatar',
+  ReReunion = 'RE_Reunion',
+  RoRomania = 'RO_Romania',
+  RuRussianFederation = 'RU_Russian_Federation',
+  RwRwanda = 'RW_RWANDA',
+  SaSaudiArabia = 'SA_Saudi_Arabia',
+  SbSolomonIslands = 'SB_Solomon_Islands',
+  ScSeychelles = 'SC_Seychelles',
+  SdSudan = 'SD_Sudan',
+  SeSweden = 'SE_Sweden',
+  SgSingapore = 'SG_Singapore',
+  ShSaintHelena = 'SH_Saint_Helena',
+  SiSlovenia = 'SI_Slovenia',
+  SjSvalbardAndJanMayen = 'SJ_Svalbard_and_Jan_Mayen',
+  SkSlovakia = 'SK_Slovakia',
+  SlSierraLeone = 'SL_Sierra_Leone',
+  SmSanMarino = 'SM_San_Marino',
+  SnSenegal = 'SN_Senegal',
+  SoSomalia = 'SO_Somalia',
+  SrSuriname = 'SR_Suriname',
+  StSaoTomeAndPrincipe = 'ST_Sao_Tome_and_Principe',
+  SvElSalvador = 'SV_El_Salvador',
+  SySyrianArabRepublic = 'SY_Syrian_Arab_Republic',
+  SzSwaziland = 'SZ_Swaziland',
+  TcTurksAndCaicosIslands = 'TC_Turks_and_Caicos_Islands',
+  TdChad = 'TD_Chad',
+  TfFrenchSouthernTerritories = 'TF_French_Southern_Territories',
+  TgTogo = 'TG_Togo',
+  ThThailand = 'TH_Thailand',
+  TjTajikistan = 'TJ_Tajikistan',
+  TkTokelau = 'TK_Tokelau',
+  TlTimorLeste = 'TL_Timor_Leste',
+  TmTurkmenistan = 'TM_Turkmenistan',
+  TnTunisia = 'TN_Tunisia',
+  ToTonga = 'TO_Tonga',
+  TrTurkey = 'TR_Turkey',
+  TtTrinidadAndTobago = 'TT_Trinidad_and_Tobago',
+  TvTuvalu = 'TV_Tuvalu',
+  TwTaiwanProvinceOfChina = 'TW_Taiwan_Province_of_China',
+  TzTanzaniaUnitedRepublicOf = 'TZ_Tanzania_United_Republic_of',
+  UaUkraine = 'UA_Ukraine',
+  UgUganda = 'UG_Uganda',
+  UmUnitedStatesMinorOutlyingIslands = 'UM_United_States_Minor_Outlying_Islands',
+  UsUnitedStates = 'US_United_States',
+  UyUruguay = 'UY_Uruguay',
+  UzUzbekistan = 'UZ_Uzbekistan',
+  VaHolySeeVaticanCityState = 'VA_Holy_See_Vatican_City_State',
+  VcSaintVincentAndTheGrenadines = 'VC_Saint_Vincent_and_the_Grenadines',
+  VeVenezuela = 'VE_Venezuela',
+  VgVirginIslandsBritish = 'VG_Virgin_Islands_British',
+  ViVirginIslandsUS = 'VI_Virgin_Islands_U_S',
+  VnVietNam = 'VN_Viet_Nam',
+  VuVanuatu = 'VU_Vanuatu',
+  WfWallisAndFutuna = 'WF_Wallis_and_Futuna',
+  WsSamoa = 'WS_Samoa',
+  YeYemen = 'YE_Yemen',
+  YtMayotte = 'YT_Mayotte',
+  ZaSouthAfrica = 'ZA_South_Africa',
+  ZmZambia = 'ZM_Zambia',
+  ZwZimbabwe = 'ZW_Zimbabwe'
+}
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -323,7 +577,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = ComponentStatsMentalStats | ComponentStatsPhysicalStats | ComponentStatsTechnicalStats | Country | I18NLocale | Player | Team | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = ComponentStatsGoalkeeperStats | ComponentStatsMentalStats | ComponentStatsPhysicalStats | ComponentStatsTechnicalStats | I18NLocale | Player | Team | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -440,7 +694,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
-  createCountry?: Maybe<CountryEntityResponse>;
   createPlayer?: Maybe<PlayerEntityResponse>;
   createTeam?: Maybe<TeamEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -449,7 +702,6 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
-  deleteCountry?: Maybe<CountryEntityResponse>;
   deletePlayer?: Maybe<PlayerEntityResponse>;
   deleteTeam?: Maybe<TeamEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -469,7 +721,6 @@ export type Mutation = {
   removeFile?: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
-  updateCountry?: Maybe<CountryEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updatePlayer?: Maybe<PlayerEntityResponse>;
   updateTeam?: Maybe<TeamEntityResponse>;
@@ -487,11 +738,6 @@ export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
-};
-
-
-export type MutationCreateCountryArgs = {
-  data: CountryInput;
 };
 
 
@@ -522,11 +768,6 @@ export type MutationCreateUsersPermissionsRoleArgs = {
 
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
-};
-
-
-export type MutationDeleteCountryArgs = {
-  id: Scalars['ID']['input'];
 };
 
 
@@ -600,12 +841,6 @@ export type MutationResetPasswordArgs = {
 };
 
 
-export type MutationUpdateCountryArgs = {
-  data: CountryInput;
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
@@ -674,9 +909,10 @@ export type PaginationArg = {
 export type Player = {
   __typename?: 'Player';
   birthdate: Scalars['Date']['output'];
-  country?: Maybe<CountryEntityResponse>;
+  country?: Maybe<Enum_Player_Country>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   first_name: Scalars['String']['output'];
+  goalkeeper_stats?: Maybe<ComponentStatsGoalkeeperStats>;
   last_name: Scalars['String']['output'];
   mental_stats?: Maybe<ComponentStatsMentalStats>;
   photo: UploadFileEntityResponse;
@@ -708,9 +944,10 @@ export type PlayerEntityResponseCollection = {
 export type PlayerFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<PlayerFiltersInput>>>;
   birthdate?: InputMaybe<DateFilterInput>;
-  country?: InputMaybe<CountryFiltersInput>;
+  country?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   first_name?: InputMaybe<StringFilterInput>;
+  goalkeeper_stats?: InputMaybe<ComponentStatsGoalkeeperStatsFiltersInput>;
   id?: InputMaybe<IdFilterInput>;
   last_name?: InputMaybe<StringFilterInput>;
   mental_stats?: InputMaybe<ComponentStatsMentalStatsFiltersInput>;
@@ -726,8 +963,9 @@ export type PlayerFiltersInput = {
 
 export type PlayerInput = {
   birthdate?: InputMaybe<Scalars['Date']['input']>;
-  country?: InputMaybe<Scalars['ID']['input']>;
+  country?: InputMaybe<Enum_Player_Country>;
   first_name?: InputMaybe<Scalars['String']['input']>;
+  goalkeeper_stats?: InputMaybe<ComponentStatsGoalkeeperStatsInput>;
   last_name?: InputMaybe<Scalars['String']['input']>;
   mental_stats?: InputMaybe<ComponentStatsMentalStatsInput>;
   photo?: InputMaybe<Scalars['ID']['input']>;
@@ -745,8 +983,6 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
-  countries?: Maybe<CountryEntityResponseCollection>;
-  country?: Maybe<CountryEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
@@ -762,19 +998,6 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
-};
-
-
-export type QueryCountriesArgs = {
-  filters?: InputMaybe<CountryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type QueryCountryArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -1307,11 +1530,9 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type PlayerFragment = { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, country?: { __typename?: 'CountryEntityResponse', data?: { __typename: 'CountryEntity', id?: string | null, attributes?: { __typename?: 'Country', code?: string | null, name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null };
+export type PlayerFragment = { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, country?: Enum_Player_Country | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, goalkeeper_stats?: { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null };
 
 export type FileFragment = { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null };
-
-export type CountryFragment = { __typename: 'CountryEntity', id?: string | null, attributes?: { __typename?: 'Country', code?: string | null, name?: string | null } | null };
 
 export type TeamFragment = { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null };
 
@@ -1321,17 +1542,19 @@ export type MentalStatsFragment = { __typename?: 'ComponentStatsMentalStats', ag
 
 export type PhysicalStatsFragment = { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null };
 
+export type GoalkeeperStatsFragment = { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null };
+
 export type PlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PlayersQuery = { __typename?: 'Query', players?: { __typename?: 'PlayerEntityResponseCollection', data: Array<{ __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, country?: { __typename?: 'CountryEntityResponse', data?: { __typename: 'CountryEntity', id?: string | null, attributes?: { __typename?: 'Country', code?: string | null, name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null }> } | null };
+export type PlayersQuery = { __typename?: 'Query', players?: { __typename?: 'PlayerEntityResponseCollection', data: Array<{ __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, country?: Enum_Player_Country | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, goalkeeper_stats?: { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null }> } | null };
 
 export type PlayerQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type PlayerQuery = { __typename?: 'Query', player?: { __typename?: 'PlayerEntityResponse', data?: { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, country?: { __typename?: 'CountryEntityResponse', data?: { __typename: 'CountryEntity', id?: string | null, attributes?: { __typename?: 'Country', code?: string | null, name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null } | null } | null };
+export type PlayerQuery = { __typename?: 'Query', player?: { __typename?: 'PlayerEntityResponse', data?: { __typename: 'PlayerEntity', id?: string | null, attributes?: { __typename?: 'Player', first_name: string, last_name: string, birthdate: any, position?: string | null, country?: Enum_Player_Country | null, technical_stats?: { __typename?: 'ComponentStatsTechnicalStats', corners?: number | null, crossing?: number | null, dribbling?: number | null, finishing?: number | null, first_touch?: number | null, free_kick_taking?: number | null, heading?: number | null, long_shots?: number | null, long_throws?: number | null, marking?: number | null, passing?: number | null, penalty_taking?: number | null, tackling?: number | null, technique?: number | null } | null, mental_stats?: { __typename?: 'ComponentStatsMentalStats', aggression?: number | null, anticipation?: number | null, bravery?: number | null, composure?: number | null, concentration?: number | null, decisions?: number | null, determination?: number | null, flair?: number | null, leadership?: number | null, off_the_ball?: number | null, positioning?: number | null, teamwork?: number | null, vision?: number | null, work_rate?: number | null } | null, physical_stats?: { __typename?: 'ComponentStatsPhysicalStats', acceleration?: number | null, agility?: number | null, balance?: number | null, jumping_reach?: number | null, natural_fitness?: number | null, pace?: number | null, stamina?: number | null, strength?: number | null } | null, goalkeeper_stats?: { __typename?: 'ComponentStatsGoalkeeperStats', aerial_reach?: number | null, command_of_area?: number | null, communication?: number | null, eccentricity?: number | null, first_touch?: number | null, handling?: number | null, kicking?: number | null, one_on_ones?: number | null, passing?: number | null, punching?: number | null, reflexes?: number | null, rushing_out?: number | null, throwing?: number | null } | null, team?: { __typename?: 'TeamEntityResponse', data?: { __typename: 'TeamEntity', id?: string | null, attributes?: { __typename?: 'Team', name?: string | null } | null } | null } | null, photo: { __typename?: 'UploadFileEntityResponse', data?: { __typename: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string } | null } | null } } | null } | null } | null };
 
 export const TechnicalStatsFragmentDoc = gql`
     fragment technicalStats on ComponentStatsTechnicalStats {
@@ -1381,21 +1604,28 @@ export const PhysicalStatsFragmentDoc = gql`
   strength
 }
     `;
+export const GoalkeeperStatsFragmentDoc = gql`
+    fragment goalkeeperStats on ComponentStatsGoalkeeperStats {
+  aerial_reach
+  command_of_area
+  communication
+  eccentricity
+  first_touch
+  handling
+  kicking
+  one_on_ones
+  passing
+  punching
+  reflexes
+  rushing_out
+  throwing
+}
+    `;
 export const TeamFragmentDoc = gql`
     fragment team on TeamEntity {
   __typename
   id
   attributes {
-    name
-  }
-}
-    `;
-export const CountryFragmentDoc = gql`
-    fragment country on CountryEntity {
-  __typename
-  id
-  attributes {
-    code
     name
   }
 }
@@ -1419,6 +1649,7 @@ export const PlayerFragmentDoc = gql`
     last_name
     birthdate
     position
+    country
     technical_stats {
       ...technicalStats
     }
@@ -1428,14 +1659,12 @@ export const PlayerFragmentDoc = gql`
     physical_stats {
       ...physicalStats
     }
+    goalkeeper_stats {
+      ...goalkeeperStats
+    }
     team {
       data {
         ...team
-      }
-    }
-    country {
-      data {
-        ...country
       }
     }
     photo {
@@ -1448,8 +1677,8 @@ export const PlayerFragmentDoc = gql`
     ${TechnicalStatsFragmentDoc}
 ${MentalStatsFragmentDoc}
 ${PhysicalStatsFragmentDoc}
+${GoalkeeperStatsFragmentDoc}
 ${TeamFragmentDoc}
-${CountryFragmentDoc}
 ${FileFragmentDoc}`;
 export const PlayersDocument = gql`
     query players {

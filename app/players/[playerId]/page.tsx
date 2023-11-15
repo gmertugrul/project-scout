@@ -4,6 +4,7 @@ import { getGQL } from "@/app/lib/gql";
 import { notFound } from "next/navigation";
 import { PlayerFragment } from "@/app/lib/gql-sdk";
 import {
+  goalkeeperStatNames,
   mentalStatNames,
   physicalStatNames,
   technicalStatNames,
@@ -34,6 +35,18 @@ function Stats({ player }: { player: PlayerFragment }) {
   return (
     <div className="mt-4">
       <div className="flex gap-x-4 overflow-auto pb-4">
+        {player.attributes?.goalkeeper_stats ? (
+          <div className="flex flex-col">
+            <header className="text-xs text-gray-500 px-2 mb-2">
+              Goalkeeper
+            </header>
+            <StatsColumn
+              stats={player.attributes.goalkeeper_stats as any}
+              names={goalkeeperStatNames}
+            />
+          </div>
+        ) : null}
+
         {player.attributes?.technical_stats ? (
           <div className="flex flex-col">
             <header className="text-xs text-gray-500 px-2 mb-2">
@@ -81,9 +94,11 @@ function StatsColumn({
 }) {
   return (
     <div className="flex flex-col gap-y-0.5">
-      {names.map((name) => (
-        <Stat name={name} value={stats[name]} key={name} />
-      ))}
+      {names
+        .filter((name) => stats[name] !== null)
+        .map((name) => (
+          <Stat name={name} value={stats[name]} key={name} />
+        ))}
     </div>
   );
 }

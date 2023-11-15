@@ -6,6 +6,7 @@ fragment player on PlayerEntity {
     last_name
     birthdate
     position
+    country
     technical_stats {
       ...technicalStats
     }
@@ -15,14 +16,12 @@ fragment player on PlayerEntity {
     physical_stats {
       ...physicalStats
     }
+    goalkeeper_stats {
+      ...goalkeeperStats
+    }
     team {
       data {
         ...team
-      }
-    }
-    country {
-      data {
-        ...country
       }
     }
     photo {
@@ -39,15 +38,6 @@ fragment file on UploadFileEntity {
   attributes {
     name
     url
-  }
-}
-
-fragment country on CountryEntity {
-  __typename
-  id
-  attributes {
-    code
-    name
   }
 }
 
@@ -102,6 +92,22 @@ fragment physicalStats on ComponentStatsPhysicalStats {
   pace
   stamina
   strength
+}
+
+fragment goalkeeperStats on ComponentStatsGoalkeeperStats {
+  aerial_reach
+  command_of_area
+  communication
+  eccentricity
+  first_touch
+  handling
+  kicking
+  one_on_ones
+  passing
+  punching
+  reflexes
+  rushing_out
+  throwing
 }
 
 query players {
