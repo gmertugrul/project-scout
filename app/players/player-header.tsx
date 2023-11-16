@@ -30,9 +30,9 @@ export function PlayerHeader({ player }: { player: PlayerFragment }) {
                 height={30}
               />
             ) : null}
-            {country[0]}
+            {!!country[0] ? country[0] : ""}
             {country[0] && age ? ", " : null}
-            {age}
+            {!!age ? age : ""}
           </span>
           <span className="text-sm text-gray-500 mb-1 uppercase">
             {player.attributes?.team?.data?.attributes?.name}
