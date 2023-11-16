@@ -112,13 +112,8 @@ fragment goalkeeperStats on ComponentStatsGoalkeeperStats {
 
 fragment timelineEntry on ComponentTimelineTimelineEntry {
   id
-  text
+  content
   posted_on
-  media {
-    data {
-      ...file
-    }
-  }
 }
 
 query players {

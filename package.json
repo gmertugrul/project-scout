@@ -12,12 +12,11 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@strapi/blocks-react-renderer": "^1.0.0-beta.0",
     "graphql": "^16.8.1",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18",
-    "remark": "^15.0.1",
-    "remark-html": "^16.0.1"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
