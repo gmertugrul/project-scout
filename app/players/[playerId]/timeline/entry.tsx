@@ -23,7 +23,7 @@ export function Entry({ entry }: { entry: TimelineEntryFragment }) {
               />
             ),
           }}
-          content={entry.content}
+          content={entry.content || []}
         />
       </div>
     </div>
