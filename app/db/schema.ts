@@ -12,6 +12,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
+export * from "./schema.auth"
+
 export const teams = pgTable("teams", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull(),

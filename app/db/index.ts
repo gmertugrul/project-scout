@@ -9,7 +9,7 @@ const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
 });
 
-const db = localDrizzle(pool, { schema, logger: true });
+export const db = localDrizzle(pool, { schema, logger: true });
 
 let prm: Promise<typeof db>;
 

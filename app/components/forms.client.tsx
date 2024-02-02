@@ -8,7 +8,7 @@ export function SubmitButton({ children }: { children: ReactNode }) {
 
   return (
     <button className="btn-primary" type="submit" disabled={pending}>
-      Save
+      {children}
     </button>
   );
 }
