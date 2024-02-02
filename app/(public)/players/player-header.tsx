@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PlayerFragment } from "../lib/gql-sdk";
+import { PlayerFragment } from "../../lib/gql-sdk";
 
 export function PlayerHeader({ player }: { player: PlayerFragment }) {
   var urlprefix =

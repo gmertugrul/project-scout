@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getGQL } from "../lib/gql";
-import { PlayerEntity, PlayerFragment } from "../lib/gql-sdk";
+import { getGQL } from "../../lib/gql";
+import { PlayerEntity, PlayerFragment } from "../../lib/gql-sdk";
 import { PlayerHeader } from "./player-header";
 
 export default async function Players() {

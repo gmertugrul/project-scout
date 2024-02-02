@@ -1,0 +1,567 @@
+{
+  "id": "9662fdaa-c7c1-42ef-819c-ccf56b98cb05",
+  "prevId": "97328e4a-0d26-4a46-b5d1-789020d546f8",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "countries": {
+      "name": "countries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "char(2)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "countries_name_index": {
+          "name": "countries_name_index",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "goalkeeper_stats": {
+      "name": "goalkeeper_stats",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "aerial_reach": {
+          "name": "aerial_reach",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "command_of_area": {
+          "name": "command_of_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "communication": {
+          "name": "communication",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eccentricity": {
+          "name": "eccentricity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_touch": {
+          "name": "first_touch",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "handling": {
+          "name": "handling",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kicking": {
+          "name": "kicking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "one_on_ones": {
+          "name": "one_on_ones",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "passing": {
+          "name": "passing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "punching": {
+          "name": "punching",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reflexes": {
+          "name": "reflexes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rushing_out": {
+          "name": "rushing_out",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "throwing": {
+          "name": "throwing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "goalkeeper_stats_player_id_players_id_fk": {
+          "name": "goalkeeper_stats_player_id_players_id_fk",
+          "tableFrom": "goalkeeper_stats",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "mental_stats": {
+      "name": "mental_stats",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "aggression": {
+          "name": "aggression",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "anticipation": {
+          "name": "anticipation",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bravery": {
+          "name": "bravery",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "composure": {
+          "name": "composure",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "concentration": {
+          "name": "concentration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "decisions": {
+          "name": "decisions",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "determination": {
+          "name": "determination",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "flair": {
+          "name": "flair",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leadership": {
+          "name": "leadership",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "off_the_ball": {
+          "name": "off_the_ball",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "positioning": {
+          "name": "positioning",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "teamwork": {
+          "name": "teamwork",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vision": {
+          "name": "vision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "work_rate": {
+          "name": "work_rate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mental_stats_player_id_players_id_fk": {
+          "name": "mental_stats_player_id_players_id_fk",
+          "tableFrom": "mental_stats",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "physical_stats": {
+      "name": "physical_stats",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "acceleration": {
+          "name": "acceleration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "agility": {
+          "name": "agility",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "balance": {
+          "name": "balance",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jumping_reach": {
+          "name": "jumping_reach",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "natural_fitness": {
+          "name": "natural_fitness",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pace": {
+          "name": "pace",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stamina": {
+          "name": "stamina",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "strength": {
+          "name": "strength",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "physical_stats_player_id_players_id_fk": {
+          "name": "physical_stats_player_id_players_id_fk",
+          "tableFrom": "physical_stats",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "birth_date": {
+          "name": "birth_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country_id": {
+          "name": "country_id",
+          "type": "char(2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_id": {
+          "name": "team_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "players_country_id_countries_id_fk": {
+          "name": "players_country_id_countries_id_fk",
+          "tableFrom": "players",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "country_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "players_team_id_teams_id_fk": {
+          "name": "players_team_id_teams_id_fk",
+          "tableFrom": "players",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "teams": {
+      "name": "teams",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "technical_stats": {
+      "name": "technical_stats",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "corners": {
+          "name": "corners",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crossing": {
+          "name": "crossing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dribbling": {
+          "name": "dribbling",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "finishing": {
+          "name": "finishing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_touch": {
+          "name": "first_touch",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "free_kick_taking": {
+          "name": "free_kick_taking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "heading": {
+          "name": "heading",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "long_shots": {
+          "name": "long_shots",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "long_throws": {
+          "name": "long_throws",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marking": {
+          "name": "marking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "passing": {
+          "name": "passing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "penalty_taking": {
+          "name": "penalty_taking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tackling": {
+          "name": "tackling",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "technique": {
+          "name": "technique",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "technical_stats_player_id_players_id_fk": {
+          "name": "technical_stats_player_id_players_id_fk",
+          "tableFrom": "technical_stats",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
