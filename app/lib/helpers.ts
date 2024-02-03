@@ -6,5 +6,5 @@ export function camelCaseToWords(s: string) {
 }
 
 export const idSchema = z.object({
-  id: z.coerce.number().int().finite(),
+  id: z.coerce.number().int().nonnegative().finite(),
 });
