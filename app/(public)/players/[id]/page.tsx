@@ -1,83 +1,89 @@
-import { NavLink } from "@/app/lib/controls";
 import { PlayerHeader } from "../player-header";
-import { getGQL } from "@/app/lib/gql";
 import { notFound } from "next/navigation";
-import { PlayerFragment } from "@/app/lib/gql-sdk";
-import {
-  goalkeeperStatNames,
-  mentalStatNames,
-  physicalStatNames,
-  technicalStatNames,
-} from "@/app/lib/stats";
+import { getPlayer } from "@/app/db/getters";
+import { camelCaseToWords, idSchema } from "@/app/lib/helpers";
+import { type Player, players } from "@/app/db/schema";
+import { getDb } from "@/app/db";
+import { eq } from "drizzle-orm";
 
-export default async function Player({
-  params: { playerId },
-}: {
-  params: { playerId: string };
-}) {
-  const sdk = getGQL();
-  const player = await sdk.player({ id: playerId });
+export default async function PlayerPage({ params }: { params: any }) {
+  const { id } = idSchema.parse(params);
 
-  if (!player.player?.data) {
+  const player = await getPlayer(id);
+
+  if (!player) {
     return notFound();
   }
 
   return (
     <div className="card m-4">
-      <PlayerHeader player={player.player?.data} />
-
-      <Stats player={player.player.data} />
+      <PlayerHeader player={player} />
+      <Stats player={player} />
     </div>
   );
 }
 
-function Stats({ player }: { player: PlayerFragment }) {
+async function Stats({ player }: { player: Player }) {
+  const db = await getDb();
+
+  const playerdata = await db.query.players.findFirst({
+    where: eq(players.id, player.id),
+    with: {
+      goalkeeperStats: true,
+      technicalStats: true,
+      mentalStats: true,
+      physicalStats: true,
+    },
+  });
+
+  if (!playerdata) return null;
+
   return (
     <div className="mt-4">
       <div className="flex gap-x-4 overflow-auto pb-4">
-        {player.attributes?.goalkeeper_stats ? (
+        {playerdata.goalkeeperStats &&
+        Object.entries(playerdata.goalkeeperStats).find(
+          (x) => x[0] != "playerId" && x[1] !== null,
+        ) ? (
           <div className="flex flex-col">
             <header className="text-xs text-gray-500 px-2 mb-2">
               Goalkeeper
             </header>
-            <StatsColumn
-              stats={player.attributes.goalkeeper_stats as any}
-              names={goalkeeperStatNames}
-            />
+            <StatsColumn stats={playerdata.goalkeeperStats} />
           </div>
         ) : null}
 
-        {player.attributes?.technical_stats ? (
+        {playerdata.technicalStats &&
+        Object.entries(playerdata.technicalStats).find(
+          (x) => x[0] != "playerId" && x[1] !== null,
+        ) ? (
           <div className="flex flex-col">
             <header className="text-xs text-gray-500 px-2 mb-2">
               Technical
             </header>
-            <StatsColumn
-              stats={player.attributes.technical_stats as any}
-              names={technicalStatNames}
-            />
+            <StatsColumn stats={playerdata.technicalStats} />
           </div>
         ) : null}
 
-        {player.attributes?.mental_stats ? (
+        {playerdata.mentalStats &&
+        Object.entries(playerdata.mentalStats).find(
+          (x) => x[0] != "playerId" && x[1] !== null,
+        ) ? (
           <div className="flex flex-col">
             <header className="text-xs text-gray-500 px-2 mb-2">Mental</header>
-            <StatsColumn
-              stats={player.attributes.mental_stats as any}
-              names={mentalStatNames}
-            />
+            <StatsColumn stats={playerdata.mentalStats} />
           </div>
         ) : null}
 
-        {player.attributes?.physical_stats ? (
+        {playerdata.physicalStats &&
+        Object.entries(playerdata.physicalStats).find(
+          (x) => x[0] != "playerId" && x[1] !== null,
+        ) ? (
           <div className="flex flex-col">
             <header className="text-xs text-gray-500 px-2 mb-2">
               Physical
             </header>
-            <StatsColumn
-              stats={player.attributes.physical_stats as any}
-              names={physicalStatNames}
-            />
+            <StatsColumn stats={playerdata.physicalStats} />
           </div>
         ) : null}
       </div>
@@ -87,26 +93,19 @@ function Stats({ player }: { player: PlayerFragment }) {
 
 function StatsColumn({
   stats,
-  names,
 }: {
   stats: Record<string, number | null | undefined>;
-  names: string[];
 }) {
   return (
     <div className="flex flex-col gap-y-0.5">
-      {names
-        .filter((name) => stats[name] !== null)
+      {Object.keys(stats)
+        .filter((name) => name != "playerId" && stats[name] !== null)
         .map((name) => (
           <Stat name={name} value={stats[name]} key={name} />
         ))}
     </div>
   );
 }
-
-const titleCase = (s: string) =>
-  s
-    .replace(/^[-_]*(.)/, (_, c) => c.toUpperCase())
-    .replace(/[-_]+(.)/g, (_, c) => " " + c.toUpperCase());
 
 const colors = [
   "bg-red-800",
@@ -144,7 +143,7 @@ function Stat({
   return (
     <span className="flex overflow-hidden">
       <span className="grow text-xs bg-gray-200 text-gray-500 px-2 py-1 whitespace-nowrap">
-        {titleCase(name)}
+        {camelCaseToWords(name)}
       </span>
       <span
         className={`${color} w-10 text-center font-semibold px-2 text-white rounded-r`}

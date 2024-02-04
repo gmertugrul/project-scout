@@ -4,6 +4,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { CreatePlayer } from "./create";
+import ResizedImage from "@/app/components/resized-image";
 
 export default async function PlayersAdmin({
   searchParams,
@@ -84,19 +85,19 @@ function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
           className="flex items-center"
         >
           {player.picture ? (
-            <Image
-              priority
+            <ResizedImage
               src={player.picture}
               alt="Image"
-              width={200}
-              height={200}
+              width={50}
+              height={50}
+              fit={"crop"}
               className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand"
             />
           ) : (
             <img
               className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand"
               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                `${player.firstName} ${player.lastName}`
+                `${player.firstName} ${player.lastName}`,
               )}`}
             />
           )}

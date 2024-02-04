@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getPlayer } from "@/app/db/getters";
 import { idSchema } from "@/app/lib/helpers";
+import ResizedImage from "@/app/components/resized-image";
 
 export default async function PlayerAdminLayout({
   params,
@@ -28,12 +29,13 @@ export default async function PlayerAdminLayout({
       <div className="mt-2">
         {player.picture ? (
           <div className="p-1 bg-white rounded ring-1 ring-gray-300 mb-8">
-            <Image
+            <ResizedImage
               className="w-full"
               alt="Player Image"
               src={player.picture}
               width={500}
               height={500}
+              fit="cover"
             />
           </div>
         ) : null}

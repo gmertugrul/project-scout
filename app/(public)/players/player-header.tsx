@@ -1,54 +1,54 @@
 import Image from "next/image";
-import { PlayerFragment } from "../../lib/gql-sdk";
+import { type Player, Team } from "@/app/db/schema";
+import { getTeam } from "@/app/db/getters";
+import ResizedImage from "@/app/components/resized-image";
 
-export function PlayerHeader({ player }: { player: PlayerFragment }) {
-  var urlprefix =
-    process.env.NODE_ENV == "development"
-      ? `${process.env.NEXT_STRAPI_URL}`
-      : "";
+export async function PlayerHeader({ player }: { player: Player }) {
+  const age = formatAge(player.birthDate);
+  let team: Team | undefined;
 
-  var country = (player.attributes?.country ?? "").split("_");
-  var age = formatAge(player.attributes?.birthdate);
+  if (player.teamId) {
+    team = await getTeam(player.teamId);
+  }
 
   return (
     <header className="flex gap-x-4">
-      <img
-        className="rounded h-24"
-        src={`${urlprefix}${player.attributes?.photo.data?.attributes?.url}`}
-        alt="Player"
-      />
+      {player.picture ? (
+        <ResizedImage
+          className="rounded h-24 w-24"
+          src={player.picture}
+          width={200}
+          height={200}
+          fit="crop"
+          alt="Player"
+        />
+      ) : null}
 
       <div className="flex w-full border-b border-brand-900 border-opacity-10 pb-2">
         <div className="flex flex-col leading-6 justify-between">
           <span className="text-sm text-gray-500 flex items-center">
-            {country.length == 2 ? (
+            {player.countryCode ? (
               <Image
-                src={`/images/flags/${country[0].toLowerCase()}.svg`}
+                src={`/images/flags/${player.countryCode.toLowerCase()}.svg`}
                 alt="Country flag"
                 className="w-4 h-3 mr-1"
                 width={40}
                 height={30}
               />
             ) : null}
-            {!!country[0] ? country[0] : ""}
-            {country[0] && age ? ", " : null}
+            {player.countryCode ? player.countryCode.toUpperCase() : null}
+            {player.countryCode && age ? ", " : null}
             {!!age ? age : ""}
           </span>
           <span className="text-sm text-gray-500 mb-1 uppercase">
-            {player.attributes?.team?.data?.attributes?.name}
+            {team?.name}
           </span>
-          <span className="font-bold text-gray-700">
-            {player.attributes?.first_name}
-          </span>
-          <span className="font-bold text-gray-700">
-            {player.attributes?.last_name}
-          </span>
+          <span className="font-bold text-gray-700">{player.firstName}</span>
+          <span className="font-bold text-gray-700">{player.lastName}</span>
         </div>
 
         <div className="flex flex-col ml-auto leading-6">
-          <span className="font-medium text-gray-500">
-            {player.attributes?.position}
-          </span>
+          <span className="font-medium text-gray-500">{player.position}</span>
         </div>
       </div>
     </header>
@@ -57,8 +57,7 @@ export function PlayerHeader({ player }: { player: PlayerFragment }) {
 
 function formatAge(birthday: string | undefined) {
   if (birthday === undefined) return "";
-
-  var ageDifMs = Date.now() - new Date(birthday).getTime();
-  var ageDate = new Date(ageDifMs);
+  const ageDifMs = Date.now() - new Date(birthday).getTime();
+  const ageDate = new Date(ageDifMs);
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }

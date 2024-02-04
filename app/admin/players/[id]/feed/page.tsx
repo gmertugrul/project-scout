@@ -2,10 +2,9 @@ import { idSchema } from "@/app/lib/helpers";
 import { getPlayer } from "@/app/db/getters";
 import { notFound } from "next/navigation";
 import { getDb } from "@/app/db";
-import { Post, posts } from "@/app/db/schema";
+import { posts } from "@/app/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { CreatePost } from "@/app/admin/players/[id]/feed/create";
-import { deletePost } from "@/app/admin/players/[id]/feed/actions";
 import { PostDetail } from "@/app/admin/players/[id]/feed/post";
 
 export default async function Newsfeed({ params }: { params: any }) {

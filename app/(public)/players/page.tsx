@@ -1,23 +1,26 @@
 import Link from "next/link";
-import { getGQL } from "../../lib/gql";
-import { PlayerFragment } from "../../lib/gql-sdk";
 import { PlayerHeader } from "./player-header";
+import { getDb } from "@/app/db";
+import { type Player, players } from "@/app/db/schema";
+import { desc } from "drizzle-orm";
 
 export default async function Players() {
-  const sdk = getGQL();
+  const db = await getDb();
 
-  const { players } = await sdk.players();
+  const playersList = await db.query.players.findMany({
+    orderBy: [desc(players.createdAt)],
+  });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {players?.data.map((p) => (
-        <Player player={p} key={p.id} />
+      {playersList.map((p) => (
+        <PlayerDetail player={p} key={p.id} />
       ))}
     </div>
   );
 }
 
-function Player({ player }: { player: PlayerFragment }) {
+function PlayerDetail({ player }: { player: Player }) {
   return (
     <div className="card flex flex-col">
       <PlayerHeader player={player} />
