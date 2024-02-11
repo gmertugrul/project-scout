@@ -154,7 +154,7 @@ input[id^="react-select-"] {
   }
 
   .card {
-    @apply bg-white ring-1 ring-gray-200 rounded-md p-card;
+    @apply bg-white ring-1 ring-brand-800 rounded-md p-card;
   }
 
   .card-section {

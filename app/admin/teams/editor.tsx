@@ -102,7 +102,7 @@ function TeamEditor({ team }: { team: Team }) {
                 {state?.team ? "Close" : "Cancel"}
               </Link>
 
-              <SubmitButton>Save</SubmitButton>
+              <SubmitButton className="btn-primary">Save</SubmitButton>
             </div>
           </div>
         </form>

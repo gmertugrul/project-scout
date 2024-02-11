@@ -1,1 +1,0 @@
-ALTER TABLE "players" ADD COLUMN "picture" varchar(1024);

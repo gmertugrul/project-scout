@@ -168,23 +168,23 @@ export function PlayerEditor({ player }: { player: Player }) {
 
           <hr />
 
-          {state?.player ? (
-            <div className="rounded-md bg-green-100 p-4 flex gap-2 items-center">
-              <CheckCircleIcon
-                className="h-5 w-5 text-green-400"
-                aria-hidden="true"
-              />
-              Changes saved
-            </div>
-          ) : null}
-
           <FormLayoutTwoColumn>
+            {state?.player ? (
+              <div className="rounded-md bg-green-100 p-4 flex gap-2 items-center">
+                <CheckCircleIcon
+                  className="h-5 w-5 text-green-400"
+                  aria-hidden="true"
+                />
+                Changes saved
+              </div>
+            ) : null}
+
             <div className="flex gap-x-6 items-center justify-end">
               <a className="btn-text" href="/admin/players">
                 Cancel
               </a>
 
-              <SubmitButton>Save</SubmitButton>
+              <SubmitButton className="btn-primary">Save</SubmitButton>
             </div>
           </FormLayoutTwoColumn>
         </div>

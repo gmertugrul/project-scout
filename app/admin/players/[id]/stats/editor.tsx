@@ -11,7 +11,7 @@ import {
 } from "@/app/db/schema";
 import { camelCaseToWords } from "@/app/lib/helpers";
 import { useFormState } from "react-dom";
-import { updatePlayerStats } from "../actions";
+import { updatePlayerStats } from "./actions";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export function PlayerStatsEditor({
@@ -141,7 +141,7 @@ export function PlayerStatsEditor({
               Cancel
             </button>
 
-            <SubmitButton>Save</SubmitButton>
+            <SubmitButton className="btn-primary">Save</SubmitButton>
           </div>
         </div>
       </form>

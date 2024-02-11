@@ -1,21 +1,37 @@
 import { relations } from "drizzle-orm/relations";
 
 import {
+  bigint,
+  boolean,
   char,
   date,
+  decimal,
   index,
   integer,
+  numeric,
   pgTable,
+  primaryKey,
   serial,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { goalkeeperStats, mentalStats, physicalStats, technicalStats } from "./schema.stats";
+import {
+  goalkeeperStats,
+  mentalStats,
+  physicalStats,
+  technicalStats,
+} from "./schema.stats";
 
-export * from "./schema.auth"
-export * from "./schema.stats"
+export * from "./schema.stats";
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  name: text("name"),
+  email: text("email").notNull(),
+  image: text("image"),
+});
 
 export const teams = pgTable("teams", {
   id: serial("id").primaryKey(),
@@ -42,7 +58,8 @@ export const nftContracts = pgTable("nft_contracts", {
     .notNull()
     .references(() => players.id, {
       onDelete: "restrict",
-    }),
+    })
+    .unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   address: varchar("address", { length: 256 }).notNull(),
   name: varchar("name", { length: 256 }).notNull(),
@@ -50,6 +67,66 @@ export const nftContracts = pgTable("nft_contracts", {
   totalSupply: integer("total_supply").notNull(),
   picture: varchar("picture", { length: 1024 }),
 });
+
+export const nfts = pgTable(
+  "nfts",
+  {
+    nftContractId: integer("nft_contract_id")
+      .notNull()
+      .references(() => nftContracts.id, {
+        onDelete: "restrict",
+      }),
+    index: integer("index").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    isInTreasury: boolean("is_in_treasury").notNull().default(true),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.nftContractId, table.index] }),
+  }),
+);
+
+export const ipos = pgTable("ipos", {
+  id: serial("id").primaryKey(),
+  nftContractId: integer("nft_contract_id")
+    .notNull()
+    .references(() => nftContracts.id, {
+      onDelete: "restrict",
+    })
+    .unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  startsAt: timestamp("starts_at", { withTimezone: true }),
+  endsAt: timestamp("ends_at", { withTimezone: true }),
+  totalSupply: integer("total_supply").notNull(),
+  unitPrice: bigint("unit_price", { mode: "bigint" }).notNull(),
+});
+
+export const ipoTransactions = pgTable("ipo_transactions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "restrict" }),
+  ipoId: integer("ipo_id")
+    .notNull()
+    .references(() => ipos.id, { onDelete: "restrict" }),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  balance: integer("balance").notNull(),
+});
+
+export const nftBalances = pgTable(
+  "nft_balances",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "restrict" }),
+    nftContractId: integer("nft_contract_id")
+      .notNull()
+      .references(() => nftContracts.id, { onDelete: "restrict" }),
+    balance: integer("balance").notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.nftContractId] }),
+  }),
+);
 
 export const posts = pgTable(
   "posts",
@@ -65,14 +142,52 @@ export const posts = pgTable(
   },
   (table) => ({
     createdAtIdx: index("created_at_idx").on(table.playerId, table.createdAt),
-  })
+  }),
+);
+
+export const nftsRelations = relations(nfts, ({ one }) => ({
+  nftContract: one(nftContracts, {
+    fields: [nfts.nftContractId],
+    references: [nftContracts.id],
+  }),
+}));
+
+export const iposRelations = relations(ipos, ({ one, many }) => ({
+  transactions: many(ipoTransactions),
+  nftContract: one(nftContracts, {
+    fields: [ipos.nftContractId],
+    references: [nftContracts.id],
+  }),
+}));
+
+export const ipoTransactionsRelations = relations(
+  ipoTransactions,
+  ({ one }) => ({
+    ipo: one(ipos, {
+      fields: [ipoTransactions.ipoId],
+      references: [ipos.id],
+    }),
+  }),
+);
+
+export const nftContractsRelations = relations(
+  nftContracts,
+  ({ one, many }) => ({
+    ipos: many(ipos),
+    nfts: many(nfts),
+    player: one(players, {
+      fields: [nftContracts.playerId],
+      references: [players.id],
+    }),
+  }),
 );
 
 export const teamsRelations = relations(teams, ({ many }) => ({
   players: many(players),
 }));
 
-export const playersRelations = relations(players, ({ one }) => ({
+export const playersRelations = relations(players, ({ one, many }) => ({
+  nftContracts: many(nftContracts),
   team: one(teams, {
     fields: [players.teamId],
     references: [teams.id],
@@ -101,6 +216,24 @@ export const playersRelations = relations(players, ({ one }) => ({
 
 export type Player = typeof players.$inferSelect;
 export type PlayerInsert = typeof players.$inferInsert;
+
+export type Nft = typeof nfts.$inferSelect;
+export type NftInsert = typeof nfts.$inferInsert;
+
+export type NftContract = typeof nftContracts.$inferSelect;
+export type NftContractInsert = typeof nftContracts.$inferInsert;
+
+export type NftBalance = typeof nftBalances.$inferSelect;
+export type NftBalanceInsert = typeof nftBalances.$inferInsert;
+
+export type User = typeof users.$inferSelect;
+export type UserInsert = typeof users.$inferInsert;
+
+export type Ipo = typeof ipos.$inferSelect;
+export type IpoInsert = typeof ipos.$inferInsert;
+
+export type IpoTransaction = typeof ipoTransactions.$inferSelect;
+export type IpoTransactionInsert = typeof ipoTransactions.$inferInsert;
 
 export type Team = typeof teams.$inferSelect;
 export type TeamInsert = typeof teams.$inferInsert;

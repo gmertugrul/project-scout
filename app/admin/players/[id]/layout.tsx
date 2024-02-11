@@ -4,10 +4,10 @@ import {
   ChartBarIcon,
   PuzzlePieceIcon,
   UserIcon,
+  GlobeAltIcon,
 } from "@heroicons/react/24/outline";
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { getPlayer } from "@/app/db/getters";
 import { idSchema } from "@/app/lib/helpers";
 import ResizedImage from "@/app/components/resized-image";
@@ -93,6 +93,9 @@ function SideNav({ playerId }: { playerId: number }) {
         </SideNavLink>
         <SideNavLink href={`/admin/players/${playerId}/nft`}>
           <PuzzlePieceIcon className="size-4" /> NFT Settings
+        </SideNavLink>
+        <SideNavLink href={`/admin/players/${playerId}/ipo`}>
+          <GlobeAltIcon className="size-4" /> Public Offering
         </SideNavLink>
       </ul>
     </nav>

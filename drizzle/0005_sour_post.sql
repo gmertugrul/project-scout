@@ -1,0 +1,1 @@
+ALTER TABLE "ipos" ALTER COLUMN "unit_price" SET DATA TYPE bigint;

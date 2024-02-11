@@ -46,7 +46,7 @@ function NewTeam() {
                 Cancel
               </Link>
 
-              <SubmitButton>Save</SubmitButton>
+              <SubmitButton className="btn-primary">Save</SubmitButton>
             </div>
           </div>
         </form>

@@ -8,3 +8,8 @@ export function camelCaseToWords(s: string) {
 export const idSchema = z.object({
   id: z.coerce.number().int().nonnegative().finite(),
 });
+
+export function getFirst<T>(items: T[]): T | undefined {
+  if (items.length) return items[0];
+  return undefined;
+}
