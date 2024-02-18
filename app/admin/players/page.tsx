@@ -91,11 +91,11 @@ function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
               width={50}
               height={50}
               fit={"crop"}
-              className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand"
+              className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand p-0.5"
             />
           ) : (
             <img
-              className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand"
+              className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand p-0.5"
               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
                 `${player.firstName} ${player.lastName}`,
               )}`}

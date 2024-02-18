@@ -12,9 +12,9 @@ export function useTeams() {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    var load = async () => {
+    let load = async () => {
       try {
-        var res = await fetch("/admin/api/teams", { signal });
+        let res = await fetch("/admin/api/teams", { signal });
         setData({ loading: false, teams: await res.json() });
       } catch {}
     };

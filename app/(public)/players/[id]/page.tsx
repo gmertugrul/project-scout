@@ -5,6 +5,7 @@ import { camelCaseToWords, idSchema } from "@/app/lib/helpers";
 import { type Player, players } from "@/app/db/schema";
 import { getDb } from "@/app/db";
 import { eq } from "drizzle-orm";
+import { BuySell } from "@/app/(public)/players/components";
 
 export default async function PlayerPage({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -16,9 +17,10 @@ export default async function PlayerPage({ params }: { params: any }) {
   }
 
   return (
-    <div className="card m-4">
+    <div className="card">
       <PlayerHeader player={player} />
       <Stats player={player} />
+      <BuySell player={player} />
     </div>
   );
 }
@@ -39,7 +41,7 @@ async function Stats({ player }: { player: Player }) {
   if (!playerdata) return null;
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 pt-4 border-t border-gray-200">
       <div className="flex gap-x-4 overflow-auto pb-4">
         {playerdata.goalkeeperStats &&
         Object.entries(playerdata.goalkeeperStats).find(

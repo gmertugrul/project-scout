@@ -13,3 +13,7 @@ export function getFirst<T>(items: T[]): T | undefined {
   if (items.length) return items[0];
   return undefined;
 }
+
+export const currencyFormat = new Intl.NumberFormat(undefined, {
+  minimumFractionDigits: 2,
+});

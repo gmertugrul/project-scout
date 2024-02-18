@@ -12,7 +12,7 @@ export async function PlayerHeader({ player }: { player: Player }) {
   }
 
   return (
-    <header className="flex gap-x-4">
+    <header className="flex gap-x-4 h-24">
       {player.picture ? (
         <ResizedImage
           className="rounded h-24 w-24"
@@ -22,9 +22,15 @@ export async function PlayerHeader({ player }: { player: Player }) {
           fit="crop"
           alt="Player"
         />
-      ) : null}
+      ) : (
+        <img
+          className="rounded h-24 w-24"
+          alt="Player"
+          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${player.firstName} ${player.lastName}`)}&size=500`}
+        />
+      )}
 
-      <div className="flex w-full border-b border-brand-900 border-opacity-10 pb-2">
+      <div className="flex w-full pb-2">
         <div className="flex flex-col leading-6 justify-between">
           <span className="text-sm text-gray-500 flex items-center">
             {player.countryCode ? (

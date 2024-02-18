@@ -85,6 +85,15 @@ function TeamEditor({ team }: { team: Team }) {
               </select>
             </FormGroup>
 
+            <FormGroup label="Logo">
+              <input
+                name="picture"
+                className="file"
+                type="file"
+                accept="image/*"
+              />
+            </FormGroup>
+
             <hr />
 
             {state?.team ? (

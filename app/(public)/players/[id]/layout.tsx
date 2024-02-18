@@ -1,46 +1,58 @@
 import { NavLink } from "@/app/lib/controls";
 import { ReactNode } from "react";
+import Link from "next/link";
+import { idSchema } from "@/app/lib/helpers";
+import { getPlayer } from "@/app/db/getters";
+import { notFound } from "next/navigation";
+import { Player } from "@/app/db/schema";
 
 export default async function PlayerLayout({
-  params: { id },
+  params,
   children,
 }: {
-  params: { id: string };
+  params: any;
   children: ReactNode;
 }) {
-  return (
-    <div>
-      <Tabs id={id} />
+  const { id } = idSchema.parse(params);
 
+  const player = await getPlayer(id);
+
+  if (!player) {
+    return notFound();
+  }
+
+  return (
+    <div className="pb-14">
+      <Tabs id={id} />
       {children}
     </div>
   );
 }
 
-function Tabs({ id }: { id: string }) {
+function Tabs({ id }: { id: number }) {
   return (
-    <nav className="flex gap-x-0.5 mx-2">
+    <nav className="grid grid-cols-3 gap-x-[1px] -m-4 mb-4 px-4">
       <NavLink
-        className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
-        activeClassName="bg-gray-200 font-medium"
+        className="p-2 shadow-inner rounded-b border border-gray-200 border-t-0 text-center text-brand-950"
+        activeClassName="bg-brand-900 shadow-none text-white font-medium"
         href={`/players/${id}`}
         exact
       >
-        Statistics
+        Profile
       </NavLink>
       <NavLink
-        className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
-        activeClassName="bg-gray-200 font-medium"
+        className="p-2 shadow-inner rounded-b border border-gray-200 border-t-0 text-center text-brand-950"
+        activeClassName="bg-brand-900 shadow-none text-white font-medium"
         href={`/players/${id}/timeline`}
       >
         Timeline
       </NavLink>
       <NavLink
-        className="p-3 shadow-inner rounded-b-lg border border-gray-200 border-t-0 grow text-center text-brand-950 hover:bg-brand-900 hover:bg-opacity-25"
-        activeClassName="bg-gray-200 font-medium"
-        href={`/players/${id}/overall`}
+        className="p-2 shadow-inner rounded-b border border-gray-200 border-t-0 text-center text-brand-950"
+        activeClassName="bg-brand-900 shadow-none text-white font-medium"
+        href={`/players/${id}/trade`}
       >
-        Overall
+        Trade
       </NavLink>
     </nav>
   );

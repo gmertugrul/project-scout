@@ -5,6 +5,7 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { CreateTeam } from "./create";
 import { countries } from "@/app/lib/countries";
+import ResizedImage from "@/app/components/resized-image";
 
 export default async function TeamsAdmin({
   searchParams = {},
@@ -71,7 +72,26 @@ function TeamsTable({ teams }: { teams: Team[] }) {
 function TeamRow({ team }: { team: Team }) {
   return (
     <tr>
-      <td className="td">{team.name}</td>
+      <td className="td">
+        <div className="flex items-center">
+          {team.picture ? (
+            <ResizedImage
+              src={team.picture}
+              alt="Image"
+              width={50}
+              height={50}
+              fit={"crop"}
+              className="size-6 mr-2 rounded-lg ring-1 ring-brand p-0.5"
+            />
+          ) : (
+            <img
+              className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand p-0.5"
+              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(team.name)}`}
+            />
+          )}
+          {team.name}
+        </div>
+      </td>
       <td className="td">
         {team.abbreviation ?? <span className="text-muted">None</span>}
       </td>

@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { NavLink } from "../lib/controls";
+import Link from "next/link";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -32,7 +33,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
+                <Link href="/" className="flex flex-shrink-0 items-center">
                   <Image
                     alt="Project Scout"
                     src="/logo-white.svg"
@@ -40,7 +41,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                     width={100}
                     height={100}
                   />
-                </div>
+                </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">{children}</div>
                 </div>
@@ -69,7 +70,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                             href="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700",
                             )}
                           >
                             Your Profile
@@ -82,7 +83,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                             href="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700",
                             )}
                           >
                             Settings
@@ -95,7 +96,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                             href="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700",
                             )}
                           >
                             Sign out
@@ -121,15 +122,18 @@ export function NavBar({ children }: { children: ReactNode }) {
 export function NavBarLink({
   href,
   children,
+  exact,
 }: {
   href: string;
   children: ReactNode;
+  exact?: boolean;
 }) {
   return (
     <NavLink
       href={href}
       className="text-gray-300 hover:bg-brand-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
       activeClassName="bg-brand-800 text-white"
+      exact={exact}
     >
       {children}
     </NavLink>

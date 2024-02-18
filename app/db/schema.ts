@@ -5,10 +5,9 @@ import {
   boolean,
   char,
   date,
-  decimal,
   index,
   integer,
-  numeric,
+  pgEnum,
   pgTable,
   primaryKey,
   serial,
@@ -26,8 +25,11 @@ import {
 
 export * from "./schema.stats";
 
+export const userRole = pgEnum("user_role", ["user", "admin", "disabled"]);
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
+  role: userRole("role").notNull().default("user"),
   name: text("name"),
   email: text("email").notNull(),
   image: text("image"),
@@ -38,6 +40,7 @@ export const teams = pgTable("teams", {
   name: varchar("name", { length: 256 }).notNull(),
   abbreviation: varchar("abbreviation", { length: 10 }),
   countryCode: char("country_code", { length: 2 }),
+  picture: varchar("picture", { length: 1024 }),
 });
 
 export const players = pgTable("players", {
@@ -51,6 +54,27 @@ export const players = pgTable("players", {
   teamId: integer("team_id").references(() => teams.id),
   picture: varchar("picture", { length: 1024 }),
 });
+
+export const starredPlayers = pgTable(
+  "starred_players",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "cascade",
+      }),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => players.id, {
+        onDelete: "cascade",
+      }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.playerId] }),
+    pi: index().on(table.playerId),
+  }),
+);
 
 export const nftContracts = pgTable("nft_contracts", {
   id: serial("id").primaryKey(),
@@ -85,8 +109,16 @@ export const nfts = pgTable(
   }),
 );
 
+export const ipoStatus = pgEnum("ipo_status", [
+  "pending",
+  "active",
+  "finished",
+  "canceled",
+]);
+
 export const ipos = pgTable("ipos", {
   id: serial("id").primaryKey(),
+  status: ipoStatus("status").notNull().default("pending"),
   nftContractId: integer("nft_contract_id")
     .notNull()
     .references(() => nftContracts.id, {
@@ -219,6 +251,9 @@ export type PlayerInsert = typeof players.$inferInsert;
 
 export type Nft = typeof nfts.$inferSelect;
 export type NftInsert = typeof nfts.$inferInsert;
+
+export type StarredPlayer = typeof starredPlayers.$inferSelect;
+export type StarredPlayerInsert = typeof starredPlayers.$inferInsert;
 
 export type NftContract = typeof nftContracts.$inferSelect;
 export type NftContractInsert = typeof nftContracts.$inferInsert;
