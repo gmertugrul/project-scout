@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 import { updateIpo } from "./actions";
 import { SubmitButton } from "@/app/components/forms.client";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import Big from "big.js";
 
 export function IpoEditor({
   contract,
@@ -65,9 +66,7 @@ export function IpoEditor({
                 step={0.01}
                 min={0.01}
                 placeholder="1000.00"
-                defaultValue={
-                  ipo?.unitPrice ? (Number(ipo.unitPrice) / 100).toFixed(2) : ""
-                }
+                defaultValue={Big(ipo?.unitPrice ?? 0).toFixed(2) ?? ""}
               />
             </FormGroup>
 

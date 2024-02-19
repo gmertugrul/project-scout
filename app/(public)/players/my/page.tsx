@@ -1,39 +1,45 @@
 import { PageHeader } from "@/app/(public)/components/page-header";
 import { getDb } from "@/app/db";
-import { desc, eq } from "drizzle-orm";
-import { players, starredPlayers } from "@/app/db/schema";
+import { and, desc, eq, gt } from "drizzle-orm";
+import {
+  nftBalances,
+  nftContracts,
+  players,
+  starredPlayers,
+} from "@/app/db/schema";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 import { getSessionUser } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { clsx } from "clsx";
 import { cookies } from "next/headers";
 
-export default async function StarredPlayers() {
+export default async function MyPlayers() {
   const db = await getDb();
   const user = await getSessionUser(cookies());
 
   if (user == null)
-    return redirect(
-      `/login?returnPath=${encodeURIComponent("/players/starred")}`,
-    );
+    return redirect(`/login?returnPath=${encodeURIComponent("/players/my")}`);
 
   const playerList = await db
     .select({
       player: players,
     })
     .from(players)
-    .innerJoin(starredPlayers, eq(players.id, starredPlayers.playerId))
-    .where(eq(starredPlayers.userId, user.id))
-    .orderBy(desc(starredPlayers.createdAt));
+    .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
+    .innerJoin(nftBalances, eq(nftBalances.nftContractId, nftContracts.id))
+    .where(
+      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0))),
+    )
+    .orderBy(desc(nftBalances.balance));
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader>My Starred Ballers</PageHeader>
+      <PageHeader>My Ballers</PageHeader>
 
       <div className="card">
         {!playerList.length ? (
           <p className="p-4 text-center text-gray-500">
-            There are currently no starred ballers.
+            You currently have no baller shares.
           </p>
         ) : (
           <div

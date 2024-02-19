@@ -5,8 +5,9 @@ import Image from "next/image";
 import { getDb } from "@/app/db";
 import { eq, sql } from "drizzle-orm";
 import { ipos, nftContracts } from "@/app/db/schema";
-import { BuyForm } from "@/app/(public)/players/[id]/trade/buy/form";
-import { BuySell } from "@/app/(public)/players/components";
+import { BuyIPOForm } from "./form-ipo";
+import { getSessionUser } from "@/app/lib/auth";
+import { cookies } from "next/headers";
 
 export default async function BuyPlayer({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -15,6 +16,14 @@ export default async function BuyPlayer({ params }: { params: any }) {
 
   if (!player) {
     return notFound();
+  }
+
+  const user = await getSessionUser(cookies());
+
+  if (!user) {
+    return redirect(
+      `/login?returnPath=${encodeURIComponent(`/players/${player.id}/trade/buy`)}`,
+    );
   }
 
   const db = await getDb();
@@ -31,10 +40,14 @@ export default async function BuyPlayer({ params }: { params: any }) {
     where: sql`${ipos.nftContractId} = ${nftContract.id} and ${ipos.status} in ('pending', 'active')`,
   });
 
+  if (!ipo && !nftContract.isTradable) {
+    return redirect(`/players/${player.id}`);
+  }
+
   return (
     <>
       <div className="card">
-        <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl ml-auto mr-auto gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl ml-auto mr-auto gap-4">
           <Image
             src={"/images/player-nft.png"}
             alt={"Player NFT"}
@@ -43,8 +56,8 @@ export default async function BuyPlayer({ params }: { params: any }) {
             className="w-1/2 sm:w-72 mx-auto"
           />
 
-          <div className="mt-8 sm:mt-24">
-            <BuyForm player={player} nftContract={nftContract} ipo={ipo} />
+          <div className="mt-8">
+            <BuyIPOForm player={player} nftContract={nftContract} ipo={ipo!} />
           </div>
         </div>
       </div>

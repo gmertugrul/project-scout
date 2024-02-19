@@ -18,11 +18,14 @@ import {
 } from "@heroicons/react/24/solid";
 import { getDb } from "@/app/db";
 import { and, eq, sql } from "drizzle-orm";
-import { getUser } from "@/app/lib/auth";
+import { getSessionUser } from "@/app/lib/auth";
 import { currencyFormat } from "@/app/lib/helpers";
+import { cookies } from "next/headers";
+import Big from "big.js";
 
 export async function PlayerInfoCard({ player }: { player: Player }) {
   const db = await getDb();
+  const user = await getSessionUser(cookies());
 
   const nftContract = await db.query.nftContracts.findFirst({
     where: eq(nftContracts.playerId, player.id),
@@ -36,8 +39,6 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
       where: sql`${ipos.nftContractId} = ${nftContract.id} and ${ipos.status} in ('pending', 'active')`,
     });
 
-    const user = await getUser();
-
     if (user) {
       balance = await db.query.nftBalances.findFirst({
         where: and(
@@ -49,7 +50,7 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
   }
 
   return (
-    <PlayerCard player={player}>
+    <PlayerCard player={player} user={user}>
       {ipo ? (
         <IPOCardItems ipo={ipo} nftContract={nftContract!} player={player} />
       ) : null}
@@ -70,17 +71,17 @@ function IPOCardItems({
   nftContract: NftContract;
   player: Player;
 }) {
-  const unitPrice = Number(ipo.unitPrice) / 100;
-  const value = Number(BigInt(ipo.totalSupply) * ipo.unitPrice) / 100;
+  const unitPrice = Big(ipo.unitPrice);
+  const value = Big(ipo.totalSupply).mul(Big(ipo.unitPrice));
 
   return (
     <>
       <PlayerCardItem label="Price Per Share">
-        {currencyFormat.format(unitPrice)}{" "}
+        {currencyFormat.format(unitPrice.toNumber())}{" "}
         <span className="font-medium text-xs text-gray-500">USDT</span>
       </PlayerCardItem>
       <PlayerCardItem label="Total Value">
-        {currencyFormat.format(value)}{" "}
+        {currencyFormat.format(value.toNumber())}{" "}
         <span className="font-medium text-xs text-gray-500">USDT</span>
       </PlayerCardItem>
       <PlayerCardItem label="Total Supply">
@@ -94,7 +95,7 @@ function BalanceCardItems({ balance }: { balance: NftBalance }) {
   return (
     <>
       <PlayerCardItem label="Owned" image={<WalletIcon className="size-4" />}>
-        {balance.balance.toFixed(0)}
+        {balance.balance.toString()}
       </PlayerCardItem>
     </>
   );

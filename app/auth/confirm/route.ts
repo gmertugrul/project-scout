@@ -1,7 +1,7 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/app/lib/supabase/actions";
+import { createClient } from "@/app/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   const cookieStore = cookies();
@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     });
+
     if (!error) {
       redirectTo.searchParams.delete("next");
       return NextResponse.redirect(redirectTo);
@@ -30,5 +31,6 @@ export async function GET(request: NextRequest) {
   }
 
   redirectTo.pathname = "/error";
+
   return NextResponse.redirect(redirectTo);
 }

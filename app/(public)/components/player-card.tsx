@@ -1,4 +1,4 @@
-import { Player, Team } from "@/app/db/schema";
+import { Player, Team, User } from "@/app/db/schema";
 import ResizedImage from "@/app/components/resized-image";
 import Image from "next/image";
 import { getIsPlayerStarred, getTeam } from "@/app/db/getters";
@@ -6,15 +6,16 @@ import { ReactNode } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { toggleStar } from "@/app/(public)/components/actions";
-import { getUser } from "@/app/lib/auth";
 import { clsx } from "clsx";
 
 export async function PlayerCard({
   player,
+  user,
   children,
   className,
 }: {
   player: Player;
+  user?: User;
   children?: ReactNode;
   className?: string;
 }) {
@@ -25,29 +26,29 @@ export async function PlayerCard({
     team = await getTeam(player.teamId);
   }
 
-  const user = await getUser();
-
   if (user != null) {
     starred = await getIsPlayerStarred(user.id, player.id);
   }
 
   return (
     <div className={`@container relative ${className}`}>
-      <form action={toggleStar}>
-        <input type="hidden" name="id" value={player.id} />
-        <button
-          type="submit"
-          className="absolute top-1 left-1 @xs:left-auto @xs:right-1"
-        >
-          <StarIcon
-            className={clsx(
-              "size-8 drop-shadow",
-              { "text-gray-600 opacity-40": !starred },
-              { "text-yellow-400": starred },
-            )}
-          />
-        </button>
-      </form>
+      {user ? (
+        <form action={toggleStar}>
+          <input type="hidden" name="id" value={player.id} />
+          <button
+            type="submit"
+            className="absolute top-1 left-1 @xs:left-auto @xs:right-1"
+          >
+            <StarIcon
+              className={clsx(
+                "size-8 drop-shadow",
+                { "text-gray-600 opacity-40": !starred },
+                { "text-yellow-400": starred },
+              )}
+            />
+          </button>
+        </form>
+      ) : null}
 
       <Link href={`/players/${player.id}`}>
         <div className="flex flex-col gap-4 @xs:flex-row @xs:items-center">

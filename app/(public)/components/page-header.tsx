@@ -1,10 +1,11 @@
 import { WalletIcon } from "@heroicons/react/24/solid";
 import { ReactNode } from "react";
-import { getUser } from "@/app/lib/auth";
+import { getSessionUser } from "@/app/lib/auth";
 import Big from "big.js";
+import { cookies } from "next/headers";
 
 export async function PageHeader({ children }: { children?: ReactNode }) {
-  const user = await getUser();
+  const user = await getSessionUser(cookies());
 
   return (
     <header className="flex items-center">

@@ -3,6 +3,10 @@ import { getDb } from "@/app/db";
 import Link from "next/link";
 import { PageHeader } from "@/app/(public)/components/page-header";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
+import { nftBalances, nftContracts, players } from "@/app/db/schema";
+import { and, desc, eq, gt } from "drizzle-orm";
+import { getSessionUser } from "@/app/lib/auth";
+import { cookies } from "next/headers";
 
 export default async function Home() {
   return (
@@ -56,7 +60,7 @@ async function IBOList() {
 
         <footer className="flex flex-col -mx-4 -mb-4 mt-4 shadow-inner">
           <Link
-            href={`/ibos`}
+            href={`/players/ibos`}
             className="flex items-center justify-center gap-2 bg-opacity-15 bg-brand-900 p-3 text-sm font-medium text-brand-950 "
           >
             View All <ChevronRightIcon className="size-4" />
@@ -106,12 +110,23 @@ async function TrendingList() {
 
 async function MyBallersList() {
   const db = await getDb();
+  const user = await getSessionUser(cookies());
 
-  const players = await db.query.players.findMany({
-    limit: 4,
-  });
+  if (user == null) return null;
 
-  if (!players.length) {
+  const playerList = await db
+    .select({
+      player: players,
+    })
+    .from(players)
+    .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
+    .innerJoin(nftBalances, eq(nftBalances.nftContractId, nftContracts.id))
+    .where(
+      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0))),
+    )
+    .orderBy(desc(nftBalances.balance));
+
+  if (!playerList.length) {
     return null;
   }
 
@@ -121,9 +136,9 @@ async function MyBallersList() {
 
       <div className="card bg-gray-100">
         <div className="-m-4 grid grid-cols-1 divide-y divide-gray-200">
-          {players.map((p) => (
-            <div key={p.id} className="p-4">
-              <PlayerInfoCard player={p} />
+          {playerList.map((p) => (
+            <div key={p.player.id} className="p-4">
+              <PlayerInfoCard player={p.player} />
             </div>
           ))}
         </div>

@@ -5,47 +5,57 @@ import { useState } from "react";
 import { currencyFormat } from "@/app/lib/helpers";
 import { useFormState } from "react-dom";
 import { purchaseIPO } from "@/app/(public)/players/[id]/trade/buy/actions";
+import Big from "big.js";
+import { redirect } from "next/navigation";
+import { useUser } from "@/app/user-context";
+import { WalletIcon } from "@heroicons/react/24/solid";
 
-export function BuyForm({
+export function BuyIPOForm({
   player,
   nftContract,
   ipo,
 }: {
   player: Player;
   nftContract: NftContract;
-  ipo?: Ipo;
+  ipo: Ipo;
 }) {
+  const user = useUser();
+
   const [state, formAction] = useFormState(purchaseIPO, null);
   const [amount, setAmount] = useState(BigInt(1));
 
   if (state?.balance) {
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <h2 className="h2">Congratulations!</h2>
-        <p className="text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip.
-        </p>
-      </div>
-    );
+    return redirect("/players/my");
   }
+
+  const max = BigInt(
+    Big(user!.creditBalance).div(Big(ipo.unitPrice)).toFixed(0),
+  );
 
   return (
     <form className="flex flex-col gap-4" action={formAction}>
       <input type="hidden" name="ipoId" value={ipo!.id} />
+
+      <div className="flex items-center gap-2 justify-center">
+        <WalletIcon className="size-4" />{" "}
+        <span className="font-medium">Balance: </span>{" "}
+        <span>
+          {currencyFormat.format(Big(user!.creditBalance).toNumber())} USDT
+        </span>
+      </div>
+
       <div className="relative">
         <span className="absolute left-[2px] top-[2px] bottom-[2px] justify-center flex items-center text-sm font-medium bg-gray-200 rounded w-28">
-          Amount:
+          Shares:
         </span>
         <input
           type="number"
           name="amount"
           min={0}
+          max={max.toString()}
           step={1}
           className="input pl-32"
-          defaultValue={1}
+          defaultValue={amount.toString()}
           onChange={(x) => {
             if (/^\d+$/.test(x.target.value)) {
               setAmount(BigInt(x.target.value));
@@ -55,18 +65,26 @@ export function BuyForm({
           }}
         />
       </div>
+
+      <span className="-mt-3 font-medium text-xs text-gray-500 text-right mr-3">
+        Max: {max.toString()}
+      </span>
+
       <div className="relative">
         <span className="absolute left-[2px] top-[2px] bottom-[2px] justify-center flex items-center text-sm font-medium bg-gray-200 rounded w-28">
           Total Price:
         </span>
 
         <span className="input pointer-events-none pl-32">
-          {currencyFormat.format(amount * ipo!.unitPrice)} USDT
+          {currencyFormat.format(
+            Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+          )}{" "}
+          USDT
         </span>
       </div>
 
       <button
-        disabled={!(amount > 0)}
+        disabled={!(amount > 0) || amount > max}
         className="rounded bg-brand-900 p-2 text-sm font-medium text-white shadow-inner disabled:opacity-60"
       >
         Buy
@@ -84,11 +102,30 @@ export function BuyForm({
         </p>
       ) : null}
 
+      {amount > max ? (
+        <p className="font-light text-sm text-red-700 text-center">
+          You currently do not have the necessary funds for this purchase. You
+          need to credit{" "}
+          <strong>
+            {Big(ipo.unitPrice)
+              .mul(Big(amount.toString()))
+              .sub(Big(user!.creditBalance))
+              .toFixed(2)}{" "}
+            USDT
+          </strong>{" "}
+          into your account.
+        </p>
+      ) : null}
+
       {amount > 0 ? (
         <p className="font-light text-sm text-gray-500 text-center">
           You will need to pay{" "}
-          <strong>{currencyFormat.format(amount * ipo!.unitPrice)}</strong> USDT
-          from your balance in order to purchase{" "}
+          <strong>
+            {currencyFormat.format(
+              Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+            )}
+          </strong>{" "}
+          USDT from your balance in order to purchase{" "}
           <strong>{amount.toString()}</strong> piece{amount > 1 ? "s" : ""} of
           this NFT.
         </p>

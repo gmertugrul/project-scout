@@ -24,6 +24,7 @@
     "@vercel/postgres": "^0.7.2",
     "big.js": "^6.2.1",
     "drizzle-orm": "^0.29.3",
+    "jose": "^5.2.2",
     "next": "14.0.1",
     "nodemailer": "^6.9.9",
     "pg": "^8.11.3",

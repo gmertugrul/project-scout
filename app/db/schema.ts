@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { relations } from "drizzle-orm/relations";
 
 import {
@@ -35,9 +37,10 @@ export const users = pgTable("users", {
   name: text("name"),
   email: text("email").notNull(),
   image: text("image"),
-  creditBalance: numeric("credit_balance", { scale: 8, precision: 16 })
+  creditBalance: numeric("credit_balance", { scale: 8, precision: 20 })
     .notNull()
     .default("0"),
+  externalId: varchar("external_id", { length: 1024 }).unique(),
 });
 
 export const teams = pgTable("teams", {
@@ -132,8 +135,10 @@ export const ipos = pgTable("ipos", {
     })
     .unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  startAt: timestamp("start_at"),
+  endAt: timestamp("end_at"),
   totalSupply: integer("total_supply").notNull(),
-  unitPrice: bigint("unit_price", { mode: "bigint" }).notNull(),
+  unitPrice: numeric("unit_price", { scale: 8, precision: 20 }).notNull(),
 });
 
 export const ipoTransactions = pgTable("ipo_transactions", {
@@ -157,12 +162,30 @@ export const nftBalances = pgTable(
     nftContractId: integer("nft_contract_id")
       .notNull()
       .references(() => nftContracts.id, { onDelete: "restrict" }),
-    balance: integer("balance").notNull(),
+    balance: bigint("balance", { mode: "bigint" }).notNull(),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.userId, table.nftContractId] }),
   }),
 );
+
+export const nftListingStatus = pgEnum("nft_listing_status", [
+  "active",
+  "completed",
+  "canceled",
+]);
+
+export const nftListings = pgTable("nft_listings", {
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "restrict" }),
+  nftContractId: integer("nft_contract_id")
+    .notNull()
+    .references(() => nftContracts.id, { onDelete: "restrict" }),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  status: nftListingStatus("status").notNull().default("active"),
+  price: numeric("price", { scale: 8, precision: 20 }).notNull(),
+});
 
 export const posts = pgTable(
   "posts",
@@ -264,6 +287,9 @@ export type NftContractInsert = typeof nftContracts.$inferInsert;
 
 export type NftBalance = typeof nftBalances.$inferSelect;
 export type NftBalanceInsert = typeof nftBalances.$inferInsert;
+
+export type NftListing = typeof nftListings.$inferSelect;
+export type NftListingInsert = typeof nftListings.$inferInsert;
 
 export type User = typeof users.$inferSelect;
 export type UserInsert = typeof users.$inferInsert;

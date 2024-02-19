@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -17,14 +17,14 @@ export default function RootLayout({
     <div className="min-h-[100vh] flex flex-col w-full justify-stretch items-stretch">
       <NavBar>
         <NavBarLink href="/" exact>
-          Dashboard
+          Home
         </NavBarLink>
-        <NavBarLink href="/ibos">IBOs</NavBarLink>
+        <NavBarLink href="/players/ibos">IBOs</NavBarLink>
         <NavBarLink href="/players" exact>
-          All Players
+          Market
         </NavBarLink>
         <NavBarLink href="/players/starred">Starred</NavBarLink>
-        <NavBarLink href="#">Help</NavBarLink>
+        <NavBarLink href="/players/my">My Ballers</NavBarLink>
       </NavBar>
 
       <div className="p-4 grow relative">{children}</div>

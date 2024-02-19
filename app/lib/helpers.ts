@@ -17,3 +17,7 @@ export function getFirst<T>(items: T[]): T | undefined {
 export const currencyFormat = new Intl.NumberFormat(undefined, {
   minimumFractionDigits: 2,
 });
+
+export const largeCurrencyFormat = new Intl.NumberFormat(undefined, {
+  minimumFractionDigits: 0,
+});

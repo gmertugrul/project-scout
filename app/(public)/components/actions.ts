@@ -1,11 +1,12 @@
 "use server";
 
 import { idSchema } from "@/app/lib/helpers";
-import { getUser } from "@/app/lib/auth";
+import { getSessionUser } from "@/app/lib/auth";
 import { getDb } from "@/app/db";
 import { starredPlayers } from "@/app/db/schema";
 import { sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export async function toggleStar(formData: FormData) {
   const fields = idSchema.safeParse(Object.fromEntries(formData.entries()));
@@ -16,7 +17,7 @@ export async function toggleStar(formData: FormData) {
     };
   }
 
-  const user = await getUser();
+  const user = await getSessionUser(cookies());
 
   if (!user) {
     return { error: "You are not authenticated" };

@@ -10,18 +10,7 @@ const updateIpoSchema = z.object({
   nftContractId: z.coerce.number().int().nonnegative(),
   totalSupply: z.coerce.number().int().min(1),
   status: z.enum(ipoStatus.enumValues),
-  unitPrice: z
-    .string()
-    .regex(/^[+-]?\d+(\.\d{1,2})?$/)
-    .transform((x) => {
-      let parts = x.split(".");
-
-      if (parts.length == 1) {
-        return BigInt(parts[0]) * BigInt(100);
-      }
-
-      return BigInt(parts[0]) * BigInt(100) + BigInt(parts[1]);
-    }),
+  unitPrice: z.string().regex(/^[+-]?\d+(\.\d{1,2})?$/),
 });
 
 export async function updateIpo(_: any, formData: FormData) {
