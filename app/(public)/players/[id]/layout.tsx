@@ -1,10 +1,8 @@
 import { NavLink } from "@/app/lib/controls";
 import { ReactNode } from "react";
-import Link from "next/link";
 import { idSchema } from "@/app/lib/helpers";
 import { getPlayer } from "@/app/db/getters";
 import { notFound } from "next/navigation";
-import { Player } from "@/app/db/schema";
 
 export default async function PlayerLayout({
   params,
@@ -13,9 +11,13 @@ export default async function PlayerLayout({
   params: any;
   children: ReactNode;
 }) {
-  const { id } = idSchema.parse(params);
+  const fields = idSchema.safeParse(params);
 
-  const player = await getPlayer(id);
+  if (!fields.success) {
+    return notFound();
+  }
+
+  const player = await getPlayer(fields.data.id);
 
   if (!player) {
     return notFound();
@@ -23,7 +25,7 @@ export default async function PlayerLayout({
 
   return (
     <div className="pb-14">
-      <Tabs id={id} />
+      <Tabs id={player.id} />
       {children}
     </div>
   );

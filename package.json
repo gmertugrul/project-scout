@@ -22,6 +22,7 @@
     "@supabase/supabase-js": "^2.39.3",
     "@vercel/blob": "^0.20.0",
     "@vercel/postgres": "^0.7.2",
+    "big.js": "^6.2.1",
     "drizzle-orm": "^0.29.3",
     "next": "14.0.1",
     "nodemailer": "^6.9.9",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
+    "@types/big.js": "^6.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

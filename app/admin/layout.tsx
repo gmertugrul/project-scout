@@ -9,7 +9,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <NavBarLink href="/admin/players">Players</NavBarLink>
         <NavBarLink href="/admin/teams">Teams</NavBarLink>
         <NavBarLink href="/admin/users">Users</NavBarLink>
-        <NavBarLink href="/admin/settings">Settings</NavBarLink>
       </NavBar>
 
       <div className="mx-auto max-w-7xl pt-12 pb-8 px-2 sm:px-6 lg:px-8">

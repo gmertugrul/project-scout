@@ -4,9 +4,13 @@ import { getPlayer } from "@/app/db/getters";
 import { idSchema } from "@/app/lib/helpers";
 
 export default async function PlayerAdmin({ params }: { params: any }) {
-  const { id } = idSchema.parse(params);
+  const fields = idSchema.safeParse(params);
 
-  const player = await getPlayer(id);
+  if (!fields.success) {
+    return notFound();
+  }
+
+  const player = await getPlayer(fields.data.id);
 
   if (!player) {
     return notFound();

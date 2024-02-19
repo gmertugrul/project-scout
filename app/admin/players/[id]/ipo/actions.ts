@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { IpoInsert, ipos, nftContracts } from "@/app/db/schema";
+import { IpoInsert, ipos, ipoStatus, nftContracts } from "@/app/db/schema";
 import { getDb } from "@/app/db";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 const updateIpoSchema = z.object({
   nftContractId: z.coerce.number().int().nonnegative(),
   totalSupply: z.coerce.number().int().min(1),
+  status: z.enum(ipoStatus.enumValues),
   unitPrice: z
     .string()
     .regex(/^[+-]?\d+(\.\d{1,2})?$/)
@@ -38,6 +39,7 @@ export async function updateIpo(_: any, formData: FormData) {
     nftContractId: fields.data.nftContractId,
     totalSupply: fields.data.totalSupply,
     unitPrice: fields.data.unitPrice,
+    status: fields.data.status,
   };
 
   let db = await getDb();

@@ -13,6 +13,7 @@ const updateNftContractSchema = z.object({
   address: z.string().min(1).max(256),
   symbol: z.string().min(1).max(32),
   totalSupply: z.coerce.number().int().min(1).max(10000000),
+  isTradable: z.coerce.boolean(),
 });
 
 export async function updateNftContract(_: any, formData: FormData) {
@@ -32,6 +33,7 @@ export async function updateNftContract(_: any, formData: FormData) {
     symbol: fields.data.symbol,
     totalSupply: fields.data.totalSupply,
     playerId: fields.data.playerId,
+    isTradable: fields.data.isTradable,
   };
 
   let db = await getDb();

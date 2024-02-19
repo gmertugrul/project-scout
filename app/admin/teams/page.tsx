@@ -1,4 +1,3 @@
-import { Modal } from "@/app/components/modal";
 import { getDb } from "@/app/db";
 import { Team, teams } from "@/app/db/schema";
 import { PlusIcon } from "@heroicons/react/24/solid";

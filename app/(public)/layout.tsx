@@ -20,7 +20,10 @@ export default function RootLayout({
           Dashboard
         </NavBarLink>
         <NavBarLink href="/ibos">IBOs</NavBarLink>
-        <NavBarLink href="/players">All Players</NavBarLink>
+        <NavBarLink href="/players" exact>
+          All Players
+        </NavBarLink>
+        <NavBarLink href="/players/starred">Starred</NavBarLink>
         <NavBarLink href="#">Help</NavBarLink>
       </NavBar>
 

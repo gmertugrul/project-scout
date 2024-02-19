@@ -1,6 +1,6 @@
 "use client";
 
-import { Ipo, NftContract, Player } from "@/app/db/schema";
+import { Ipo, ipoStatus, NftContract, Player } from "@/app/db/schema";
 import { FormGroup, FormLayoutTwoColumn } from "@/app/components/forms";
 import React from "react";
 import { useFormState } from "react-dom";
@@ -69,6 +69,29 @@ export function IpoEditor({
                   ipo?.unitPrice ? (Number(ipo.unitPrice) / 100).toFixed(2) : ""
                 }
               />
+            </FormGroup>
+
+            <FormGroup
+              label="Status"
+              description={
+                state?.errors?.status ? (
+                  <span className="text-red-700">
+                    {state.errors.status.join(", ")}
+                  </span>
+                ) : null
+              }
+            >
+              <select
+                className="select"
+                name="status"
+                defaultValue={ipo?.status}
+              >
+                {ipoStatus.enumValues.map((value) => (
+                  <option value={value} key={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
             </FormGroup>
           </FormLayoutTwoColumn>
 

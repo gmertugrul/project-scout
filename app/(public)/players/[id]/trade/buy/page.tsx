@@ -6,6 +6,7 @@ import { getDb } from "@/app/db";
 import { eq, sql } from "drizzle-orm";
 import { ipos, nftContracts } from "@/app/db/schema";
 import { BuyForm } from "@/app/(public)/players/[id]/trade/buy/form";
+import { BuySell } from "@/app/(public)/players/components";
 
 export default async function BuyPlayer({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -31,20 +32,22 @@ export default async function BuyPlayer({ params }: { params: any }) {
   });
 
   return (
-    <div className="card">
-      <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl ml-auto mr-auto gap-4">
-        <Image
-          src={"/images/player-nft.png"}
-          alt={"Player NFT"}
-          width={686}
-          height={984}
-          className="w-full sm:w-72"
-        />
+    <>
+      <div className="card">
+        <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl ml-auto mr-auto gap-4">
+          <Image
+            src={"/images/player-nft.png"}
+            alt={"Player NFT"}
+            width={686}
+            height={984}
+            className="w-1/2 sm:w-72 mx-auto"
+          />
 
-        <div className="mt-8 sm:mt-24">
-          <BuyForm player={player} nftContract={nftContract} ipo={ipo} />
+          <div className="mt-8 sm:mt-24">
+            <BuyForm player={player} nftContract={nftContract} ipo={ipo} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

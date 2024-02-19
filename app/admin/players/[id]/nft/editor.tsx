@@ -1,6 +1,10 @@
 "use client";
 
-import { FormGroup, FormLayoutTwoColumn } from "@/app/components/forms";
+import {
+  FormGroup,
+  FormGroupToggle,
+  FormLayoutTwoColumn,
+} from "@/app/components/forms";
 import { NftContract, Player } from "@/app/db/schema";
 import { SubmitButton } from "@/app/components/forms.client";
 import { useFormState } from "react-dom";
@@ -121,6 +125,27 @@ export function NftEditor({
                 onChange={(x) => update({ address: x.target.value })}
               />
             </FormGroup>
+
+            <FormGroupToggle
+              label="Is Tradable"
+              description={
+                state?.errors?.isTradable ? (
+                  <span className="text-red-700">
+                    {state.errors.isTradable.join(", ")}
+                  </span>
+                ) : (
+                  <span>Allow free trade between users</span>
+                )
+              }
+            >
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                name="isTradable"
+                checked={data?.isTradable ?? false}
+                onChange={(x) => update({ isTradable: x.target.checked })}
+              />
+            </FormGroupToggle>
           </FormLayoutTwoColumn>
 
           <hr />

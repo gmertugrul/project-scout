@@ -6,6 +6,7 @@ import { getDb } from "@/app/db";
 import { eq, sql } from "drizzle-orm";
 import { getUser } from "@/app/lib/auth";
 import { getFirst } from "@/app/lib/helpers";
+import { revalidatePath } from "next/cache";
 
 const purchaseIPOSchema = z.object({
   ipoId: z.coerce.number().int().nonnegative().finite(),
@@ -62,6 +63,8 @@ export async function purchaseIPO(_: any, formData: FormData) {
     })
     .returning()
     .then(getFirst);
+
+  revalidatePath("/");
 
   return { balance: balance!.balance };
 }

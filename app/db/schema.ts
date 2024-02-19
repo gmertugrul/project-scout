@@ -7,6 +7,7 @@ import {
   date,
   index,
   integer,
+  numeric,
   pgEnum,
   pgTable,
   primaryKey,
@@ -29,10 +30,14 @@ export const userRole = pgEnum("user_role", ["user", "admin", "disabled"]);
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
   role: userRole("role").notNull().default("user"),
   name: text("name"),
   email: text("email").notNull(),
   image: text("image"),
+  creditBalance: numeric("credit_balance", { scale: 8, precision: 16 })
+    .notNull()
+    .default("0"),
 });
 
 export const teams = pgTable("teams", {
@@ -89,6 +94,7 @@ export const nftContracts = pgTable("nft_contracts", {
   name: varchar("name", { length: 256 }).notNull(),
   symbol: varchar("symbol", { length: 32 }).notNull(),
   totalSupply: integer("total_supply").notNull(),
+  isTradable: boolean("is_tradable").notNull().default(false),
   picture: varchar("picture", { length: 1024 }),
 });
 
@@ -126,8 +132,6 @@ export const ipos = pgTable("ipos", {
     })
     .unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-  startsAt: timestamp("starts_at", { withTimezone: true }),
-  endsAt: timestamp("ends_at", { withTimezone: true }),
   totalSupply: integer("total_supply").notNull(),
   unitPrice: bigint("unit_price", { mode: "bigint" }).notNull(),
 });

@@ -10,9 +10,12 @@ export function BuySell({ player }: { player: Player }) {
       >
         BUY
       </Link>
-      <button className="grow bg-orange-600 p-3 text-sm font-medium text-white shadow-inner">
+      <Link
+        href={`/players/${player.id}/trade/sell`}
+        className="grow bg-orange-600 p-3 text-sm font-medium text-white shadow-inner text-center"
+      >
         SELL
-      </button>
+      </Link>
     </div>
   );
 }

@@ -11,7 +11,11 @@ import {
   PlayerCard,
   PlayerCardItem,
 } from "@/app/(public)/components/player-card";
-import { ArrowLongDownIcon, ArrowLongUpIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLongDownIcon,
+  ArrowLongUpIcon,
+  WalletIcon,
+} from "@heroicons/react/24/solid";
 import { getDb } from "@/app/db";
 import { and, eq, sql } from "drizzle-orm";
 import { getUser } from "@/app/lib/auth";
@@ -89,7 +93,7 @@ function IPOCardItems({
 function BalanceCardItems({ balance }: { balance: NftBalance }) {
   return (
     <>
-      <PlayerCardItem label="Owned">
+      <PlayerCardItem label="Owned" image={<WalletIcon className="size-4" />}>
         {balance.balance.toFixed(0)}
       </PlayerCardItem>
     </>

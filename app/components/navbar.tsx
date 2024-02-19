@@ -111,7 +111,9 @@ export function NavBar({ children }: { children: ReactNode }) {
           </div>
 
           <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">{children}</div>
+            <div className="space-x-1 px-2 pb-6 pt-2 text-center">
+              {children}
+            </div>
           </Disclosure.Panel>
         </>
       )}

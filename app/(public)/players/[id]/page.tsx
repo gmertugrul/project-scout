@@ -6,6 +6,7 @@ import { type Player, players } from "@/app/db/schema";
 import { getDb } from "@/app/db";
 import { eq } from "drizzle-orm";
 import { BuySell } from "@/app/(public)/players/components";
+import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 
 export default async function PlayerPage({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -18,7 +19,7 @@ export default async function PlayerPage({ params }: { params: any }) {
 
   return (
     <div className="card">
-      <PlayerHeader player={player} />
+      <PlayerInfoCard player={player} />
       <Stats player={player} />
       <BuySell player={player} />
     </div>
