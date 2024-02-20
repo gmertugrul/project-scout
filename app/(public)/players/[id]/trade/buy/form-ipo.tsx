@@ -1,7 +1,7 @@
 "use client";
 
 import { Ipo, NftContract, Player } from "@/app/db/schema";
-import { useState } from "react";
+import { FormEvent, startTransition, useCallback, useState } from "react";
 import { currencyFormat } from "@/app/lib/helpers";
 import { useFormState } from "react-dom";
 import { purchaseIPO } from "@/app/(public)/players/[id]/trade/buy/actions";
@@ -9,6 +9,7 @@ import Big from "big.js";
 import { redirect } from "next/navigation";
 import { useUser } from "@/app/user-context";
 import { WalletIcon } from "@heroicons/react/24/solid";
+import { useConfirm, useToast } from "@/app/components/toast";
 
 export function BuyIPOForm({
   player,
@@ -20,20 +21,48 @@ export function BuyIPOForm({
   ipo: Ipo;
 }) {
   const user = useUser();
+  const confirm = useConfirm();
 
   const [state, formAction] = useFormState(purchaseIPO, null);
   const [amount, setAmount] = useState(BigInt(1));
 
-  if (state?.balance) {
-    return redirect("/players/my");
-  }
+  const wrappedFormAction = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (
+      !(await confirm("Are you sure?", {
+        description: (
+          <>
+            This will deduct{" "}
+            <strong>
+              {currencyFormat.format(
+                Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+              )}{" "}
+              USDT
+            </strong>{" "}
+            immediately from your credit balance.
+          </>
+        ),
+      }))
+    ) {
+      return state;
+    }
+
+    startTransition(() => {
+      return formAction(new FormData(e.target as HTMLFormElement));
+    });
+  };
+
+  // if (state?.balance) {
+  //   return redirect("/players/my");
+  // }
 
   const max = BigInt(
     Big(user!.creditBalance).div(Big(ipo.unitPrice)).toFixed(0),
   );
 
   return (
-    <form className="flex flex-col gap-4" action={formAction}>
+    <form className="flex flex-col gap-4" onSubmit={wrappedFormAction}>
       <input type="hidden" name="ipoId" value={ipo!.id} />
 
       <div className="flex items-center gap-2 justify-center">

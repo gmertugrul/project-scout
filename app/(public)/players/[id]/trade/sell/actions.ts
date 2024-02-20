@@ -7,14 +7,12 @@ import { getDb } from "@/app/db";
 import {
   nftBalances,
   nftContracts,
-  NftListing,
   NftListingInsert,
   nftListings,
 } from "@/app/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { getFirst } from "@/app/lib/helpers";
 import { revalidatePath } from "next/cache";
-import { id } from "postcss-selector-parser";
 import Big from "big.js";
 
 const sellSchema = z.object({
@@ -94,6 +92,7 @@ export async function sell(_: any, formData: FormData) {
         and(
           eq(nftListings.nftContractId, nft.id),
           eq(nftListings.userId, user.id),
+          eq(nftListings.status, "active"),
         ),
       )
       .for("update");
