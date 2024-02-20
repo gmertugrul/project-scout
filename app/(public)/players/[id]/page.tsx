@@ -24,7 +24,6 @@ export default async function PlayerPage({ params }: { params: any }) {
       <div className="card">
         <Stats player={player} />
       </div>
-      <BuySell player={player} />
     </div>
   );
 }

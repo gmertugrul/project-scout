@@ -8,6 +8,7 @@ import { ipos, nftContracts } from "@/app/db/schema";
 import { BuyIPOForm } from "./form-ipo";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
+import { Listings } from "@/app/(public)/players/[id]/trade/buy/listings";
 
 export default async function BuyPlayer({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -45,24 +46,28 @@ export default async function BuyPlayer({ params }: { params: any }) {
   }
 
   return (
-    <>
-      <div className="card">
-        <h3 className="h3 text-center mb-4">Buy Shares</h3>
+    <div className="space-y-6">
+      <div className="sm:hidden">
+        <h3 className="h3 ml-4 mb-2">Buy Shares</h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl ml-auto mr-auto gap-4">
-          <Image
-            src={"/images/player-nft.png"}
-            alt={"Player NFT"}
-            width={686}
-            height={984}
-            className="w-1/2 sm:w-72 mx-auto"
-          />
-
-          <div className="mt-8">
-            <BuyIPOForm player={player} nftContract={nftContract} ipo={ipo!} />
+        <div className="card">
+          <div className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl ml-auto mr-auto gap-4">
+            <Image
+              src={"/images/player-nft.png"}
+              alt={"Player NFT"}
+              width={686}
+              height={984}
+              className="w-1/2 sm:w-72 mx-auto"
+            />
           </div>
         </div>
       </div>
-    </>
+
+      {ipo ? (
+        <BuyIPOForm player={player} nftContract={nftContract} ipo={ipo} />
+      ) : null}
+
+      {nftContract.isTradable ? <Listings nftContract={nftContract} /> : null}
+    </div>
   );
 }

@@ -5,7 +5,6 @@ import { getPlayer } from "@/app/db/getters";
 import { getDb } from "@/app/db";
 import { desc, eq } from "drizzle-orm";
 import { posts } from "@/app/db/schema";
-import { BuySell } from "@/app/(public)/players/components";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 
 export default async function PlayerOverall({ params }: { params: any }) {
@@ -42,7 +41,6 @@ export default async function PlayerOverall({ params }: { params: any }) {
           ))}
         </div>
       </div>
-      <BuySell player={player} />
     </div>
   );
 }

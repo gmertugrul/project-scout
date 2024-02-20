@@ -33,6 +33,23 @@ const getSessionUserImpl = cache(async (email: string, externalId: string) => {
     .then(getFirst);
 });
 
+const getJwtUser = cache(async (token: string) => {
+  try {
+    const data = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET!),
+    );
+
+    if (
+      data.payload.sub &&
+      "email" in data.payload &&
+      typeof data.payload.email == "string"
+    ) {
+      return getSessionUserImpl(data.payload.email, data.payload.sub);
+    }
+  } catch {}
+});
+
 export async function getSessionUser(
   cookieStore: ReturnType<typeof cookies>,
 ): Promise<User | undefined> {
@@ -40,19 +57,6 @@ export async function getSessionUser(
   const session = await supabase.auth.getSession();
 
   if (!session.error && session.data.session?.access_token) {
-    try {
-      const data = await jwtVerify(
-        session.data.session.access_token,
-        new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET!),
-      );
-
-      if (
-        data.payload.sub &&
-        "email" in data.payload &&
-        typeof data.payload.email == "string"
-      ) {
-        return getSessionUserImpl(data.payload.email, data.payload.sub);
-      }
-    } catch {}
+    return await getJwtUser(session.data.session.access_token);
   }
 }

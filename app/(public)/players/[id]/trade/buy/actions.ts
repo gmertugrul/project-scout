@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { ipos, nftBalances, nftListings, users } from "@/app/db/schema";
 import { getDb } from "@/app/db";
-import { and, eq, gte, not, sql } from "drizzle-orm";
+import { and, eq, not, sql } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
 import { getFirst } from "@/app/lib/helpers";
 import { revalidatePath } from "next/cache";
@@ -116,7 +116,7 @@ export async function purchaseIPO(_: any, formData: FormData) {
   );
 }
 
-const purchaseListingSchema = z.object({
+const listingIdSchema = z.object({
   listingId: z
     .string()
     .transform((x) => {
@@ -130,7 +130,7 @@ const purchaseListingSchema = z.object({
 });
 
 export async function purchaseListing(_: any, formData: FormData) {
-  const fields = purchaseListingSchema.safeParse(
+  const fields = listingIdSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
@@ -177,7 +177,7 @@ export async function purchaseListing(_: any, formData: FormData) {
       .where(
         and(
           eq(users.id, user.id),
-          sql`${users.creditBalance} >= ${nftListings.price}::numeric`,
+          sql`${users.creditBalance} >= ${listing.price}::numeric`,
         ),
       )
       .for("update")
@@ -205,6 +205,18 @@ export async function purchaseListing(_: any, formData: FormData) {
       .where(eq(users.id, me.id));
 
     await conn
+      .update(nftBalances)
+      .set({
+        balance: sql`${nftBalances.balance} - 1`,
+      })
+      .where(
+        and(
+          eq(nftBalances.userId, listing.userId),
+          eq(nftBalances.nftContractId, listing.nftContractId),
+        ),
+      );
+
+    await conn
       .insert(nftBalances)
       .values({
         userId: me.id,
@@ -226,4 +238,43 @@ export async function purchaseListing(_: any, formData: FormData) {
   revalidatePath("/");
 
   return { success: true };
+}
+
+export async function cancelListing(_: any, formData: FormData) {
+  const fields = listingIdSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!fields.success) {
+    return {
+      errors: fields.error.flatten().fieldErrors,
+    };
+  }
+
+  const user = await getSessionUser(cookies());
+
+  if (!user || user.role == "disabled") {
+    return {
+      error: "You are not logged in.",
+    };
+  }
+
+  let db = await getDb();
+
+  let res = await db
+    .update(nftListings)
+    .set({
+      status: "canceled",
+    })
+    .where(
+      and(
+        eq(nftListings.id, fields.data.listingId),
+        eq(nftListings.userId, user.id),
+        eq(nftListings.status, "active"),
+      ),
+    );
+
+  revalidatePath(`/players`);
+
+  return { success: res.rowCount > 0 };
 }

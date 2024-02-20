@@ -1,11 +1,12 @@
 "use client";
 
 import { NftBalance, NftContract, Player } from "@/app/db/schema";
-import { useState } from "react";
+import { FormEvent, startTransition, useState } from "react";
 import Big from "big.js";
 import { useFormState } from "react-dom";
 import { sell } from "@/app/(public)/players/[id]/trade/sell/actions";
 import { currencyFormat } from "@/app/lib/helpers";
+import { useConfirm } from "@/app/components/toast";
 
 export function SellForm({
   player,
@@ -14,17 +15,41 @@ export function SellForm({
 }: {
   player: Player;
   nftContract: NftContract;
-  balance?: NftBalance;
+  balance?: bigint;
 }) {
+  const confirm = useConfirm();
+
   const [state, formAction] = useFormState(sell, null);
 
-  const max = balance?.balance ?? BigInt(0);
+  const max = balance ?? BigInt(0);
 
   const [amount, setAmount] = useState(BigInt(1));
   const [price, setPrice] = useState(Big(100));
 
+  const wrappedFormAction = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (
+      !(await confirm("Are you sure?", {
+        description: (
+          <>
+            This will create a listing for <strong>{amount.toString()}</strong>{" "}
+            shares immediately. You can cancel the listings before they can be
+            purchased by other users.
+          </>
+        ),
+      }))
+    ) {
+      return state;
+    }
+
+    startTransition(() => {
+      formAction(new FormData(e.target as HTMLFormElement));
+    });
+  };
+
   return (
-    <form action={formAction} className="flex flex-col gap-4">
+    <form onSubmit={wrappedFormAction} className="flex flex-col gap-4">
       <input type="hidden" name="nftContractId" value={nftContract.id} />
 
       <div className="flex items-center">
