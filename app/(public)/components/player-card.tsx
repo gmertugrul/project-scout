@@ -131,7 +131,7 @@ export function PlayerCardItem({
   image?: ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 group">
       <div className="size-6 ring-1 ring-gray-100 flex items-center justify-center rounded-full bg-white">
         {image ?? (
           <svg

@@ -5,6 +5,7 @@ import {
   nftBalances,
   NftContract,
   nftContracts,
+  nftListings,
   Player,
 } from "@/app/db/schema";
 import {
@@ -17,28 +18,33 @@ import {
   WalletIcon,
 } from "@heroicons/react/24/solid";
 import { getDb } from "@/app/db";
-import { and, eq, sql } from "drizzle-orm";
+import { and, avg, count, eq, min, sql } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
-import { currencyFormat } from "@/app/lib/helpers";
+import { currencyFormat, getFirst, numberFormat } from "@/app/lib/helpers";
 import { cookies } from "next/headers";
 import Big from "big.js";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
 
 export async function PlayerInfoCard({ player }: { player: Player }) {
   const db = await getDb();
   const user = await getSessionUser(cookies());
 
-  const nftContract = await db.query.nftContracts.findFirst({
-    where: eq(nftContracts.playerId, player.id),
-  });
+  const nft = await db
+    .select()
+    .from(nftContracts)
+    .leftJoin(ipos, eq(ipos.nftContractId, nftContracts.id))
+    .where(eq(nftContracts.playerId, player.id))
+    .then(getFirst);
 
-  let ipo: Ipo | undefined;
+  const nftContract = nft?.nft_contracts;
+  const ipo = nft?.ipos;
+
   let balance: NftBalance | undefined;
+  let floor: string | undefined;
+  let average: string | undefined;
+  let listings: number | undefined;
 
   if (nftContract) {
-    ipo = await db.query.ipos.findFirst({
-      where: sql`${ipos.nftContractId} = ${nftContract.id} and ${ipos.status} in ('pending', 'active')`,
-    });
-
     if (user) {
       balance = await db.query.nftBalances.findFirst({
         where: and(
@@ -47,19 +53,72 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
         ),
       });
     }
+
+    const listingData = await db
+      .select({
+        min: min(nftListings.price),
+        avg: avg(nftListings.price),
+        count: count(nftListings.id),
+      })
+      .from(nftListings)
+      .where(
+        and(
+          eq(nftListings.nftContractId, nftContract.id),
+          eq(nftListings.status, "active"),
+        ),
+      )
+      .then(getFirst);
+
+    if (typeof listingData?.min == "string") {
+      floor = listingData.min;
+    }
+
+    if (typeof listingData?.avg == "string") {
+      average = listingData.avg;
+    }
+
+    if (listingData?.count) {
+      listings = listingData.count;
+    }
   }
 
   return (
     <PlayerCard player={player} user={user}>
-      {ipo ? (
+      {balance ? <BalanceCardItems balance={balance} /> : null}
+
+      {listings ? (
+        <PlayerCardItem label="Listings">
+          {numberFormat.format(listings)}
+        </PlayerCardItem>
+      ) : null}
+
+      {ipo?.status == "active" ? (
         <IPOCardItems ipo={ipo} nftContract={nftContract!} player={player} />
       ) : null}
 
-      {!ipo && nftContract ? (
+      {nftContract?.isTradable ? (
         <NFTContractItems nftContract={nftContract} />
       ) : null}
 
-      {balance ? <BalanceCardItems balance={balance} /> : null}
+      {floor ? (
+        <PlayerCardItem
+          label="Floor Price"
+          image={<BanknotesIcon className="size-4" />}
+        >
+          {currencyFormat.format(Big(floor).toNumber())}{" "}
+          <span className="font-medium text-xs text-gray-500">USDT</span>
+        </PlayerCardItem>
+      ) : null}
+
+      {average ? (
+        <PlayerCardItem
+          label="Average Price"
+          image={<BanknotesIcon className="size-4" />}
+        >
+          {currencyFormat.format(Big(average).toNumber())}{" "}
+          <span className="font-medium text-xs text-gray-500">USDT</span>
+        </PlayerCardItem>
+      ) : null}
     </PlayerCard>
   );
 }

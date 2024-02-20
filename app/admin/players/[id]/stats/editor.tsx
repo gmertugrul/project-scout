@@ -30,7 +30,7 @@ export function PlayerStatsEditor({
 
   return (
     <div className="card relative">
-      <form action={formAction}>
+      <form action={formAction} data-statsform={true}>
         <input type="hidden" name="id" value={player.id} />
         <div className="space-y-10">
           <h2 className="h2">Player Stats</h2>
@@ -137,6 +137,26 @@ export function PlayerStatsEditor({
           ) : null}
 
           <div className="flex gap-x-6 items-center justify-end">
+            <button
+              className="btn-text"
+              type="button"
+              onClick={() => {
+                const form = document.querySelector("[data-statsform]");
+
+                if (!form) {
+                  return;
+                }
+
+                for (let inp of form.querySelectorAll<HTMLInputElement>(
+                  "input[type=number]",
+                )) {
+                  inp.value = (((Math.random() * 20) | 0) + 1).toString();
+                }
+              }}
+            >
+              Randomize
+            </button>
+
             <button className="btn-text" type="reset">
               Cancel
             </button>

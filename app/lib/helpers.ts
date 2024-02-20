@@ -14,6 +14,8 @@ export function getFirst<T>(items: T[]): T | undefined {
   return undefined;
 }
 
+export const numberFormat = new Intl.NumberFormat();
+
 export const currencyFormat = new Intl.NumberFormat(undefined, {
   minimumFractionDigits: 2,
 });

@@ -1,4 +1,4 @@
-import { NftContract, NftListing, nftListings } from "@/app/db/schema";
+import { NftContract, NftListing, nftListings, User } from "@/app/db/schema";
 import { getDb } from "@/app/db";
 import { and, eq, sql } from "drizzle-orm";
 import Big from "big.js";
@@ -18,6 +18,7 @@ export async function Listings({
   nftContract: NftContract;
   hideOnEmpty?: boolean;
 }) {
+  const user = await getSessionUser(cookies());
   const db = await getDb();
 
   const listings = await db
@@ -29,7 +30,7 @@ export async function Listings({
         eq(nftListings.status, "active"),
       ),
     )
-    .orderBy(nftListings.price);
+    .orderBy(sql`${nftListings.userId} <> ${user?.id ?? 0}`, nftListings.price);
 
   if (!listings.length && hideOnEmpty) return null;
 
@@ -45,24 +46,28 @@ export async function Listings({
 
       <ListingContainer>
         {listings.map((l) => (
-          <ListingItem nftListing={l} key={l.id} />
+          <ListingItem nftListing={l} key={l.id} user={user} />
         ))}
       </ListingContainer>
     </div>
   );
 }
 
-export function ListingContainer({ children }: { children: ReactNode }) {
+function ListingContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
       {children}
     </div>
   );
 }
 
-export async function ListingItem({ nftListing }: { nftListing: NftListing }) {
-  const user = await getSessionUser(cookies());
-
+async function ListingItem({
+  nftListing,
+  user,
+}: {
+  nftListing: NftListing;
+  user?: User;
+}) {
   return (
     <div className="card py-3 relative flex items-center gap-2">
       <svg
