@@ -44,17 +44,14 @@ export function BuyIPOForm({
         </span>
       </div>
 
-      <div className="relative">
-        <span className="absolute left-[2px] top-[2px] bottom-[2px] justify-center flex items-center text-sm font-medium bg-gray-200 rounded w-28">
-          Shares:
+      <div className="flex items-center">
+        <span className="input font-medium text-sm py-2 rounded-r-none bg-gray-200 flex items-center text-gray-500 w-32 shrink-0 justify-center">
+          Shares
         </span>
         <input
-          type="number"
+          type="text"
           name="amount"
-          min={0}
-          max={max.toString()}
-          step={1}
-          className="input pl-32"
+          className="input rounded-l-none -ml-[1px]"
           defaultValue={amount.toString()}
           onChange={(x) => {
             if (/^\d+$/.test(x.target.value)) {
@@ -70,12 +67,12 @@ export function BuyIPOForm({
         Max: {max.toString()}
       </span>
 
-      <div className="relative">
-        <span className="absolute left-[2px] top-[2px] bottom-[2px] justify-center flex items-center text-sm font-medium bg-gray-200 rounded w-28">
-          Total Price:
+      <div className="flex items-center">
+        <span className="input font-medium text-sm py-2 rounded-r-none bg-gray-200 flex items-center text-gray-500 w-32 shrink-0 justify-center">
+          Total Price
         </span>
 
-        <span className="input pointer-events-none pl-32">
+        <span className="input rounded-l-none -ml-[1px]">
           {currencyFormat.format(
             Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
           )}{" "}

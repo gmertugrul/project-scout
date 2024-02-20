@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { PlayerHeader } from "./player-header";
 import { getDb } from "@/app/db";
 import { type Player, players } from "@/app/db/schema";
 import { desc } from "drizzle-orm";

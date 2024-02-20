@@ -11,9 +11,18 @@ import { cookies } from "next/headers";
 
 const purchaseIPOSchema = z.object({
   ipoId: z.coerce.number().int().nonnegative().finite(),
-  amount: z.coerce
-    .bigint()
-    .min(BigInt(1), { message: "Amount should be at least 1" }),
+  amount: z
+    .string()
+    .transform((x) => {
+      try {
+        return BigInt(x);
+      } catch {
+        return BigInt(0);
+      }
+    })
+    .pipe(
+      z.bigint().min(BigInt(1), { message: "Amount should be at least 1" }),
+    ),
 });
 
 export async function purchaseIPO(_: any, formData: FormData) {

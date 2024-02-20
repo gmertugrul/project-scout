@@ -1,4 +1,3 @@
-import { PlayerHeader } from "../player-header";
 import { notFound } from "next/navigation";
 import { getPlayer } from "@/app/db/getters";
 import { camelCaseToWords, idSchema } from "@/app/lib/helpers";
@@ -18,9 +17,13 @@ export default async function PlayerPage({ params }: { params: any }) {
   }
 
   return (
-    <div className="card">
-      <PlayerInfoCard player={player} />
-      <Stats player={player} />
+    <div className="space-y-4">
+      <div className="card">
+        <PlayerInfoCard player={player} />
+      </div>
+      <div className="card">
+        <Stats player={player} />
+      </div>
       <BuySell player={player} />
     </div>
   );
@@ -42,8 +45,12 @@ async function Stats({ player }: { player: Player }) {
   if (!playerdata) return null;
 
   return (
-    <div className="mt-4 pt-4 border-t border-gray-200">
-      <div className="flex gap-x-4 overflow-auto pb-4">
+    <div>
+      <div className="flex gap-x-4 overflow-auto">
+        <p className="p-4 grow text-center text-sm text-gray-500 hidden only:block">
+          This player does not have any stats
+        </p>
+
         {playerdata.goalkeeperStats &&
         Object.entries(playerdata.goalkeeperStats).find(
           (x) => x[0] != "playerId" && x[1] !== null,

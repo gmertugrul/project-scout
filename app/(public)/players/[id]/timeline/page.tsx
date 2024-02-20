@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { PlayerHeader } from "../../player-header";
 import { Entry } from "./entry";
 import { idSchema } from "@/app/lib/helpers";
 import { getPlayer } from "@/app/db/getters";
@@ -25,17 +24,25 @@ export default async function PlayerOverall({ params }: { params: any }) {
   });
 
   return (
-    <>
+    <div className="space-y-4">
       <div className="card">
         <PlayerInfoCard player={player} />
+      </div>
 
-        <div className="space-y-4 divide-y divide-gray-200 mt-4 border-t border-gray-200">
+      <div className="card">
+        <div className="space-y-4 divide-y divide-gray-200">
+          {!entries.length ? (
+            <p className="p-4 text-center text-sm text-gray-500">
+              This player does not have any timeline entries
+            </p>
+          ) : null}
+
           {entries.map((e) => (
             <Entry entry={e} key={e.id} />
           ))}
         </div>
       </div>
       <BuySell player={player} />
-    </>
+    </div>
   );
 }

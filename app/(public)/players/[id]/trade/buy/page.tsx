@@ -47,6 +47,8 @@ export default async function BuyPlayer({ params }: { params: any }) {
   return (
     <>
       <div className="card">
+        <h3 className="h3 text-center mb-4">Buy Shares</h3>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl ml-auto mr-auto gap-4">
           <Image
             src={"/images/player-nft.png"}

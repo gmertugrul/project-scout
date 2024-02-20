@@ -4,6 +4,7 @@ import { relations } from "drizzle-orm/relations";
 
 import {
   bigint,
+  bigserial,
   boolean,
   char,
   date,
@@ -176,6 +177,7 @@ export const nftListingStatus = pgEnum("nft_listing_status", [
 ]);
 
 export const nftListings = pgTable("nft_listings", {
+  id: bigserial("id", { mode: "bigint" }).primaryKey(),
   userId: integer("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "restrict" }),
