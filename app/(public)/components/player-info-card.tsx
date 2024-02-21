@@ -18,7 +18,7 @@ import {
   WalletIcon,
 } from "@heroicons/react/24/solid";
 import { getDb } from "@/app/db";
-import { and, avg, count, eq, min, sql } from "drizzle-orm";
+import { and, avg, count, eq, gt, min, sql } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
 import { currencyFormat, getFirst, numberFormat } from "@/app/lib/helpers";
 import { cookies } from "next/headers";
@@ -50,6 +50,7 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
         where: and(
           eq(nftBalances.nftContractId, nftContract.id),
           eq(nftBalances.userId, user.id),
+          gt(nftBalances.balance, BigInt(0)),
         ),
       });
     }
