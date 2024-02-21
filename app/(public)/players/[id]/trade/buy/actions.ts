@@ -205,6 +205,13 @@ export async function purchaseListing(_: any, formData: FormData) {
       .where(eq(users.id, me.id));
 
     await conn
+      .update(users)
+      .set({
+        creditBalance: sql`${users.creditBalance} + ${listing.price}::numeric`,
+      })
+      .where(eq(users.id, listing.userId));
+
+    await conn
       .update(nftBalances)
       .set({
         balance: sql`${nftBalances.balance} - 1`,
