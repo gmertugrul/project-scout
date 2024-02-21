@@ -151,7 +151,7 @@ async function MyBallersList() {
 
         <footer className="flex flex-col -mx-4 -mb-4 mt-4 shadow-inner">
           <Link
-            href={`/my-ballers`}
+            href={`/players/my`}
             className="flex items-center justify-center gap-2 bg-opacity-15 bg-brand-900 p-3 text-sm font-medium text-brand-950 "
           >
             View All <ChevronRightIcon className="size-4" />
