@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  @apply text-indigo-500;
+
+  &:focus {
+    @apply ring-0 outline-0;
+  }
+}
+
+strong {
+  @apply font-bold;
+}
+
+hr {
+  @apply border-gray-200 border-0 border-b;
+}
+
+input[id^="react-select-"] {
+  @apply focus:outline-none focus:border-transparent focus:ring-0;
+}
+
+@layer components {
+  .btn-group {
+    @apply flex;
+
+    & > * {
+      @apply btn-white;
+
+      &[data-state="on"] {
+        @apply btn-primary shadow-inner;
+      }
+
+      &:first-child {
+        @apply rounded-r-none;
+      }
+
+      &:last-child {
+        @apply rounded-l-none;
+      }
+
+      &:not(:first-child):not(:last-child) {
+        @apply rounded-none;
+      }
+
+      &:not(:first-child) {
+        @apply -ml-[1px];
+      }
+    }
+  }
+
+  .btn-primary {
+    @apply rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-white {
+    @apply rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 ring-1 ring-inset ring-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-green {
+    @apply rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-danger {
+    @apply rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-warning {
+    @apply rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-text {
+    @apply text-sm font-semibold leading-6 text-gray-900 focus-visible:outline-0 focus-visible:text-indigo-700;
+
+    &[disabled] {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .label {
+    @apply font-medium leading-6 text-gray-900;
+  }
+
+  .select {
+    @apply form-select block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200;
+  }
+
+  .input {
+    @apply form-input block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200;
+
+    &[data-focus="true"] {
+      @apply ring-2 ring-inset ring-indigo-600;
+    }
+  }
+
+  .file {
+    @apply block w-full rounded-md border border-gray-300 file:py-[5px] file:pr-4 file:border-0 cursor-pointer text-gray-900 shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200;
+  }
+
+  .input-checkbox {
+    @apply form-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600;
+  }
+
+  .input-radio {
+    @apply form-radio h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600;
+  }
+
+  .input-textarea {
+    @apply form-textarea block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+  }
+
+  .h1 {
+    @apply text-2xl sm:text-3xl font-bold leading-tight tracking-tight text-gray-900;
+  }
+
+  .h2 {
+    @apply text-xl sm:text-2xl font-bold leading-tight tracking-tight text-gray-900;
+  }
+
+  .h3 {
+    @apply text-lg sm:text-xl font-medium leading-tight tracking-tight text-gray-900;
+  }
+
+  .h4 {
+    @apply text-base font-semibold leading-tight tracking-tight text-gray-900;
+  }
+
+  .card {
+    @apply bg-white ring-1 ring-brand-800 rounded-md p-card;
+  }
+
+  .card-section {
+    @apply -m-card mb-card last:-mb-card border-b border-gray-200 last:border-b-0 p-card;
+  }
+
+  .card-heading {
+    @apply -m-card mb-card last:-mb-card border-b border-gray-200 last:border-b-0 px-card py-5;
+  }
+
+  .table-card {
+    @apply divide-y divide-gray-300;
+
+    td {
+      @apply first-of-type:pl-card last-of-type:pr-card;
+    }
+
+    th {
+      @apply first-of-type:pl-card last-of-type:pr-card;
+    }
+  }
+
+  .th {
+    @apply px-3 py-3.5 text-left text-sm font-semibold text-gray-900;
+  }
+
+  .td {
+    @apply px-3 py-4 text-sm;
+  }
+
+  .td-notice {
+    @apply py-card text-gray-500 text-center;
+  }
+
+  .thead {
+    @apply border-b border-gray-300;
+  }
+
+  .tbody {
+    @apply divide-y divide-gray-200;
+  }
+
+  .code {
+    @apply inline-flex bg-gray-100 px-2 rounded-md;
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600;
+  }
+
+  .pill-red {
+    @apply inline-flex items-center rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700;
+  }
+
+  .pill-green {
+    @apply inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700;
+  }
+
+  .pill-primary {
+    @apply inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700;
+  }
+
+  .pill-purple {
+    @apply inline-flex items-center rounded-md bg-purple-100 px-2 py-1 text-xs font-medium text-purple-700;
+  }
+}
+
+@layer utilities {
+  .text-muted {
+    @apply text-gray-500;
+  }
+
+  .space-y-section {
+    @apply space-y-10;
+  }
+
+  .btn-w-full {
+    @apply flex w-full justify-center;
+  }
+}
