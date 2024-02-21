@@ -3,7 +3,7 @@ import { getDb } from "@/app/db";
 import Link from "next/link";
 import { PageHeader } from "@/app/(public)/components/page-header";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
-import { nftBalances, nftContracts, players } from "@/app/db/schema";
+import { ipos, nftBalances, nftContracts, players } from "@/app/db/schema";
 import { and, desc, eq, gt } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
@@ -37,11 +37,17 @@ export default async function Home() {
 async function IBOList() {
   const db = await getDb();
 
-  const players = await db.query.players.findMany({
-    limit: 2,
-  });
+  const playerList = await db
+    .select({
+      player: players,
+    })
+    .from(players)
+    .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
+    .innerJoin(ipos, eq(ipos.nftContractId, nftContracts.id))
+    .where(eq(ipos.status, "active"))
+    .limit(2);
 
-  if (!players.length) {
+  if (!playerList.length) {
     return null;
   }
 
@@ -51,9 +57,9 @@ async function IBOList() {
 
       <div className="card">
         <div className="-m-4 grid grid-cols-1 xs:grid-cols-2 divide-x divide-gray-200">
-          {players.slice(0, 2).map((p) => (
-            <div key={p.id} className="p-4">
-              <PlayerInfoCard player={p} />
+          {playerList.map((p) => (
+            <div key={p.player.id} className="p-4">
+              <PlayerInfoCard player={p.player} />
             </div>
           ))}
         </div>
