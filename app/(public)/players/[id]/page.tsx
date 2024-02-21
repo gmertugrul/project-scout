@@ -4,7 +4,6 @@ import { camelCaseToWords, idSchema } from "@/app/lib/helpers";
 import { type Player, players } from "@/app/db/schema";
 import { getDb } from "@/app/db";
 import { eq } from "drizzle-orm";
-import { BuySell } from "@/app/(public)/players/components";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 
 export default async function PlayerPage({ params }: { params: any }) {
