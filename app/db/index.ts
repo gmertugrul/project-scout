@@ -30,6 +30,9 @@ export function getDb(): Promise<typeof db> {
 }
 
 async function getDbInternal() {
-  await migrate(db!, { migrationsFolder: "./drizzle" });
+  if (process.env.NODE_ENV == "development") {
+    await migrate(db!, { migrationsFolder: "./drizzle" });
+  }
+
   return db;
 }
