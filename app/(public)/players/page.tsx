@@ -30,7 +30,7 @@ function PlayerDetail({ player }: { player: Player }) {
     <div className="card flex flex-col">
       <PlayerInfoCard player={player} />
 
-      <footer className="flex -mx-4 -mb-4 mt-4">
+      <footer className="flex -mx-4 -mb-4 mt-auto pt-4">
         <Link
           href={`/players/${player.id}/trade/buy`}
           className="text-center grow bg-opacity-80 bg-green-600 p-3 text-sm font-medium text-white shadow-inner"

@@ -25,15 +25,15 @@ export default async function IBOs() {
           <p className="py-4 text-center text-gray-500">
             There are currently no ongoing IBOs. Please check back later
           </p>
-        ) : null}
-
-        <div className="-m-4 grid grid-cols-1 xs:grid-cols-2 divide-x divide-gray-200">
-          {playerList.map((p) => (
-            <div key={p.player.id} className="p-4">
-              <PlayerInfoCard player={p.player} />
-            </div>
-          ))}
-        </div>
+        ) : (
+          <div className="-m-4 grid grid-cols-1 xs:grid-cols-2 divide-x divide-gray-200">
+            {playerList.map((p) => (
+              <div key={p.player.id} className="p-4">
+                <PlayerInfoCard player={p.player} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
