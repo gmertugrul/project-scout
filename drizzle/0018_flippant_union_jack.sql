@@ -1,1 +1,0 @@
-ALTER TABLE "ipos" ALTER COLUMN "unit_price" SET DATA TYPE numeric(20, 8);

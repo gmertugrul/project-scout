@@ -1,1 +1,0 @@
-ALTER TABLE "nft_listings" ADD COLUMN "id" bigserial NOT NULL;
