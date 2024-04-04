@@ -77,6 +77,8 @@ function PlayersTable({
 }
 
 function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
+  console.log(player);
+
   return (
     <tr>
       <td className="td">
@@ -84,9 +86,9 @@ function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
           href={`/admin/players/${player.id}`}
           className="flex items-center"
         >
-          {player.picture ? (
+          {player.portrait ? (
             <ResizedImage
-              src={player.picture}
+              src={player.portrait}
               alt="Image"
               width={50}
               height={50}
@@ -97,7 +99,7 @@ function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
             <img
               className="size-6 -my-1 mr-2 rounded-lg ring-1 ring-brand p-0.5"
               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                `${player.firstName} ${player.lastName}`,
+                `${player.firstName} ${player.lastName}`
               )}`}
             />
           )}

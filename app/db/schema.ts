@@ -62,6 +62,7 @@ export const players = pgTable("players", {
   countryCode: char("country_code", { length: 2 }),
   teamId: integer("team_id").references(() => teams.id),
   picture: varchar("picture", { length: 1024 }),
+  portrait: varchar("portrait", { length: 1024 }),
 });
 
 export const starredPlayers = pgTable(
@@ -82,7 +83,7 @@ export const starredPlayers = pgTable(
   (table) => ({
     pk: primaryKey({ columns: [table.userId, table.playerId] }),
     pi: index().on(table.playerId),
-  }),
+  })
 );
 
 export const nftContracts = pgTable("nft_contracts", {
@@ -116,7 +117,7 @@ export const nfts = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.nftContractId, table.index] }),
-  }),
+  })
 );
 
 export const ipoStatus = pgEnum("ipo_status", [
@@ -167,7 +168,7 @@ export const nftBalances = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.userId, table.nftContractId] }),
-  }),
+  })
 );
 
 export const nftListingStatus = pgEnum("nft_listing_status", [
@@ -203,7 +204,7 @@ export const posts = pgTable(
   },
   (table) => ({
     createdAtIdx: index("created_at_idx").on(table.playerId, table.createdAt),
-  }),
+  })
 );
 
 export const nftsRelations = relations(nfts, ({ one }) => ({
@@ -228,7 +229,7 @@ export const ipoTransactionsRelations = relations(
       fields: [ipoTransactions.ipoId],
       references: [ipos.id],
     }),
-  }),
+  })
 );
 
 export const nftContractsRelations = relations(
@@ -240,7 +241,7 @@ export const nftContractsRelations = relations(
       fields: [nftContracts.playerId],
       references: [players.id],
     }),
-  }),
+  })
 );
 
 export const teamsRelations = relations(teams, ({ many }) => ({

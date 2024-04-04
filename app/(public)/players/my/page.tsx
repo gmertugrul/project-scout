@@ -12,6 +12,7 @@ import { getSessionUser } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { clsx } from "clsx";
 import { cookies } from "next/headers";
+import { PlayerHighlightBox } from "../../components/player-box";
 
 export default async function MyPlayers() {
   const db = await getDb();
@@ -28,7 +29,7 @@ export default async function MyPlayers() {
     .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
     .innerJoin(nftBalances, eq(nftBalances.nftContractId, nftContracts.id))
     .where(
-      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0))),
+      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0)))
     )
     .orderBy(desc(nftBalances.balance));
 
@@ -36,25 +37,21 @@ export default async function MyPlayers() {
     <div className="flex flex-col gap-6">
       <PageHeader>My Ballers</PageHeader>
 
-      <div className="card">
-        {!playerList.length ? (
-          <p className="p-4 text-center text-gray-500">
-            You currently have no baller shares.
-          </p>
-        ) : (
-          <div
-            className={clsx("-m-4 grid grid-cols-1 divide-x divide-gray-200", {
-              "xs:grid-cols-2": playerList.length > 1,
-            })}
-          >
-            {playerList.map((p) => (
-              <div key={p.player.id} className="p-4">
-                <PlayerInfoCard player={p.player} />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      {!playerList.length ? (
+        <p className="p-4 text-center text-gray-500">
+          You currently have no baller shares.
+        </p>
+      ) : (
+        <div
+          className={clsx("grid grid-cols-1 gap-2", {
+            "xs:grid-cols-2": playerList.length > 1,
+          })}
+        >
+          {playerList.map((p) => (
+            <PlayerHighlightBox key={p.player.id} player={p.player} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

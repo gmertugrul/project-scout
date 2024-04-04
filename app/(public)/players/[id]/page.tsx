@@ -1,10 +1,14 @@
-import { notFound } from "next/navigation";
 import { getPlayer } from "@/app/db/getters";
-import { camelCaseToWords, idSchema } from "@/app/lib/helpers";
-import { type Player, players } from "@/app/db/schema";
-import { getDb } from "@/app/db";
-import { eq } from "drizzle-orm";
-import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
+import { type Player } from "@/app/db/schema";
+import { idSchema } from "@/app/lib/helpers";
+import {
+  BanknotesIcon,
+  CurrencyDollarIcon,
+  WalletIcon,
+} from "@heroicons/react/24/outline";
+import { notFound } from "next/navigation";
+import { IBOActiveChart, IBOCounter } from "./ibo-metrics";
+import { Tabs } from "./tabs";
 
 export default async function PlayerPage({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -17,147 +21,90 @@ export default async function PlayerPage({ params }: { params: any }) {
 
   return (
     <div className="space-y-4">
-      <div className="card">
-        <PlayerInfoCard player={player} />
-      </div>
-      <div className="card">
-        <Stats player={player} />
-      </div>
+      <IBOInfoCard player={player} />
+      <Tabs player={player} />
+      <IBOMetrics player={player} />
+      <IBOActiveMetrics player={player} />
     </div>
   );
 }
 
-async function Stats({ player }: { player: Player }) {
-  const db = await getDb();
+async function IBOInfoCard({ player }: { player: Player }) {
+  return (
+    <div className="card grid grid-cols-2 items-center">
+      <h2 className="font-semibold">IBO Price</h2>
+      <p className="text-gray-500 text-sm text-right">
+        <strong>100.000</strong> USDT
+      </p>
 
-  const playerdata = await db.query.players.findFirst({
-    where: eq(players.id, player.id),
-    with: {
-      goalkeeperStats: true,
-      technicalStats: true,
-      mentalStats: true,
-      physicalStats: true,
-    },
-  });
+      <hr className="col-span-2 my-4 -mx-card" />
 
-  if (!playerdata) return null;
+      <h2 className="font-semibold">Total Shares</h2>
+      <p className="text-gray-500 text-sm text-right">1000</p>
+
+      <hr className="col-span-2 my-4 -mx-card" />
+
+      <h2 className="font-semibold">Price Per Share</h2>
+      <p className="text-gray-500 text-sm text-right">
+        <strong>100</strong> USDT
+      </p>
+    </div>
+  );
+}
+
+async function IBOMetrics({ player }: { player: Player }) {
+  const target = new Date("2024-04-23T23:59:59Z");
 
   return (
-    <div>
-      <div className="flex gap-x-4 overflow-auto">
-        <p className="p-4 grow text-center text-sm text-gray-500 hidden only:block">
-          This player does not have any stats
-        </p>
+    <div className="card grid grid-cols-2 items-center">
+      <div className="col-span-2">
+        <IBOCounter target={target} />
+      </div>
 
-        {playerdata.goalkeeperStats &&
-        Object.entries(playerdata.goalkeeperStats).find(
-          (x) => x[0] != "playerId" && x[1] !== null,
-        ) ? (
-          <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
-              Goalkeeper
-            </header>
-            <StatsColumn stats={playerdata.goalkeeperStats} />
-          </div>
-        ) : null}
+      <hr className="col-span-2 my-4 -mx-card" />
 
-        {playerdata.technicalStats &&
-        Object.entries(playerdata.technicalStats).find(
-          (x) => x[0] != "playerId" && x[1] !== null,
-        ) ? (
-          <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
-              Technical
-            </header>
-            <StatsColumn stats={playerdata.technicalStats} />
-          </div>
-        ) : null}
+      <h2 className="font-semibold flex items-center gap-2">
+        <BanknotesIcon className="size-4" /> Allocation
+      </h2>
+      <p className="text-gray-500 text-sm text-right">1000</p>
 
-        {playerdata.mentalStats &&
-        Object.entries(playerdata.mentalStats).find(
-          (x) => x[0] != "playerId" && x[1] !== null,
-        ) ? (
-          <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">Mental</header>
-            <StatsColumn stats={playerdata.mentalStats} />
-          </div>
-        ) : null}
+      <hr className="col-span-2 my-4 -mx-card" />
 
-        {playerdata.physicalStats &&
-        Object.entries(playerdata.physicalStats).find(
-          (x) => x[0] != "playerId" && x[1] !== null,
-        ) ? (
-          <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
-              Physical
-            </header>
-            <StatsColumn stats={playerdata.physicalStats} />
-          </div>
-        ) : null}
+      <h2 className="font-semibold flex items-center gap-2">
+        <CurrencyDollarIcon className="size-4" /> Allocation Cost
+      </h2>
+      <p className="text-gray-500 text-sm text-right">
+        <strong>5000</strong> USDT
+      </p>
+
+      <hr className="col-span-2 my-4 -mx-card" />
+
+      <h2 className="font-semibold flex items-center gap-2">
+        <WalletIcon className="size-4" /> Balance
+      </h2>
+      <p className="text-green-600 text-sm text-right">
+        <strong>4550</strong> USDT
+      </p>
+    </div>
+  );
+}
+
+async function IBOActiveMetrics({ player }: { player: Player }) {
+  return (
+    <div className="card grid grid-cols-3 items-center gap-8">
+      <div>
+        <IBOActiveChart />
+      </div>
+
+      <div className="col-span-2 flex flex-col">
+        <h2 className="font-semibold">IBO Time</h2>
+        <p className="text-gray-500 text-sm">2 days, 14 hours, 23 minutes</p>
+
+        <hr className="col-span-2 my-2" />
+
+        <h2 className="font-semibold">IBO Holders</h2>
+        <p className="text-gray-500 text-sm">167</p>
       </div>
     </div>
-  );
-}
-
-function StatsColumn({
-  stats,
-}: {
-  stats: Record<string, number | null | undefined>;
-}) {
-  return (
-    <div className="flex flex-col gap-y-0.5">
-      {Object.keys(stats)
-        .filter((name) => name != "playerId" && stats[name] !== null)
-        .map((name) => (
-          <Stat name={name} value={stats[name]} key={name} />
-        ))}
-    </div>
-  );
-}
-
-const colors = [
-  "bg-red-800",
-  "bg-red-800",
-  "bg-red-800",
-  "bg-orange-800",
-  "bg-amber-800",
-  "bg-yellow-800",
-  "bg-neutral-800",
-  "bg-neutral-800",
-  "bg-gray-800",
-  "bg-slate-800",
-  "bg-indigo-800",
-  "bg-indigo-800",
-  "bg-cyan-800",
-  "bg-cyan-800",
-  "bg-cyan-800",
-  "bg-emerald-800",
-  "bg-emerald-800",
-  "bg-emerald-800",
-  "bg-green-800",
-  "bg-green-800",
-];
-
-function Stat({
-  name,
-  value,
-}: {
-  name: string;
-  value: number | null | undefined;
-}) {
-  value = value || 1;
-  const color = colors[Math.max(0, Math.min(19, value - 1))];
-
-  return (
-    <span className="flex overflow-hidden">
-      <span className="grow text-xs bg-gray-200 text-gray-500 px-2 py-1 whitespace-nowrap">
-        {camelCaseToWords(name)}
-      </span>
-      <span
-        className={`${color} w-10 text-center font-semibold px-2 text-white rounded-r`}
-      >
-        {value}
-      </span>
-    </span>
   );
 }

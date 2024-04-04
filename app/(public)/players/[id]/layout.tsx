@@ -1,7 +1,7 @@
 import { NavLink } from "@/app/lib/controls";
 import { ReactNode } from "react";
 import { getFirst, idSchema } from "@/app/lib/helpers";
-import { getPlayer } from "@/app/db/getters";
+import { getPlayer, getTeam } from "@/app/db/getters";
 import { notFound } from "next/navigation";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
@@ -13,7 +13,10 @@ import {
   nftContracts,
   nftListings,
   Player,
+  Team,
 } from "@/app/db/schema";
+import Image from "next/image";
+import ResizedImage from "@/app/components/resized-image";
 
 export default async function PlayerLayout({
   params,
@@ -35,10 +38,60 @@ export default async function PlayerLayout({
   }
 
   return (
-    <div className="pb-14">
-      <Tabs player={player} />
+    <div className="space-y-4">
+      <PlayerHeader player={player} />
       {children}
     </div>
+  );
+}
+
+async function PlayerHeader({ player }: { player: Player }) {
+  let team: Team | undefined;
+
+  if (player.teamId) {
+    team = await getTeam(player.teamId);
+  }
+
+  return (
+    <header className="flex items-center">
+      <div className="relative">
+        <figure className="size-24 ring ring-brand-900 rounded-full overflow-hidden bg-white">
+          {player.portrait ? (
+            <ResizedImage
+              src={player.portrait}
+              width={200}
+              height={200}
+              fit="crop"
+              alt="Player"
+            />
+          ) : (
+            <Image
+              className="opacity-80"
+              alt="Default Player Image"
+              src="/images/portrait-default.png"
+              width={200}
+              height={200}
+            />
+          )}
+        </figure>
+
+        {player.countryCode ? (
+          <div
+            style={{
+              backgroundImage: `url(/images/flags/${player.countryCode.toLowerCase()}.svg)`,
+            }}
+            className="absolute bg-cover bg-center flex items-center bottom-1 right-1 ring-4 ring-white rounded-full size-5"
+          ></div>
+        ) : null}
+      </div>
+
+      <div className="flex flex-col gap-1 grow ml-8">
+        <strong>
+          {player.firstName} {player.lastName}
+        </strong>
+        <span className="text-gray-500">{team?.name}</span>
+      </div>
+    </header>
   );
 }
 
@@ -67,8 +120,8 @@ async function Tabs({ player }: { player: Player }) {
       .where(
         and(
           eq(nftContracts.playerId, player.id),
-          eq(nftBalances.userId, user.id),
-        ),
+          eq(nftBalances.userId, user.id)
+        )
       )
       .then(getFirst);
 

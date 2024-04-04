@@ -4,6 +4,7 @@ import { type Player, players } from "@/app/db/schema";
 import { desc } from "drizzle-orm";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 import { PageHeader } from "@/app/(public)/components/page-header";
+import { PlayerHighlightBox } from "../components/player-box";
 
 export default async function Players() {
   const db = await getDb();
@@ -16,34 +17,11 @@ export default async function Players() {
     <div className="flex flex-col gap-6">
       <PageHeader>Baller Market</PageHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
         {playersList.map((p) => (
-          <PlayerDetail player={p} key={p.id} />
+          <PlayerHighlightBox player={p} key={p.id} />
         ))}
       </div>
-    </div>
-  );
-}
-
-function PlayerDetail({ player }: { player: Player }) {
-  return (
-    <div className="card flex flex-col">
-      <PlayerInfoCard player={player} />
-
-      <footer className="flex -mx-4 -mb-4 mt-auto pt-4">
-        <Link
-          href={`/players/${player.id}/trade/buy`}
-          className="text-center grow bg-opacity-80 bg-green-600 p-3 text-sm font-medium text-white shadow-inner"
-        >
-          BUY
-        </Link>
-        <Link
-          href={`/players/${player.id}/trade/sell`}
-          className="text-center grow bg-opacity-80 bg-red-600 p-3 text-sm font-medium text-white shadow-inner"
-        >
-          SELL
-        </Link>
-      </footer>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export async function PlayerCard({
               className={clsx(
                 "size-8 drop-shadow",
                 { "text-gray-600 opacity-40": !starred },
-                { "text-yellow-400": starred },
+                { "text-yellow-400": starred }
               )}
             />
           </button>

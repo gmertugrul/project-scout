@@ -87,6 +87,15 @@ export function PlayerEditor({ player }: { player: Player }) {
                 accept="image/*"
               />
             </FormGroup>
+
+            <FormGroup label="Portrait">
+              <input
+                name="portrait"
+                className="file"
+                type="file"
+                accept="image/*"
+              />
+            </FormGroup>
           </FormLayoutTwoColumn>
 
           <hr />

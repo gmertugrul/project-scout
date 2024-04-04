@@ -40,7 +40,7 @@ export async function updatePlayer(_: any, formData: FormData) {
   "use server";
 
   const fields = updatePlayerSchema.safeParse(
-    Object.fromEntries(formData.entries()),
+    Object.fromEntries(formData.entries())
   );
 
   if (!fields.success) {
@@ -58,15 +58,26 @@ export async function updatePlayer(_: any, formData: FormData) {
     teamId: fields.data.teamId,
   };
 
-  const imageFile = formData.get("picture") as File;
+  const picture = formData.get("picture") as File;
 
-  if (imageFile.size) {
-    const blob = await put(`images/${uuidv4()}`, imageFile, {
+  if (picture.size) {
+    const blob = await put(`images/${uuidv4()}`, picture, {
       access: "public",
-      contentType: imageFile.type,
+      contentType: picture.type,
     });
 
     playerData.picture = blob.url;
+  }
+
+  const portrait = formData.get("portrait") as File;
+
+  if (portrait.size) {
+    const blob = await put(`images/${uuidv4()}`, portrait, {
+      access: "public",
+      contentType: portrait.type,
+    });
+
+    playerData.portrait = blob.url;
   }
 
   let db = await getDb();

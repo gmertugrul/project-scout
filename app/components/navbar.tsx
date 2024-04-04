@@ -7,7 +7,6 @@ import Image from "next/image";
 import { NavLink } from "../lib/controls";
 import Link from "next/link";
 import { Avatar } from "@/app/components/avatar";
-import { User } from "@/app/db/schema";
 import { useUser } from "@/app/user-context";
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -23,7 +22,11 @@ export function NavBar({ children }: { children: ReactNode }) {
   const user = useUser();
 
   return (
-    <Disclosure as="nav" className="bg-brand-900">
+    <Disclosure
+      as="nav"
+      style={{ backgroundImage: "url(/images/bgmask.jpg)" }}
+      className="bg-cover"
+    >
       {({ open }) => (
         <>
           <div className="px-2 sm:px-6 lg:px-8">
@@ -80,7 +83,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                             href="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "flex items-center gap-1 px-4 py-2 text-sm text-gray-700",
+                              "flex items-center gap-1 px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             <WalletIcon className="size-4" />
@@ -95,7 +98,7 @@ export function NavBar({ children }: { children: ReactNode }) {
                             href="/auth/logout"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "flex items-center gap-1  px-4 py-2 text-sm text-gray-700",
+                              "flex items-center gap-1  px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             <ArrowLeftStartOnRectangleIcon className="size-4" />
@@ -133,8 +136,8 @@ export function NavBarLink({
   return (
     <NavLink
       href={href}
-      className="text-gray-300 hover:bg-brand-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-      activeClassName="bg-brand-800 text-white"
+      className="text-gray-300 hover:bg-brand-800 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+      activeClassName="bg-brand-900 text-white"
       exact={exact}
     >
       {children}

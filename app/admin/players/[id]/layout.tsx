@@ -27,12 +27,12 @@ export default async function PlayerAdminLayout({
   return (
     <div className="grid grid-cols-4 gap-8">
       <div className="mt-2">
-        {player.picture ? (
+        {player.portrait ? (
           <div className="p-1 bg-white rounded ring-1 ring-gray-300 mb-8">
             <ResizedImage
               className="w-full"
               alt="Player Image"
-              src={player.picture}
+              src={player.portrait}
               width={500}
               height={500}
               fit="cover"

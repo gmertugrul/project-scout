@@ -7,13 +7,15 @@ import { ipos, nftBalances, nftContracts, players } from "@/app/db/schema";
 import { and, desc, eq, gt } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
+import { PlayerHighlightBox, PlayerImageBox } from "./components/player-box";
+import { Fragment } from "react";
 
 export default async function Home() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader>Dashboard</PageHeader>
 
-      <div className="rounded bg-brand-800 text-white p-4 space-y-2">
+      {/* <div className="rounded bg-brand-800 text-white p-4 space-y-2">
         <h3 className="h3">Project Scout</h3>
         <div className="flex gap-2 ">
           <p className="text-sm text-gray-200">
@@ -25,7 +27,7 @@ export default async function Home() {
 
           <div className="bg-brand-700 size-36 rounded shrink-0 grow"></div>
         </div>
-      </div>
+      </div> */}
 
       <IBOList />
       <TrendingList />
@@ -53,26 +55,26 @@ async function IBOList() {
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="h3 px-4">Latest IBOs</h3>
+      <h3 className="h3">Latest IBOs</h3>
 
-      <div className="card">
-        <div className="-m-4 grid grid-cols-1 xs:grid-cols-2 divide-x divide-gray-200">
-          {playerList.map((p) => (
-            <div key={p.player.id} className="p-4">
-              <PlayerInfoCard player={p.player} />
-            </div>
-          ))}
-        </div>
-
-        <footer className="flex flex-col -mx-4 -mb-4 mt-4 shadow-inner">
-          <Link
-            href={`/players/ibos`}
-            className="flex items-center justify-center gap-2 bg-opacity-15 bg-brand-900 p-3 text-sm font-medium text-brand-950 "
-          >
-            View All <ChevronRightIcon className="size-4" />
-          </Link>
-        </footer>
+      <div className="grid grid-cols-1 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2">
+        {playerList.map((p) => (
+          <Fragment key={p.player.id}>
+            <PlayerImageBox player={p.player} />
+            <PlayerImageBox player={p.player} />
+            <PlayerImageBox player={p.player} />
+          </Fragment>
+        ))}
       </div>
+
+      <footer className="flex justify-end">
+        <Link
+          href={`/players/ibos`}
+          className="flex items-center justify-center gap-2 py-2 text-sm font-medium text-brand-950 "
+        >
+          View All <ChevronRightIcon className="size-4" />
+        </Link>
+      </footer>
     </div>
   );
 }
@@ -92,24 +94,23 @@ async function TrendingList() {
     <div className="flex flex-col gap-2">
       <h3 className="h3 px-4">Trending</h3>
 
-      <div className="card">
-        <div className="-m-4 grid grid-cols-1 divide-y divide-gray-200">
-          {players.map((p) => (
-            <div key={p.id} className="p-4">
-              <PlayerInfoCard player={p} />
-            </div>
-          ))}
-        </div>
-
-        <footer className="flex flex-col -mx-4 -mb-4 mt-4 shadow-inner">
-          <Link
-            href={`/players`}
-            className="flex items-center justify-center gap-2 bg-opacity-15 bg-brand-900 p-3 text-sm font-medium text-brand-950 "
-          >
-            View All <ChevronRightIcon className="size-4" />
-          </Link>
-        </footer>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
+        {players.map((p) => (
+          <Fragment key={p.id}>
+            <PlayerHighlightBox player={p} />
+            <PlayerHighlightBox player={p} />
+          </Fragment>
+        ))}
       </div>
+
+      <footer className="flex justify-end">
+        <Link
+          href={`/players/ibos`}
+          className="flex items-center justify-center gap-2 py-2 text-sm font-medium text-brand-950 "
+        >
+          View All <ChevronRightIcon className="size-4" />
+        </Link>
+      </footer>
     </div>
   );
 }
@@ -128,7 +129,7 @@ async function MyBallersList() {
     .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
     .innerJoin(nftBalances, eq(nftBalances.nftContractId, nftContracts.id))
     .where(
-      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0))),
+      and(eq(nftBalances.userId, user.id), gt(nftBalances.balance, BigInt(0)))
     )
     .orderBy(desc(nftBalances.balance));
 

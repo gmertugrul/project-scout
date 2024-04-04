@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import { NavBar, NavBarLink } from "../components/navbar";
 import React from "react";
-import Image from "next/image";
+
 import { ToastProvider } from "@/app/components/toast";
+
+import {
+  MagnifyingGlassIcon,
+  HomeIcon,
+  UserIcon,
+  CogIcon,
+} from "@heroicons/react/24/outline";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
 export const metadata: Metadata = {
   title: "Project Scout",
@@ -15,7 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-[100vh] flex flex-col w-full justify-stretch items-stretch">
+    <div className="min-h-[100vh] pb-16 flex flex-col w-full justify-stretch items-stretch">
       <ToastProvider>
         <NavBar>
           <NavBarLink href="/" exact>
@@ -31,21 +39,38 @@ export default async function RootLayout({
 
         <div className="p-4 grow relative">{children}</div>
 
-        <footer className="bg-brand-900 p-4 text-white text-sm font-medium grid grid-cols-2 gap-4 mt-auto">
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Help</a>
+        <footer
+          style={{ boxShadow: "0px 3px 28px rgba(0, 0, 0, 0.3)" }}
+          className="fixed rounded-t-2xl inset-x-0 bottom-0 bg-white grid grid-cols-5 px-4 py-2 items-center"
+        >
+          <div className="flex justify-center">
+            <a href="#">
+              <HomeIcon className="size-6" />
+            </a>
+          </div>
 
-          <div className="col-span-2 flex items-center gap-2 mt-auto">
-            <Image
-              alt="Project Scout"
-              src="/logo-white.svg"
-              className="h-4 w-auto"
-              width={100}
-              height={100}
-            />
-            The Project Scout, {new Date().getFullYear()} &copy;
+          <div className="flex justify-center">
+            <a href="#">
+              <MagnifyingGlassIcon className="size-6" />
+            </a>
+          </div>
+
+          <div className="flex justify-center">
+            <a href="#" className="p-2 bg-brand-950 rounded-full text-white">
+              <ArrowsUpDownIcon className="size-8" />
+            </a>
+          </div>
+
+          <div className="flex justify-center">
+            <a href="#">
+              <UserIcon className="size-6" />
+            </a>
+          </div>
+
+          <div className="flex justify-center">
+            <a href="#">
+              <CogIcon className="size-6" />
+            </a>
           </div>
         </footer>
       </ToastProvider>

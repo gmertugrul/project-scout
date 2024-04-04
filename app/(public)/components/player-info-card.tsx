@@ -50,7 +50,7 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
         where: and(
           eq(nftBalances.nftContractId, nftContract.id),
           eq(nftBalances.userId, user.id),
-          gt(nftBalances.balance, BigInt(0)),
+          gt(nftBalances.balance, BigInt(0))
         ),
       });
     }
@@ -65,8 +65,8 @@ export async function PlayerInfoCard({ player }: { player: Player }) {
       .where(
         and(
           eq(nftListings.nftContractId, nftContract.id),
-          eq(nftListings.status, "active"),
-        ),
+          eq(nftListings.status, "active")
+        )
       )
       .then(getFirst);
 
