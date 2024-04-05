@@ -55,12 +55,13 @@ function NewTeam() {
   );
 }
 
-export function CreateTeam() {
+export function CreateTeam({ open }: { open: boolean }) {
   var router = useRouter();
 
   return (
     <Modal
       title="Create New Team"
+      open={open}
       onOpenChange={(closed) => {
         if (!closed) {
           router.push("/admin/teams");

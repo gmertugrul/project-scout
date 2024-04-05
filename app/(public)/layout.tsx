@@ -11,6 +11,7 @@ import {
   CogIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Project Scout",
@@ -56,9 +57,12 @@ export default async function RootLayout({
           </div>
 
           <div className="flex justify-center">
-            <a href="#" className="p-2 bg-brand-950 rounded-full text-white">
+            <Link
+              href="/players"
+              className="p-2 bg-brand-950 rounded-full text-white"
+            >
               <ArrowsUpDownIcon className="size-8" />
-            </a>
+            </Link>
           </div>
 
           <div className="flex justify-center">

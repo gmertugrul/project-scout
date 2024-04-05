@@ -7,7 +7,7 @@ import {
   WalletIcon,
 } from "@heroicons/react/24/outline";
 import { notFound } from "next/navigation";
-import { IBOActiveChart, IBOCounter } from "./ibo-metrics";
+import { BuyModal, IBOActiveChart, IBOCounter } from "./client";
 import { Tabs } from "./tabs";
 
 export default async function PlayerPage({ params }: { params: any }) {
@@ -25,6 +25,7 @@ export default async function PlayerPage({ params }: { params: any }) {
       <Tabs player={player} />
       <IBOMetrics player={player} />
       <IBOActiveMetrics player={player} />
+      <BuyModal player={player} />
     </div>
   );
 }

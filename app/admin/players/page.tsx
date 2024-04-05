@@ -22,7 +22,7 @@ export default async function PlayersAdmin({
 
   return (
     <div className="space-y-4">
-      {"new" in searchParams ? <CreatePlayer /> : null}
+      <CreatePlayer open={"new" in searchParams} />
 
       <h1 className="h1 flex items-center">
         Players
@@ -77,8 +77,6 @@ function PlayersTable({
 }
 
 function PlayerRow({ player }: { player: Player & { team: Team | null } }) {
-  console.log(player);
-
   return (
     <tr>
       <td className="td">

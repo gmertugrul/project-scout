@@ -110,12 +110,13 @@ function NewPlayer() {
   );
 }
 
-export function CreatePlayer() {
+export function CreatePlayer({ open }: { open: boolean }) {
   var router = useRouter();
 
   return (
     <Modal
       title="Create New Player"
+      open={open}
       onOpenChange={(closed) => {
         if (!closed) {
           router.push("/admin/players");

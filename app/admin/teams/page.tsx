@@ -19,7 +19,7 @@ export default async function TeamsAdmin({
 
   return (
     <div className="space-y-4">
-      {"new" in searchParams ? <CreateTeam /> : null}
+      <CreateTeam open={"new" in searchParams} />
 
       <h1 className="h1 flex items-center">
         Teams

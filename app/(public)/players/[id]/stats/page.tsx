@@ -7,6 +7,7 @@ import { OverviewChart } from "./client";
 import Image from "next/image";
 import { getDb } from "@/app/db";
 import { eq } from "drizzle-orm";
+import { BuyModal } from "../client";
 
 export default async function PlayerStatsPage({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -23,6 +24,7 @@ export default async function PlayerStatsPage({ params }: { params: any }) {
       <Tabs player={player} />
       <Overview player={player} />
       <StatNumbers player={player} />
+      <BuyModal player={player} />
     </div>
   );
 }
@@ -108,7 +110,7 @@ async function StatNumbers({ player }: { player: Player }) {
   if (!playerdata) return null;
 
   return (
-    <div>
+    <div className="card">
       <div className="flex gap-x-4 overflow-auto">
         <p className="p-4 grow text-center text-sm text-gray-500 hidden only:block">
           This player does not have any stats
@@ -119,7 +121,7 @@ async function StatNumbers({ player }: { player: Player }) {
           (x) => x[0] != "playerId" && x[1] !== null
         ) ? (
           <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
+            <header className="text-xs text-gray-800 font-bold mb-2">
               Goalkeeper
             </header>
             <StatsColumn stats={playerdata.goalkeeperStats} />
@@ -131,7 +133,7 @@ async function StatNumbers({ player }: { player: Player }) {
           (x) => x[0] != "playerId" && x[1] !== null
         ) ? (
           <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
+            <header className="text-xs text-gray-800 font-bold mb-2">
               Technical
             </header>
             <StatsColumn stats={playerdata.technicalStats} />
@@ -143,7 +145,9 @@ async function StatNumbers({ player }: { player: Player }) {
           (x) => x[0] != "playerId" && x[1] !== null
         ) ? (
           <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">Mental</header>
+            <header className="text-xs text-gray-800 font-bold mb-2">
+              Mental
+            </header>
             <StatsColumn stats={playerdata.mentalStats} />
           </div>
         ) : null}
@@ -153,7 +157,7 @@ async function StatNumbers({ player }: { player: Player }) {
           (x) => x[0] != "playerId" && x[1] !== null
         ) ? (
           <div className="flex flex-col">
-            <header className="text-xs text-gray-500 px-2 mb-2">
+            <header className="text-xs text-gray-800 font-bold mb-2">
               Physical
             </header>
             <StatsColumn stats={playerdata.physicalStats} />
@@ -170,7 +174,7 @@ function StatsColumn({
   stats: Record<string, number | null | undefined>;
 }) {
   return (
-    <div className="flex flex-col gap-y-0.5">
+    <div className="flex flex-col gap-y-1.5">
       {Object.keys(stats)
         .filter((name) => name != "playerId" && stats[name] !== null)
         .map((name) => (
@@ -214,14 +218,17 @@ function Stat({
   const color = colors[Math.max(0, Math.min(19, value - 1))];
 
   return (
-    <span className="flex overflow-hidden">
-      <span className="grow text-xs bg-gray-200 text-gray-500 px-2 py-1 whitespace-nowrap">
-        {camelCaseToWords(name)}
-      </span>
+    <span className={`flex overflow-hidden ${color} bg-opacity-10 rounded`}>
       <span
-        className={`${color} w-10 text-center font-semibold px-2 text-white rounded-r`}
+        className={`${color} w-10 text-center font-semibold px-2 py-1 text-white rounded`}
       >
         {value}
+      </span>
+
+      <span
+        className={` grow text-xs text-gray-500 px-2 py-2 whitespace-nowrap`}
+      >
+        {camelCaseToWords(name)}
       </span>
     </span>
   );
