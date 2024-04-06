@@ -51,8 +51,8 @@ export async function PlayerImageBox({ player }: { player: Player }) {
             <ResizedImage
               className="absolute h-auto w-1/4 max-w-16 left-0 top-8"
               src={team?.picture}
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               fit="crop"
               alt="Player"
             />
@@ -61,8 +61,8 @@ export async function PlayerImageBox({ player }: { player: Player }) {
           {player.picture ? (
             <ResizedImage
               src={player.picture}
-              width={200}
-              height={200}
+              width={400}
+              height={400}
               fit="crop"
               alt="Player"
             />
@@ -98,11 +98,11 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
         className="relative bg-cover flex justify-end h-[80px]"
       >
         {team?.picture ? (
-          <div className="absolute h-auto w-1/4 max-w-10 left-2 top-2 p-1 shadow bg-white rounded-full">
+          <div className="absolute h-auto w-1/4 max-w-10 left-2 top-2 p-1.5 shadow bg-white rounded-full">
             <ResizedImage
               src={team?.picture}
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               fit="crop"
               alt="Player"
             />
@@ -113,8 +113,8 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
           <ResizedImage
             className="aspect-square w-auto mt-1"
             src={player.picture}
-            width={200}
-            height={200}
+            width={400}
+            height={400}
             fit="crop"
             alt="Player"
           />
@@ -123,8 +123,8 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
             className="aspect-square w-auto mt-1 opacity-50"
             alt="Default Player Image"
             src="/images/picture-default.png"
-            width={200}
-            height={200}
+            width={400}
+            height={400}
           />
         )}
 
