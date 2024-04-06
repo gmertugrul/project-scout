@@ -31,7 +31,6 @@ export default async function Home() {
 
       <IBOList />
       <TrendingList />
-      <MyBallersList />
     </div>
   );
 }
@@ -47,7 +46,7 @@ async function IBOList() {
     .innerJoin(nftContracts, eq(nftContracts.playerId, players.id))
     .innerJoin(ipos, eq(ipos.nftContractId, nftContracts.id))
     .where(eq(ipos.status, "active"))
-    .limit(2);
+    .limit(3);
 
   if (!playerList.length) {
     return null;
@@ -59,11 +58,7 @@ async function IBOList() {
 
       <div className="grid grid-cols-1 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2">
         {playerList.map((p) => (
-          <Fragment key={p.player.id}>
-            <PlayerImageBox player={p.player} />
-            <PlayerImageBox player={p.player} />
-            <PlayerImageBox player={p.player} />
-          </Fragment>
+          <PlayerImageBox player={p.player} key={p.player.id} />
         ))}
       </div>
 
@@ -96,10 +91,7 @@ async function TrendingList() {
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {players.map((p) => (
-          <Fragment key={p.id}>
-            <PlayerHighlightBox player={p} />
-            <PlayerHighlightBox player={p} />
-          </Fragment>
+          <PlayerHighlightBox player={p} key={p.id} />
         ))}
       </div>
 
