@@ -53,7 +53,7 @@ export async function PlayerImageBox({ player }: { player: Player }) {
               src={team?.picture}
               width={100}
               height={100}
-              fit="cover"
+              fit="contain"
               alt="Team"
             />
           ) : null}
@@ -98,12 +98,12 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
         className="relative bg-cover flex justify-end h-[80px]"
       >
         {team?.picture ? (
-          <div className="absolute h-auto w-1/4 max-w-10 left-2 top-2 p-1.5 shadow bg-white rounded-full">
+          <div className="absolute h-auto w-1/4 max-w-10 left-2 top-2 p-1.5 shadow bg-white rounded-full flex items-center justify-center">
             <ResizedImage
               src={team?.picture}
               width={100}
               height={100}
-              fit="cover"
+              fit="contain"
               alt="Team"
             />
           </div>
