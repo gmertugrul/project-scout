@@ -8,7 +8,6 @@ import { and, desc, eq, gt } from "drizzle-orm";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
 import { PlayerHighlightBox, PlayerImageBox } from "./components/player-box";
-import { Fragment } from "react";
 
 export default async function Home() {
   return (
