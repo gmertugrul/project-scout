@@ -42,8 +42,8 @@ export async function PlayerImageBox({ player }: { player: Player }) {
 
       <Link href={`/players/${player.id}`}>
         <header className="flex flex-col">
-          <strong className="font-bold font-sm">Lionel</strong>
-          <span className="font-light">Messi</span>
+          <strong className="font-bold font-sm">{player.firstName}</strong>
+          <span className="font-light">{player.lastName}</span>
         </header>
 
         <div className="relative flex justify-end -mr-3 -my-4 pl-6">
@@ -129,7 +129,7 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
         )}
 
         <span className="bg-gray-300/50 absolute inset-x-0 bottom-0 text-sm font-bold px-2">
-          Lionel Messi
+          {player.firstName} {player.lastName}
         </span>
       </header>
 
