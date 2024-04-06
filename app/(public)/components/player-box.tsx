@@ -53,7 +53,7 @@ export async function PlayerImageBox({ player }: { player: Player }) {
               src={team?.picture}
               width={100}
               height={100}
-              fit="contain"
+              fit="cover"
               alt="Team"
             />
           ) : null}
@@ -103,7 +103,7 @@ export async function PlayerHighlightBox({ player }: { player: Player }) {
               src={team?.picture}
               width={100}
               height={100}
-              fit="contain"
+              fit="cover"
               alt="Team"
             />
           </div>
