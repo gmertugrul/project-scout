@@ -4,7 +4,7 @@ import { Ipo, NftContract, Player } from "@/app/db/schema";
 import { FormEvent, startTransition, useCallback, useState } from "react";
 import { currencyFormat } from "@/app/lib/helpers";
 import { useFormState } from "react-dom";
-import { purchaseIPO } from "@/app/(public)/players/[id]/trade/buy/actions";
+import { purchaseIPO } from "@/app/(public)/(basic)/players/[id]/trade/buy/actions";
 import Big from "big.js";
 import { redirect } from "next/navigation";
 import { useUser } from "@/app/user-context";
@@ -36,7 +36,7 @@ export function BuyIPOForm({
             This will deduct{" "}
             <strong>
               {currencyFormat.format(
-                Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+                Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber()
               )}{" "}
               USDT
             </strong>{" "}
@@ -54,7 +54,7 @@ export function BuyIPOForm({
   };
 
   const max = BigInt(
-    Big(user!.creditBalance).div(Big(ipo.unitPrice)).toFixed(0),
+    Big(user!.creditBalance).div(Big(ipo.unitPrice)).toFixed(0)
   );
 
   return (
@@ -101,7 +101,7 @@ export function BuyIPOForm({
 
           <span className="input rounded-l-none -ml-[1px]">
             {currencyFormat.format(
-              Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+              Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber()
             )}{" "}
             USDT
           </span>
@@ -146,7 +146,7 @@ export function BuyIPOForm({
             You will need to pay{" "}
             <strong>
               {currencyFormat.format(
-                Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber(),
+                Big(ipo.unitPrice).mul(Big(amount.toString())).toNumber()
               )}
             </strong>{" "}
             USDT from your balance in order to purchase{" "}

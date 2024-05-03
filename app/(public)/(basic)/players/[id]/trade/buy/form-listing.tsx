@@ -7,7 +7,7 @@ import { useFormState } from "react-dom";
 import {
   cancelListing,
   purchaseListing,
-} from "@/app/(public)/players/[id]/trade/buy/actions";
+} from "@/app/(public)/(basic)/players/[id]/trade/buy/actions";
 import { currencyFormat } from "@/app/lib/helpers";
 import Big from "big.js";
 
@@ -48,7 +48,7 @@ export function BuyListingFormWrapper({
           } else if (x.error) {
             toast(x.error, { variant: "error" });
           }
-        },
+        }
       );
     });
   };

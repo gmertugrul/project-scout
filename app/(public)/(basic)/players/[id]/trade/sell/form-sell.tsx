@@ -4,7 +4,7 @@ import { NftBalance, NftContract, Player } from "@/app/db/schema";
 import { FormEvent, startTransition, useState } from "react";
 import Big from "big.js";
 import { useFormState } from "react-dom";
-import { sell } from "@/app/(public)/players/[id]/trade/sell/actions";
+import { sell } from "@/app/(public)/(basic)/players/[id]/trade/sell/actions";
 import { currencyFormat } from "@/app/lib/helpers";
 import { useConfirm } from "@/app/components/toast";
 
@@ -136,7 +136,7 @@ export function SellForm({
           completion of this sale, you will receive{" "}
           <strong>
             {currencyFormat.format(
-              Big(amount.toString()).mul(price).toNumber(),
+              Big(amount.toString()).mul(price).toNumber()
             )}{" "}
             USDT
           </strong>{" "}

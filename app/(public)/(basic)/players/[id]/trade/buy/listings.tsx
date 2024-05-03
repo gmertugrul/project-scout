@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import {
   BuyListingFormWrapper,
   CancelListingFormWrapper,
-} from "@/app/(public)/players/[id]/trade/buy/form-listing";
+} from "@/app/(public)/(basic)/players/[id]/trade/buy/form-listing";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
 
@@ -27,8 +27,8 @@ export async function Listings({
     .where(
       and(
         eq(nftListings.nftContractId, nftContract.id),
-        eq(nftListings.status, "active"),
-      ),
+        eq(nftListings.status, "active")
+      )
     )
     .orderBy(sql`${nftListings.userId} <> ${user?.id ?? 0}`, nftListings.price);
 

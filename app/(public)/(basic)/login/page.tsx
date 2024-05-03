@@ -1,5 +1,5 @@
 import { PageHeader } from "@/app/(public)/components/page-header";
-import { AuthForm } from "@/app/(public)/login/auth-form";
+import { AuthForm } from "@/app/(public)/(basic)/login/auth-form";
 
 export default function Login({
   searchParams,

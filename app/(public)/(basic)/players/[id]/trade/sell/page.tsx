@@ -7,8 +7,8 @@ import { cookies } from "next/headers";
 import { getDb } from "@/app/db";
 import { and, eq, sql } from "drizzle-orm";
 import { nftBalances, nftContracts, nftListings } from "@/app/db/schema";
-import { SellForm } from "@/app/(public)/players/[id]/trade/sell/form-sell";
-import { Listings } from "@/app/(public)/players/[id]/trade/buy/listings";
+import { SellForm } from "@/app/(public)/(basic)/players/[id]/trade/sell/form-sell";
+import { Listings } from "@/app/(public)/(basic)/players/[id]/trade/buy/listings";
 
 export default async function SellPlayer({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -23,7 +23,7 @@ export default async function SellPlayer({ params }: { params: any }) {
 
   if (!user) {
     return redirect(
-      `/login?returnPath=${encodeURIComponent(`/players/${player.id}/trade/sell`)}`,
+      `/login?returnPath=${encodeURIComponent(`/players/${player.id}/trade/sell`)}`
     );
   }
 
@@ -43,8 +43,8 @@ export default async function SellPlayer({ params }: { params: any }) {
     .where(
       and(
         eq(nftBalances.nftContractId, nftContract.id),
-        eq(nftBalances.userId, user.id),
-      ),
+        eq(nftBalances.userId, user.id)
+      )
     )
     .then(getFirst);
 
@@ -57,8 +57,8 @@ export default async function SellPlayer({ params }: { params: any }) {
       and(
         eq(nftListings.nftContractId, nftContract.id),
         eq(nftListings.userId, user.id),
-        eq(nftListings.status, "active"),
-      ),
+        eq(nftListings.status, "active")
+      )
     )
     .then(getFirst);
 

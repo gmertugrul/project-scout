@@ -12,7 +12,7 @@ import { getSessionUser } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { clsx } from "clsx";
 import { cookies } from "next/headers";
-import { PlayerHighlightBox } from "../../components/player-box";
+import { PlayerHighlightBox } from "../../../components/player-box";
 
 export default async function MyPlayers() {
   const db = await getDb();

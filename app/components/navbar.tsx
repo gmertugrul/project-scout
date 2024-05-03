@@ -59,13 +59,13 @@ export function NavBar({ children }: { children: ReactNode }) {
                   />
                 </Link>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="absolute inset-y-0 right-12 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-300 text-sm focus:outline-none">
                       {user ? (
                         <Avatar
-                          className="size-7"
+                          className="size-9"
                           name={user.name ?? user.email}
                         />
                       ) : null}

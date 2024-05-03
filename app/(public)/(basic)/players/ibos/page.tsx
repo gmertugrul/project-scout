@@ -2,7 +2,7 @@ import { PageHeader } from "@/app/(public)/components/page-header";
 import { getDb } from "@/app/db";
 import { desc, eq } from "drizzle-orm";
 import { ipos, nftContracts, players } from "@/app/db/schema";
-import { PlayerImageBox } from "../../components/player-box";
+import { PlayerImageBox } from "../../../components/player-box";
 
 export default async function IBOs() {
   const db = await getDb();

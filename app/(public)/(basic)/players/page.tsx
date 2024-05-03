@@ -4,7 +4,7 @@ import { type Player, players } from "@/app/db/schema";
 import { desc } from "drizzle-orm";
 import { PlayerInfoCard } from "@/app/(public)/components/player-info-card";
 import { PageHeader } from "@/app/(public)/components/page-header";
-import { PlayerHighlightBox } from "../components/player-box";
+import { PlayerHighlightBox } from "../../components/player-box";
 
 export default async function Players() {
   const db = await getDb();

@@ -8,7 +8,7 @@ import { ipos, nftContracts } from "@/app/db/schema";
 import { BuyIPOForm } from "./form-ipo";
 import { getSessionUser } from "@/app/lib/auth";
 import { cookies } from "next/headers";
-import { Listings } from "@/app/(public)/players/[id]/trade/buy/listings";
+import { Listings } from "@/app/(public)/(basic)/players/[id]/trade/buy/listings";
 
 export default async function BuyPlayer({ params }: { params: any }) {
   const { id } = idSchema.parse(params);
@@ -23,7 +23,7 @@ export default async function BuyPlayer({ params }: { params: any }) {
 
   if (!user) {
     return redirect(
-      `/login?returnPath=${encodeURIComponent(`/players/${player.id}/trade/buy`)}`,
+      `/login?returnPath=${encodeURIComponent(`/players/${player.id}/trade/buy`)}`
     );
   }
 

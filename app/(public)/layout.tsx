@@ -17,19 +17,7 @@ export default async function RootLayout({
   return (
     <div className="min-h-[100vh] pb-16 flex flex-col w-full justify-stretch items-stretch">
       <ToastProvider>
-        <NavBar>
-          <NavBarLink href="/" exact>
-            Home
-          </NavBarLink>
-          <NavBarLink href="/players/ibos">IBOs</NavBarLink>
-          <NavBarLink href="/players" exact>
-            Market
-          </NavBarLink>
-          <NavBarLink href="/players/starred">Starred</NavBarLink>
-          <NavBarLink href="/players/my">My Ballers</NavBarLink>
-        </NavBar>
-
-        <div className="p-4 grow relative">{children}</div>
+        {children}
 
         <footer
           id="global-footer"

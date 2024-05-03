@@ -62,13 +62,19 @@ export function GlobalActionSheet({
 
         <div className="grid grid-cols-2 gap-10">
           <DialogClose asChild>
-            <Link href="/players/my" className="btn btn-primary text-center">
+            <Link
+              href="/me/wallet/deposit"
+              className="btn btn-primary text-center"
+            >
               Deposit
             </Link>
           </DialogClose>
 
           <DialogClose asChild>
-            <Link href="/players/my" className="btn btn-primary text-center">
+            <Link
+              href="/me/wallet/withdraw"
+              className="btn btn-primary text-center"
+            >
               Withdraw
             </Link>
           </DialogClose>
