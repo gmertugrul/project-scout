@@ -4,6 +4,7 @@ import { ActionSheet } from "../components/modal";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { BuySellIcon } from "../components/icons";
 import Link from "next/link";
+import { useUser } from "../user-context";
 
 export function GlobalActionSheet({
   open,
@@ -12,6 +13,8 @@ export function GlobalActionSheet({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
+  const user = useUser();
+
   const handleOpenChange = (open: boolean) => {
     const footer = document?.getElementById("global-footer");
 
@@ -43,7 +46,7 @@ export function GlobalActionSheet({
         </span>
       }
     >
-      <div className="flex flex-col gap-8 mb-16">
+      <div className="flex flex-col gap-6 mb-16">
         <DialogClose asChild>
           <span className="close-handle self-center w-16 h-1.5 bg-gray-300 rounded"></span>
         </DialogClose>
@@ -79,6 +82,16 @@ export function GlobalActionSheet({
             </Link>
           </DialogClose>
         </div>
+
+        {!user ? (
+          <div>
+            <DialogClose asChild>
+              <Link href="/login" className="btn btn-primary text-center block">
+                Log In
+              </Link>
+            </DialogClose>
+          </div>
+        ) : null}
       </div>
     </ActionSheet>
   );

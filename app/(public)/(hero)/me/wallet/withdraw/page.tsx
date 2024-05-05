@@ -11,7 +11,7 @@ export default function WithdrawPage() {
       <h3 className="h3 mb-6">Withdraw USDT</h3>
 
       <div className="flex flex-col gap-2 items-center">
-        <span className="text-sm my-2 border border-gray-500 rounded px-4 py-2 w-full flex flex-col focus-within:border-brand-700">
+        <span className="text-sm my-2 border border-gray-300 rounded-lg px-4 py-2 w-full flex flex-col focus-within:border-brand-700">
           <label className="text-sm text-black">Network</label>
           <select className="border-0 focus:ring-0 p-0 text-sm font-bold">
             <option>Ethereum</option>
@@ -19,7 +19,7 @@ export default function WithdrawPage() {
           </select>
         </span>
 
-        <span className="text-sm my-2 border border-gray-500 rounded px-4 py-2 w-full flex flex-col focus-within:border-brand-700">
+        <span className="text-sm my-2 border border-gray-300 rounded-lg px-4 py-2 w-full flex flex-col focus-within:border-brand-700">
           <label className="text-sm text-black">Address</label>
           <input
             className="border-0 focus:ring-0 p-0 text-sm font-bold"
@@ -29,7 +29,7 @@ export default function WithdrawPage() {
           ></input>
         </span>
 
-        <span className="text-sm my-2 border border-gray-500 rounded px-4 py-2 w-full flex flex-col gap-2 focus-within:border-brand-700">
+        <span className="text-sm my-2 border border-gray-300 rounded-lg px-4 py-2 w-full flex flex-col gap-2 focus-within:border-brand-700">
           <div className="flex">
             <label
               htmlFor="withdraw-amount"
@@ -62,7 +62,7 @@ export default function WithdrawPage() {
           </div>
         </span>
 
-        <span className="text-sm my-2 border border-gray-500 rounded px-4 py-2 w-full flex focus-within:border-brand-700">
+        <span className="text-sm my-2 border border-gray-300 rounded-lg px-4 py-2 w-full flex focus-within:border-brand-700">
           <label className="text-sm text-black whitespace-nowrap">
             Minimum Withdrawal Amount
           </label>

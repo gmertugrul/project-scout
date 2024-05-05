@@ -20,17 +20,17 @@ export default async function DepositPage() {
           transaction is confirmed on the blockchain.
         </span>
 
-        <span className="text-sm text-gray-500 my-2 border border-gray-500 rounded p-2 w-full text-center">
+        <span className="text-sm text-gray-500 my-2 border border-gray-300 rounded-lg p-2 w-full text-center">
           bc1q0fuhmpurlya0wsyc72ccfyr5f3ndd3dqkqjc70
         </span>
 
         <div className="flex items-center gap-2">
-          <button className="btn-white text-brand-800 font-bold">
-            <ShareIcon className="size-6" />
+          <button className="btn-gray font-bold">
+            <ShareIcon className="size-6 text-brand-800" />
           </button>
 
-          <button className="btn-white text-brand-800 font-bold flex items-center gap-1">
-            <ClipboardIcon className="size-6" />
+          <button className="btn-gray font-normal flex items-center gap-1 min-w-[250px] justify-center">
+            <ClipboardIcon className="size-6 text-brand-800" />
             <span>Copy Address</span>
           </button>
         </div>
