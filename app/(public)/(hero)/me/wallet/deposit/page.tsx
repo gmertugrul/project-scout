@@ -14,6 +14,12 @@ export default async function DepositPage() {
           height={200}
         />
 
+        <span className="text-sm text-gray-500 my-2 text-center">
+          Please deposit <strong>USDT</strong> on <strong>ERC20</strong> to the
+          address below. The deposit will be automatically confirmed once the
+          transaction is confirmed on the blockchain.
+        </span>
+
         <span className="text-sm text-gray-500 my-2 border border-gray-500 rounded p-2 w-full text-center">
           bc1q0fuhmpurlya0wsyc72ccfyr5f3ndd3dqkqjc70
         </span>
