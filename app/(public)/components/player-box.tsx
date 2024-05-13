@@ -81,16 +81,24 @@ export async function PlayerImageBox({ player }: { player: Player }) {
   );
 }
 
-export async function PlayerHighlightBox({ player }: { player: Player }) {
+export async function PlayerHighlightBox({
+  player,
+  mapHref,
+}: {
+  player: Player;
+  mapHref?: (player: Player) => string;
+}) {
   let team: Team | undefined;
 
   if (player.teamId) {
     team = await getTeam(player.teamId);
   }
 
+  const href = mapHref?.(player) ?? `/players/${player.id}`;
+
   return (
     <Link
-      href={`/players/${player.id}`}
+      href={href}
       className="border-b-4 rounded-lg hover:border-b-brand-600 border-b-brand-900 shadow-[0px_1px_8px_rgba(110,110,110,0.1)]"
     >
       <header

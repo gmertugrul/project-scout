@@ -51,11 +51,25 @@ export function GlobalActionSheet({
           <span className="close-handle self-center w-16 h-1.5 bg-gray-300 rounded"></span>
         </DialogClose>
 
-        <DialogClose asChild>
-          <Link href="/players" className="btn btn-white text-center py-4">
-            Buy Baller Share
-          </Link>
-        </DialogClose>
+        <div className="grid grid-cols-2 gap-6">
+          <DialogClose asChild>
+            <Link
+              href="/players/buy"
+              className="btn btn-white text-center py-4"
+            >
+              Buy Baller Share
+            </Link>
+          </DialogClose>
+
+          <DialogClose asChild>
+            <Link
+              href="/players/sell"
+              className="btn btn-white text-center py-4"
+            >
+              Sell Baller Share
+            </Link>
+          </DialogClose>
+        </div>
 
         <DialogClose asChild>
           <Link href="/players/my" className="btn btn-white text-center py-4">
@@ -63,7 +77,7 @@ export function GlobalActionSheet({
           </Link>
         </DialogClose>
 
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-2 gap-6">
           <DialogClose asChild>
             <Link
               href="/me/wallet/deposit"
