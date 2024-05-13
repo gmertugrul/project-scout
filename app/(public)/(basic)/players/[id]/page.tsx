@@ -54,7 +54,7 @@ async function IBOInfoCard({ player }: { player: Player }) {
 }
 
 async function IBOMetrics({ player }: { player: Player }) {
-  const target = new Date("2024-04-23T23:59:59Z");
+  const target = new Date("2024-08-23T23:59:59Z");
 
   return (
     <div className="card grid grid-cols-2 items-center">
